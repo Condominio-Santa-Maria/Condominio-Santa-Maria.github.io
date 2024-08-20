@@ -2,7 +2,10 @@ const init= async()=>{
     let usuarios = await getUsuarios();
     let cuerpo = "";
     cuerpo += "<div>Bienvenido a Santa maria 1</div>";
-    cuerpo += "<div>"+JSON.stringify(usuarios)+"</div>";
+    usuarios.map(usuario=>{
+        cuerpo += card(usuario);
+    });
+    
     document.getElementById("app").innerHTML = cuerpo;
 };
 
