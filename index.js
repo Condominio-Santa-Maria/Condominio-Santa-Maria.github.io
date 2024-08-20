@@ -9,7 +9,7 @@ const init= async()=>{
 const getUsuarios=()=>{
     return new Promise(resolve=>{
         fetch("https://ged579f8ad0fdcf-santamaria.adb.sa-saopaulo-1.oraclecloudapps.com/ords/admin/usuario/").then(res => res.json()).then(obj => {
-            resolve(obj);
+            resolve(obj.items);
         });
     })
 };
