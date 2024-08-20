@@ -5,7 +5,7 @@ const init= async()=>{
     cuerpo += "<ul>";
     cuerpo += "<li><a href='./usuarios/'>Usuarios</a></li>";
     cuerpo += "<li><a href='./aptos/'>Departamentos</a></li>";
-    cuerpo += "<li><a href='./pintado/'>Departamentos</a></li>";
+    cuerpo += "<li><a href='./pintado/'>Pintado</a></li>";
     cuerpo += "</ul>";
     document.getElementById("app").innerHTML = cuerpo;
 };
