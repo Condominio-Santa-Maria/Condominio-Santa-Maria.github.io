@@ -24,7 +24,8 @@ const card=(usuario)=>{
 const getAptos=()=>{
     return new Promise(resolve=>{
         fetch("https://ged579f8ad0fdcf-santamaria.adb.sa-saopaulo-1.oraclecloudapps.com/ords/admin/getaptos/").then(res => res.json()).then(obj => {
-            resolve(obj.items);
+            
+            resolve(JSON.parse(obj.items[0].json));
         });
     })
 };
