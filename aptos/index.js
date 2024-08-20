@@ -13,14 +13,6 @@ const init= async()=>{
     document.getElementById("app").innerHTML = cuerpo;
 };
 
-const card=(usuario)=>{
-    let cuerpo = "<div style='pading:10px; margin:10px; border:1px solid; border-radius:10px;'>";
-    cuerpo+="<div>"+usuario.telefono+"</div>";
-    cuerpo+="<div>"+usuario.user+"</div>";
-    cuerpo+="</div>";
-    return cuerpo;
-};
-
 const getAptos=()=>{
     return new Promise(resolve=>{
         fetch("https://ged579f8ad0fdcf-santamaria.adb.sa-saopaulo-1.oraclecloudapps.com/ords/admin/getaptos/").then(res => res.json()).then(obj => {
