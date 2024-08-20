@@ -2,10 +2,11 @@ const init= async()=>{
     let usuarios = await getUsuarios();
     let cuerpo = "";
     cuerpo += "<div>Bienvenido a Santa maria 1</div>";
-    usuarios.map(usuario=>{
-        cuerpo += card(usuario);
-    });
+
+    cuerpo += "<div>Registra usuario</div>";
+    cuerpo += "<div>Registra usuario</div>";
     
+
     document.getElementById("app").innerHTML = cuerpo;
 };
 

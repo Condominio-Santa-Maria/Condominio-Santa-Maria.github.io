@@ -1,11 +1,15 @@
 const init= async()=>{
-    let usuarios = await getUsuarios();
+    let aptos = await getAptos();
     let cuerpo = "";
     cuerpo += "<div>Bienvenido a Santa maria 1</div>";
-    usuarios.map(usuario=>{
-        cuerpo += card(usuario);
+
+    cuerpo += "<div>Lista de departamentos.</div>";
+    
+    aptos.map(apto=>{
+        cuerpo+="<div>"+apto.NUMERO+"</div>";
     });
     
+
     document.getElementById("app").innerHTML = cuerpo;
 };
 
@@ -17,9 +21,9 @@ const card=(usuario)=>{
     return cuerpo;
 };
 
-const getUsuarios=()=>{
+const getAptos=()=>{
     return new Promise(resolve=>{
-        fetch("https://ged579f8ad0fdcf-santamaria.adb.sa-saopaulo-1.oraclecloudapps.com/ords/admin/usuario/").then(res => res.json()).then(obj => {
+        fetch("https://ged579f8ad0fdcf-santamaria.adb.sa-saopaulo-1.oraclecloudapps.com/ords/admin/getaptos/").then(res => res.json()).then(obj => {
             resolve(obj.items);
         });
     })
