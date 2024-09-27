@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="52" height="24" viewBox="0 0 52 24">
+  <g id="Grupo_6238" data-name="Grupo 6238" transform="translate(-1132 -37.069)">
+    <g id="Grupo_6235" data-name="Grupo 6235" transform="translate(23.035)">
+      <path id="Trazado_3916" data-name="Trazado 3916" d="M17.626,28.149A5.227,5.227,0,1,1,12.4,22.922a5.227,5.227,0,0,1,5.227,5.227Z" transform="translate(1108.514 20.92)" fill="#7200a6"/>
+      <path id="Trazado_3917" data-name="Trazado 3917" d="M43.312,19.125H15.437a12,12,0,1,0,0,24H43.312a12,12,0,1,0,0-24Zm-27.937,20a8,8,0,1,1,8-8A8.007,8.007,0,0,1,15.375,39.125Z" transform="translate(1105.59 17.944)" fill="#7200a6"/>
+    </g>
+    <text id="ES" transform="translate(1156 55)" fill="#fff" font-size="16" font-family="SegoeUI-Bold, Segoe UI" font-weight="700"><tspan x="0" y="0">ES</tspan></text>
+  </g>
+</svg>

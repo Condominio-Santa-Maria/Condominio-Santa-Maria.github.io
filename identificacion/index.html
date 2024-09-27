@@ -78,28 +78,46 @@
 
 
    <!-- Mobile Technology -->
-   <section id="contenido_" class="pad3 bg-content2 fullscreen">
+   <section id="" class="pad3 bg-content2 fullscreen">
       <div class="container">
-         <div class="row top60" id="app-feature">
-            <div class="col-lg-12  col-md-12 col-sm-12">
-               <div class=" top30 text-md-start2 wow fadeInRight content-center" data-wow-delay="300ms">
+         <div class="row" id="app-feature">
+            <div class="col-lg-6  col-md-12 col-sm-12">
+               <div class=" left top30 text-md-start2 wow fadeInRight content-center" data-wow-delay="300ms">
                   <div class="">
-                     <h2 class="text-center whitecolor fontbold">Habitante </h2>
+                     <h2 class="whitecolor fontbold">Identificacion </h2>
                   </div>
                </div>
             </div>
-            
+            <div class="col-lg-6  col-md-12 col-sm-12">
+               <div class=" right top30 wow fadeInUp aling-right" data-wow-delay="350ms" style="display: none;">
+                  <a class="tp-caption tp-resizeme " href="https://admin.typeform.com/login" target="_blank">
+                     <span class="button btnprimary-alt  pagescroll border1"> <img
+                           src="../images/icons/icon-fiber-smart-record.svg" /> &nbsp;
+                        Activa tu ciudad</span>
+                  </a>
+               </div>
+            </div>
             <div class="text-center row justify-content-md-center" data-textAlign="center">
-               <div class="col-lg-12  col-md-8 col-sm-12">
+               <div class="col-lg-6  col-md-8 col-sm-12">
                   <div class=" left top30 text-md-start wow fadeInUp" data-wow-delay="300ms">
-                     
-                     <div>
-                        <h3 style="color: #fff;">
-                           El condominio Santa Marìa cuenta con <span id="cant_habitantes">0</span> habitantes.
-                           A continuación enumeramos cada una de ellos.
-                        </h3>
+                     <div class="text-center whitecolor" style="margin-top: 25px;;">
+                        <h2>Indentifícate</h2>
                      </div>
-                     
+                     <div>
+                        <input type="text" id="apartamento" class="swal2-input" placeholder="Número de apartamento" style="border: 1px solid #fff !important;">
+                     </div>
+                     <div>
+                        <input type="text" id="ci" class="swal2-input" placeholder="Nombre completo" style="border: 1px solid #fff !important;">
+                     </div>
+                     <div>
+                        <input type="text" id="ci" class="swal2-input" placeholder="Número de carnet" style="border: 1px solid #fff !important;">
+                     </div>
+                     <div>
+                        <input type="text" id="email" class="swal2-input" placeholder="Email" style="border: 1px solid #fff !important;">
+                     </div>
+                     <div>
+                        <input type="text" id="telefono" class="swal2-input" placeholder="Teléfono" style="border: 1px solid #fff !important;">
+                     </div>
                      <div class="col-lg-6  col-md-12 col-sm-12">
                         <div class=" right top30 wow fadeInUp aling-right" data-wow-delay="350ms">
                            <a class="tp-caption tp-resizeme " href="#">
@@ -111,14 +129,14 @@
                      </div>
                   </div>
                </div>
-            </div>
-
-            <div class="text-center row justify-content-md-center" data-textAlign="center">
-               <div class="col-lg-8  col-md-8 col-sm-8">
+               <div class="col-lg-6 col-md-8 col-sm-12">
                   <div class=" left top30 text-md-start wow fadeInUp" data-wow-delay="300ms">
-                     <div style="display: flex; flex-wrap: wrap; justify-content: center;" id="habitantes">
-
-
+                     <div class="text-center whitecolor">
+                        <h2>Que es identificación?</h2>
+                     </div>
+                     <div class="text-md-start whitecolor top30" >
+                        <h4>En indentificación tratamos de ayudarte para que puedas ingresar a nuestra aplicación de manera mas fácil.
+                        Momentaneamente estamos trabajando en encontrar la mejor manera de hacerlo.</h4>
                      </div>
                   </div>
                </div>
@@ -151,6 +169,7 @@
       </div>
    </footer>
    <!--Footer ends-->
+
 
    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
    <script src="../js/bootstrap.min.js"></script>
@@ -295,10 +314,9 @@
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.15/dist/sweetalert2.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.15/dist/sweetalert2.min.js"></script>
 
-
    <script src="../js/smtp.js"></script>
+   <script src="index.js"></script>
 
-   <script src="index.js"></script>   
 
 </body>
 
