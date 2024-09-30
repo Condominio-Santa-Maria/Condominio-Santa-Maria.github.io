@@ -1,3 +1,4 @@
+const url = "https://ruddypazd.com";
 
 const pintarDeptos= async()=>{
     let deptos = await getDeptos();
@@ -29,7 +30,7 @@ const getDeptos=()=>{
         type:"getAll",
     };
     return new Promise(resolve => {
-        fetch("https://santamaria.ruddypazd.com", {
+        fetch(url, {
             method: 'post',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: JSON.stringify(obj)
