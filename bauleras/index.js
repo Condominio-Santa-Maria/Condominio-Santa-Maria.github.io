@@ -1,15 +1,21 @@
-const url = "https://ruddypazd.com";
+import { leerDocumentos } from '../js/firebaseConfig.js';
 
 const pintarBauleras= async()=>{
-    let bauleras = await getBauleras();
+
+    let querySnapshot = await leerDocumentos("baulera");
     let cuerpo = "";
-    Object.values(bauleras).map((baulera)=>{
-        cuerpo+=cardBaulera(baulera);
+    let bauleras = [];
+    querySnapshot.forEach((doc) => {
+        bauleras.push({ id: doc.id, data: doc.data() });
+    });
+
+    bauleras.sort((a, b) => parseInt(a.id)>parseInt(b.id));
+
+    bauleras.forEach((doc) => {
+        cuerpo+=cardBaulera(doc.data);
     });
     document.getElementById("departamentos").innerHTML = cuerpo;
-    
     let heigth = document.getElementById("departamentos").clientHeight;
-    
     document.getElementById("contenido_").style.height=(heigth+500)+"px";
 };
 
@@ -23,30 +29,6 @@ const cardBaulera=(baulera)=>{
     return cuerpo;
 };
 
-const getBauleras=()=>{
-    let obj = {
-        component:"baulera",
-        type:"getAll",
-    };
-    return new Promise(resolve => {
-        fetch(url, {
-            method: 'post',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: JSON.stringify(obj)
-        })
-            .then(res => res.json()).then(obj => {
-                if (obj["estado"] === "exito") {
-                    resolve(obj["data"]);
-                }
-                if (obj["estado"] === "error") {
-                    AlertMessenge(obj["error"], 3);
-                    resolve(false);
-                }
-            }).catch(err => {
-                console.log("");
-            });
-    });
-};
 document.addEventListener("DOMContentLoaded", function(event) { 
     pintarBauleras();
 });

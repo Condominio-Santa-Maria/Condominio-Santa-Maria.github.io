@@ -1,25 +1,22 @@
-import { agregarDocumento, leerDocumentos } from '../js/firebaseConfig.js';
-
+import { leerDocumentos } from '../js/firebaseConfig.js';
 
 
 const pintarDeptos= async()=>{
-    //for (let i = 1; i<=10; i++) {
-    //    for(let j=1; j<=4; j++){
-    //        await agregarDocumento("aptos", i+"0"+j, {descripcion:i+"0"+j, mora:0, propietario:""});
-    //    }
-    //    
-    //}
-    let deptos = await leerDocumentos("aptos");
-
+    let querySnapshot = await leerDocumentos("aptos");
     let cuerpo = "";
-    deptos.forEach((doc) => {
-        cuerpo+=cardDepto(doc.data());
+    let deptos = [];
+    querySnapshot.forEach((doc) => {
+        deptos.push({ id: doc.id, data: doc.data() });
     });
+    
+    // Ordenar el array por el campo `id` de cada documento
+    deptos.sort((a, b) => parseInt(a.id)>parseInt(b.id));
 
+    deptos.forEach((doc) => {
+        cuerpo+=cardDepto(doc.data);
+    });
     document.getElementById("departamentos").innerHTML = cuerpo;
-    
     let heigth = document.getElementById("departamentos").clientHeight;
-    
     document.getElementById("contenido_").style.height=(heigth+500)+"px";
 };
 
@@ -36,4 +33,3 @@ const cardDepto=(depto)=>{
 document.addEventListener("DOMContentLoaded", function(event) { 
     pintarDeptos();
 });
-
