@@ -16,7 +16,7 @@ const pintarDeptos= async()=>{
 
 const cardDepto=(depto)=>{
     let cuerpo = "";
-    cuerpo += "<div class='border1 button btnprimary-alt' style='margin: 5px; width:140px;'>";
+    cuerpo += "<div class='border1 button btnprimary-alt' style='margin: 5px; width:130px;'>";
     cuerpo += "<div class='top10'># "+depto.descripcion+"</div>";
     cuerpo += "<div class='top10'>"+(depto.propietario || "Sin identificar")+"</div>";
     cuerpo += "<div class='top10'>"+(depto.mora || "Bs. 0,00")+"</div>";

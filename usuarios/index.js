@@ -18,7 +18,7 @@ const pintarHabitantes= async()=>{
 
 const cardHabitante=(habitante)=>{
     let cuerpo = "";
-    cuerpo += "<div class='border1 button btnprimary-alt' style='margin: 5px; width:140px;'>";
+    cuerpo += "<div class='border1 button btnprimary-alt' style='margin: 5px; width:130px;'>";
     cuerpo += "<div class='top10'># "+habitante.descripcion+"</div>";
     cuerpo += "<div class='top10'>"+(habitante.propietario || "Sin identificar")+"</div>";
     cuerpo += "<div class='top10'>"+(habitante.mora || "Bs. 0,00")+"</div>";

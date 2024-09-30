@@ -15,7 +15,7 @@ const pintarBauleras= async()=>{
 
 const cardBaulera=(baulera)=>{
     let cuerpo = "";
-    cuerpo += "<div class='border1 button btnprimary-alt' style='margin: 5px; width:140px;'>";
+    cuerpo += "<div class='border1 button btnprimary-alt' style='margin: 5px; width:130px;'>";
     cuerpo += "<div class='top10'># "+baulera.descripcion+"</div>";
     cuerpo += "<div class='top10'>"+(baulera.propietario || "Sin identificar")+"</div>";
     cuerpo += "<div class='top10'>"+(baulera.mora || "Bs. 0,00")+"</div>";
