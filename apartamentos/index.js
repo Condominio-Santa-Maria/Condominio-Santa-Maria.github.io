@@ -1,11 +1,21 @@
-const url = "https://ruddypazd.com";
+import { agregarDocumento, leerDocumentos } from '../js/firebaseConfig.js';
+
+
 
 const pintarDeptos= async()=>{
-    let deptos = await getDeptos();
+    //for (let i = 1; i<=10; i++) {
+    //    for(let j=1; j<=4; j++){
+    //        await agregarDocumento("aptos", i+"0"+j, {descripcion:i+"0"+j, mora:0, propietario:""});
+    //    }
+    //    
+    //}
+    let deptos = await leerDocumentos("aptos");
+
     let cuerpo = "";
-    Object.values(deptos).map((depto)=>{
-        cuerpo+=cardDepto(depto);
+    deptos.forEach((doc) => {
+        cuerpo+=cardDepto(doc.data());
     });
+
     document.getElementById("departamentos").innerHTML = cuerpo;
     
     let heigth = document.getElementById("departamentos").clientHeight;
@@ -23,30 +33,6 @@ const cardDepto=(depto)=>{
     return cuerpo;
 };
 
-const getDeptos=()=>{
-    let obj = { 
-        component:"apartamento",
-        type:"getAll",
-    };
-    return new Promise(resolve => {
-        fetch(url, {
-            method: 'post',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: JSON.stringify(obj)
-        })
-            .then(res => res.json()).then(obj => {
-                if (obj["estado"] === "exito") {
-                    resolve(obj["data"]);
-                }
-                if (obj["estado"] === "error") {
-                    AlertMessenge(obj["error"], 3);
-                    resolve(false);
-                }
-            }).catch(err => {
-                console.log("");
-            });
-    });
-};
 document.addEventListener("DOMContentLoaded", function(event) { 
     pintarDeptos();
 });
