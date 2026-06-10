@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finanzas - Condominio Santa María</title>
+    <link rel="stylesheet" href="index.css">
+    <!-- SheetJS: lee archivos .xlsx en el navegador -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <!-- Chart.js: dibuja la gráfica de ingresos/egresos/utilidad -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>INFORME ECONÓMICO</h1>
+        <p class="subtitle">Condominio Santa María</p>
+    </header>
+
+    <main>
+        <section id="grafico-seccion">
+            <div class="controls">
+                <label for="gestion">Gestión:</label>
+                <select id="gestion"></select>
+            </div>
+            <h2>Ingresos, egresos y utilidad por mes</h2>
+            <div class="chart-wrap">
+                <canvas id="grafico"></canvas>
+            </div>
+            <p id="grafico-msg" class="placeholder"></p>
+            <p class="hint">💡 Haz clic en una barra de <b>ingresos</b> o de <b>egresos</b> para ver su detalle.</p>
+        </section>
+
+        <section id="detalle">
+            <p class="placeholder">Haz clic en una barra de la gráfica para ver el detalle.</p>
+        </section>
+    </main>
+
+    <script src="index.js"></script>
+</body>
+</html>

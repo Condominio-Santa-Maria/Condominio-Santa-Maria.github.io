@@ -1,0 +1,143 @@
+:root {
+    --azul: #1f4e79;
+    --azul-claro: #dbe7f3;
+    --gris: #f4f6f8;
+    --borde: #d0d7de;
+    --verde: #1b6e3c;
+    --rojo: #9b2c2c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #222;
+    background: var(--gris);
+    line-height: 1.4;
+}
+
+header {
+    background: var(--azul);
+    color: #fff;
+    padding: 1.5rem 1rem 1rem;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+}
+
+.subtitle {
+    margin: 0.25rem 0 1rem;
+    opacity: 0.85;
+}
+
+.controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.controls label { font-weight: 600; color: var(--azul); }
+
+.controls select {
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    border: 1px solid var(--borde);
+    font-size: 1rem;
+    background: #fff;
+    cursor: pointer;
+}
+
+main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 3rem;
+}
+
+.placeholder { text-align: center; color: #666; }
+.error { text-align: center; color: var(--rojo); font-weight: 600; }
+
+section {
+    background: #fff;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    overflow-x: auto;
+}
+
+section h2 {
+    margin: 0 0 0.75rem;
+    color: var(--azul);
+    border-bottom: 2px solid var(--azul-claro);
+    padding-bottom: 0.4rem;
+}
+
+.chart-wrap {
+    position: relative;
+    height: 360px;
+    width: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.92rem;
+}
+
+.hint {
+    margin: 0.75rem 0 0;
+    font-size: 0.88rem;
+    color: #555;
+    text-align: center;
+}
+
+#detalle h3 {
+    color: var(--azul);
+    margin: 1.3rem 0 0.5rem;
+    font-size: 1.05rem;
+}
+
+/* --- Resumen de carátula --- */
+table.resumen { max-width: 520px; }
+table.resumen .rmonto {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    font-weight: 600;
+}
+table.resumen .fila-total td {
+    font-weight: 700;
+    border-top: 2px solid var(--azul);
+    color: var(--azul);
+}
+
+/* --- Tablas de detalle --- */
+#detalle th {
+    background: var(--azul);
+    color: #fff;
+    text-align: left;
+    padding: 0.5rem;
+    position: sticky;
+    top: 0;
+}
+#detalle td {
+    padding: 0.4rem 0.5rem;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+}
+#detalle tr:nth-child(even) td { background: #fafbfc; }
+#detalle tr:hover td { background: var(--azul-claro); }
+
+.titulo-hoja {
+    color: var(--azul);
+    font-weight: 600;
+    line-height: 1.3;
+}
+.titulo-hoja:first-of-type { font-size: 1.05rem; }
