@@ -189,6 +189,30 @@
   }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
 
+  /* ─── HERO RESPONSIVE ─── */
+  @media(max-width:560px){
+    .hero { padding: 44px 20px 52px; }
+    .hero-eyebrow { font-size: 10px; letter-spacing: 0.12em; margin-bottom: 16px; }
+    .hero-eyebrow::before, .hero-eyebrow::after { width: 16px; }
+    .hero-sub { font-size: 13px; margin-bottom: 32px; }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+    .hero-stat {
+      padding: 16px 12px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .hero-stat:nth-child(even) { border-right: none; }
+    .hero-stat:nth-child(3), .hero-stat:nth-child(4) { border-bottom: none; }
+    .hero-stat .val { font-size: 24px; }
+    .hero-stat .lbl { font-size: 10px; }
+  }
+
   /* ─── LAYOUT ─── */
   .container { max-width: 920px; margin: 0 auto; padding: 0 24px 100px; }
 
