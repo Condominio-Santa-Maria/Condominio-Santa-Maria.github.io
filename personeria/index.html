@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personería Jurídica — Condominio Santa María 1</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --ink: #dde0f8;
+    --ink-light: #9090be;
+    --ink-muted: #5a5a88;
+    --surface: #0d0d1a;
+    --white: #14142a;
+    --accent: #667dff;
+    --accent-light: #161b48;
+    --accent-mid: #8090e8;
+    --gold: #d4a030;
+    --gold-light: #251a08;
+    --green: #22b870;
+    --green-light: #0a2016;
+    --red: #e06050;
+    --red-light: #2a1010;
+    --border: #21213a;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --shadow: 0 2px 16px rgba(0,0,0,0.5);
+    --shadow-hover: 0 6px 28px rgba(0,0,0,0.7);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15,15,26,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    height: 52px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent-mid);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    padding-right: 24px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    margin-right: 20px;
+  }
+  .nav-links { display: flex; gap: 4px; }
+  .nav-link {
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all .2s;
+    border: none; background: none;
+    font-family: 'Inter', sans-serif;
+  }
+  .nav-link:hover, .nav-link.active {
+    color: white;
+    background: rgba(255,255,255,0.08);
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: #080814;
+    color: white;
+    padding: 80px 40px 68px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(61,90,241,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(61,90,241,0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 70% at 50% -10%, rgba(61,90,241,0.35) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero > * { position: relative; z-index: 1; }
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+    margin-bottom: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    width: 28px; height: 1px;
+    background: var(--accent-mid);
+    opacity: 0.5;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(34px, 6vw, 58px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+  .hero h1 em { font-style: italic; color: #a8b4ff; }
+  .hero-sub {
+    color: rgba(255,255,255,0.45);
+    font-size: 14px;
+    font-weight: 300;
+    margin-bottom: 40px;
+  }
+  .hero-stats {
+    display: inline-flex;
+    gap: 0;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .hero-stat {
+    padding: 18px 30px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    text-align: center;
+  }
+  .hero-stat:last-child { border-right: none; }
+  .hero-stat .val {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: white;
+    line-height: 1;
+  }
+  .hero-stat .lbl {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+  .hero-badges {
+    display: flex; justify-content: center;
+    gap: 10px; flex-wrap: wrap;
+    margin-top: 24px;
+  }
+  .hero-badge {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 30px;
+    padding: 6px 14px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+  }
+  .dot-live {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #4dff91;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  /* ─── LAYOUT ─── */
+  .container { max-width: 920px; margin: 0 auto; padding: 0 24px 100px; }
+
+  .section { margin-top: 72px; }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 6px; font-weight: 500;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(24px, 4vw, 34px);
+    font-weight: 400; color: var(--ink);
+    line-height: 1.2; margin-bottom: 28px;
+  }
+
+  /* ─── ABOGADOS ─── */
+  .lawyers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  @media(max-width:640px){ .lawyers-grid { grid-template-columns:1fr; } }
+
+  .lawyer-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: box-shadow .25s, transform .2s;
+    cursor: default;
+  }
+  .lawyer-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+  }
+  .lawyer-card.winner {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px var(--green-light), var(--shadow);
+  }
+  .lawyer-top {
+    padding: 22px 20px 16px;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .lawyer-avatar {
+    width: 52px; height: 52px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px; font-weight: 400;
+    margin-bottom: 12px;
+  }
+  .lawyer-name { font-weight: 600; font-size: 14px; line-height: 1.3; }
+  .lawyer-prop { font-size: 11px; color: var(--ink-muted); margin-top: 3px; }
+  .lawyer-tag {
+    margin-top: 10px;
+    font-size: 10.5px; font-family: 'JetBrains Mono', monospace;
+    border-radius: 20px; padding: 3px 10px; font-weight: 500;
+  }
+  .tag-green { background: var(--green-light); color: var(--green); }
+  .tag-gold  { background: var(--gold-light);  color: var(--gold);  }
+  .tag-red   { background: var(--red-light);   color: var(--red);   }
+
+  .lawyer-costs { padding: 14px 18px; }
+  .lc-row {
+    display: flex; justify-content: space-between;
+    padding: 7px 0; border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .lc-row:last-child { border-bottom: none; }
+  .lc-label { color: var(--ink-light); }
+  .lc-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500; font-size: 12.5px; color: var(--ink);
+  }
+  .lawyer-total {
+    display: flex; justify-content: space-between;
+    padding: 12px 18px; font-weight: 700; font-size: 13.5px;
+    background: var(--surface); border-top: 2px solid var(--border);
+  }
+  .winner .lawyer-total { background: var(--green-light); border-color: var(--green); }
+  .winner .lawyer-total .tot-val { color: var(--green); }
+  .tot-val { font-family: 'JetBrains Mono', monospace; }
+
+  /* ─── CHART SECTION ─── */
+  .charts-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+  @media(max-width:640px){ .charts-row { grid-template-columns: 1fr; } }
+
+  .chart-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 22px 18px;
+    box-shadow: var(--shadow);
+  }
+  .chart-card h4 {
+    font-size: 13px; font-weight: 600;
+    color: var(--ink); margin-bottom: 4px;
+  }
+  .chart-card p {
+    font-size: 11.5px; color: var(--ink-muted); margin-bottom: 16px;
+  }
+  .chart-wrap { position: relative; height: 220px; }
+
+  .chart-full {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 22px 18px;
+    box-shadow: var(--shadow);
+  }
+  .chart-full h4 { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .chart-full p  { font-size: 11.5px; color: var(--ink-muted); margin-bottom: 16px; }
+  .chart-full .chart-wrap { height: 260px; }
+
+  /* ─── PAYMENT SCHEME ─── */
+  .cuotas-row {
+    display: grid; grid-template-columns: 1fr 32px 1fr 32px 1fr;
+    align-items: center; gap: 0;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-top: 18px;
+  }
+  @media(max-width:560px){
+    .cuotas-row { grid-template-columns: 1fr; }
+    .cuota-arrow { display: none; }
+  }
+  .cuota {
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .cuota-n {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-muted);
+    margin-bottom: 6px;
+  }
+  .cuota-bs {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px; color: var(--accent); line-height: 1;
+  }
+  .cuota-when { font-size: 11.5px; color: var(--ink-muted); margin-top: 5px; }
+  .cuota-arrow {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: var(--border);
+    background: var(--surface);
+    align-self: stretch;
+  }
+  .cuota-total-row {
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--green-light); border: 1px solid var(--green);
+    border-radius: var(--radius-sm);
+    padding: 12px 20px; margin-top: 10px;
+    font-size: 13.5px; font-weight: 600;
+  }
+  .cuota-total-val {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--green); font-size: 15px;
+  }
+
+  /* ─── STEPS ACCORDION ─── */
+  .accordion { display: flex; flex-direction: column; gap: 10px; }
+
+  .acc-item {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .acc-item.open {
+    border-color: var(--accent-mid);
+    box-shadow: 0 0 0 3px var(--accent-light);
+  }
+
+  .acc-header {
+    display: flex; align-items: center; gap: 16px;
+    padding: 18px 22px;
+    cursor: pointer;
+    user-select: none;
+    transition: background .15s;
+  }
+  .acc-header:hover { background: var(--surface); }
+
+  .acc-num {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--accent); color: white;
+    font-family: 'DM Serif Display', serif; font-size: 17px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background .2s;
+  }
+  .acc-item.open .acc-num { background: #080814; }
+
+  .acc-info { flex: 1; }
+  .acc-title { font-weight: 600; font-size: 15px; color: var(--ink); }
+  .acc-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; color: var(--accent);
+    letter-spacing: 0.06em; margin-top: 2px;
+  }
+
+  .acc-meta {
+    display: flex; gap: 8px; align-items: center;
+    flex-shrink: 0;
+  }
+  .acc-cost {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 500;
+    background: var(--accent-light); color: var(--accent);
+    border-radius: 6px; padding: 3px 9px;
+  }
+  .acc-chevron {
+    color: var(--ink-muted); font-size: 18px;
+    transition: transform .25s; line-height: 1;
+  }
+  .acc-item.open .acc-chevron { transform: rotate(180deg); }
+
+  .acc-body {
+    display: none;
+    padding: 0 22px 22px;
+    border-top: 1px solid var(--border);
+  }
+  .acc-item.open .acc-body { display: block; }
+
+  .acc-body p {
+    color: var(--ink-light); font-size: 14px;
+    margin: 16px 0 12px;
+  }
+
+  /* ─── DOC LIST ─── */
+  .doc-list { list-style: none; }
+  .doc-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+    font-size: 13.5px; color: var(--ink-light); line-height: 1.55;
+  }
+  .doc-list li:last-child { border-bottom: none; }
+  .doc-n {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--accent); font-weight: 500;
+    flex-shrink: 0; width: 24px; margin-top: 3px;
+  }
+  .doc-text { flex: 1; }
+  .doc-sub { display: block; font-size: 12px; color: var(--ink-muted); margin-top: 3px; }
+  .badge {
+    font-size: 10px; font-family: 'JetBrains Mono', monospace;
+    border-radius: 4px; padding: 1px 7px;
+    margin-left: 5px; white-space: nowrap; vertical-align: middle;
+  }
+  .badge-gold { background: var(--gold-light); color: var(--gold); border: 1px solid #f0d89a; }
+  .badge-blue { background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent-mid); }
+  .badge-red  { background: #fff3f0; color: #c04a2b; border: 1px solid #f0c0b8; }
+
+  .warn {
+    background: var(--gold-light); border: 1px solid #f0d89a;
+    border-radius: var(--radius-sm);
+    padding: 12px 16px; display: flex; gap: 10px;
+    font-size: 13px; color: #c9a040;
+    margin-top: 14px; line-height: 1.55;
+  }
+
+  /* ─── TIPS ─── */
+  .tips {
+    background: var(--accent-light);
+    border: 1.5px solid var(--accent-mid);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+  }
+  .tips-title {
+    font-weight: 700; font-size: 13px;
+    color: var(--accent); margin-bottom: 14px;
+    letter-spacing: 0.02em;
+  }
+  .tip {
+    display: flex; gap: 10px;
+    font-size: 13.5px; color: var(--ink-light);
+    padding: 7px 0; line-height: 1.55;
+    border-bottom: 1px solid rgba(61,90,241,0.1);
+  }
+  .tip:last-child { border-bottom: none; }
+  .tip-ic { flex-shrink: 0; }
+
+  /* ─── CHECKLIST / PRÓXIMOS PASOS ─── */
+  .checklist { display: flex; flex-direction: column; gap: 8px; }
+  .check-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    cursor: pointer;
+    transition: border-color .2s, box-shadow .15s, opacity .2s;
+    user-select: none;
+  }
+  .check-item:hover { border-color: var(--accent-mid); }
+  .check-item.done {
+    opacity: 0.55;
+    background: var(--green-light);
+    border-color: var(--green);
+  }
+  .check-box {
+    width: 24px; height: 24px; border-radius: 6px;
+    border: 2px solid var(--border);
+    background: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; flex-shrink: 0; margin-top: 2px;
+    transition: all .2s;
+  }
+  .check-item.done .check-box {
+    background: var(--green); border-color: var(--green); color: white;
+  }
+  .check-n {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--ink-muted); flex-shrink: 0; margin-top: 4px; width: 18px;
+  }
+  .check-text { font-size: 14px; color: var(--ink-light); line-height: 1.5; }
+  .check-progress {
+    display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
+  }
+  .progress-bar {
+    flex: 1; height: 6px; background: var(--border); border-radius: 10px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: var(--green);
+    border-radius: 10px; transition: width .4s ease;
+    width: 0%;
+  }
+  .progress-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--green); font-weight: 500; white-space: nowrap;
+  }
+
+  /* ─── LEGAL NOTE ─── */
+  .legal-note {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px; font-size: 12px;
+    color: var(--ink-muted); margin-top: 20px; line-height: 1.7;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center; padding: 28px 40px;
+    border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--ink-muted);
+    margin-top: 60px;
+  }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SM1 · PJ</div>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="scrollTo('#sec-abogados')">Abogados</button>
+    <button class="nav-link" onclick="scrollTo('#sec-costos')">Costos</button>
+    <button class="nav-link" onclick="scrollTo('#sec-proceso')">Proceso</button>
+    <button class="nav-link" onclick="scrollTo('#sec-tips')">Recomendaciones</button>
+    <button class="nav-link" onclick="scrollTo('#sec-checklist')">Checklist</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-eyebrow">Gobernación Autónoma de Santa Cruz — Bolivia</div>
+  <h1>Personería Jurídica<br><em>Condominio Santa María 1</em></h1>
+  <div class="hero-sub">Asociación Civil de Copropietarios · Sin fines de lucro · Ley Dptal. N° 50</div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="val">5</div>
+      <div class="lbl">pasos oficiales</div>
+    </div>
+    <div class="hero-stat">
+      <div class="val">16</div>
+      <div class="lbl">documentos</div>
+    </div>
+    <div class="hero-stat">
+      <div class="val">4–6</div>
+      <div class="lbl">meses</div>
+    </div>
+    <div class="hero-stat">
+      <div class="val">Bs.11.7k</div>
+      <div class="lbl">costo total</div>
+    </div>
+  </div>
+
+  <div class="hero-badges">
+    <div class="hero-badge"><span class="dot-live"></span> Trámite en curso</div>
+    <div class="hero-badge">📍 Santa Cruz de la Sierra</div>
+    <div class="hero-badge">⚖️ Decreto Dptal. N° 205</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ── ABOGADOS ── -->
+  <div class="section reveal" id="sec-abogados">
+    <div class="section-label">Propuestas recibidas · 3 consultas</div>
+    <div class="section-title">Abogados consultados</div>
+
+    <div class="lawyers-grid">
+      <!-- Ana María Moya -->
+      <div class="lawyer-card">
+        <div class="lawyer-top">
+          <div class="lawyer-avatar" style="background:#fdecea; color:var(--red);">AM</div>
+          <div class="lawyer-name">Ana María Moya</div>
+          <div class="lawyer-prop">Propuesta 1</div>
+          <span class="lawyer-tag tag-gold">Intermedia</span>
+        </div>
+        <div class="lawyer-costs">
+          <div class="lc-row">
+            <span class="lc-label">Redacción del reglamento</span>
+            <span class="lc-val">Bs. 7.110</span>
+          </div>
+          <div class="lc-row">
+            <span class="lc-label">Gastos fijos aprox.</span>
+            <span class="lc-val">Bs. 5.700</span>
+          </div>
+        </div>
+        <div class="lawyer-total">
+          <span>Total estimado</span>
+          <span class="tot-val">~Bs. 12.810</span>
+        </div>
+      </div>
+
+      <!-- Claudia Paola Jiménez -->
+      <div class="lawyer-card">
+        <div class="lawyer-top">
+          <div class="lawyer-avatar" style="background:var(--red-light); color:var(--red);">CP</div>
+          <div class="lawyer-name">Claudia Paola Jiménez</div>
+          <div class="lawyer-prop">Propuesta 2</div>
+          <span class="lawyer-tag tag-red">Más cara</span>
+        </div>
+        <div class="lawyer-costs">
+          <div class="lc-row">
+            <span class="lc-label">Honorarios profesionales</span>
+            <span class="lc-val">Bs. 10.000</span>
+          </div>
+          <div class="lc-row">
+            <span class="lc-label">Gastos fijos aprox.</span>
+            <span class="lc-val">Bs. 5.700</span>
+          </div>
+        </div>
+        <div class="lawyer-total">
+          <span>Total estimado</span>
+          <span class="tot-val">~Bs. 15.700</span>
+        </div>
+      </div>
+
+      <!-- Christian Salinas -->
+      <div class="lawyer-card winner">
+        <div class="lawyer-top" style="background:var(--green-light);">
+          <div class="lawyer-avatar" style="background:rgba(34,184,112,0.12); color:var(--green);">CS</div>
+          <div class="lawyer-name">Christian Salinas</div>
+          <div class="lawyer-prop" style="color:var(--green);">Propuesta 3 · ✓ Elegido</div>
+          <span class="lawyer-tag tag-green">Más económico</span>
+        </div>
+        <div class="lawyer-costs">
+          <div class="lc-row">
+            <span class="lc-label">Honorarios (3 cuotas)</span>
+            <span class="lc-val" style="color:var(--green);">Bs. 6.000</span>
+          </div>
+          <div class="lc-row">
+            <span class="lc-label">Gastos fijos aprox.</span>
+            <span class="lc-val">Bs. 5.700</span>
+          </div>
+        </div>
+        <div class="lawyer-total">
+          <span>Total estimado</span>
+          <span class="tot-val" style="color:var(--green);">~Bs. 11.700</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── COSTOS Y GRÁFICOS ── -->
+  <div class="section reveal" id="sec-costos">
+    <div class="section-label">Análisis financiero</div>
+    <div class="section-title">Desglose de costos</div>
+
+    <div class="charts-row">
+      <!-- Gráfico comparativo de abogados -->
+      <div class="chart-card">
+        <h4>Comparativo de propuestas</h4>
+        <p>Total estimado por abogado en bolivianos</p>
+        <div class="chart-wrap">
+          <canvas id="chartAbogados"></canvas>
+        </div>
+      </div>
+
+      <!-- Gráfico desglose gastos fijos -->
+      <div class="chart-card">
+        <h4>Gastos fijos del trámite</h4>
+        <p>Pagos directos a gobernación y notaría</p>
+        <div class="chart-wrap">
+          <canvas id="chartFijos"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gráfico barras horizontal honorarios vs gastos fijos -->
+    <div class="chart-full">
+      <h4>Honorarios vs. gastos fijos por abogado</h4>
+      <p>Desglose apilado — qué parte va al abogado y qué parte al estado/notaría</p>
+      <div class="chart-wrap">
+        <canvas id="chartApilado"></canvas>
+      </div>
+    </div>
+
+    <!-- Esquema de cuotas Christian Salinas -->
+    <div style="margin-top:28px;">
+      <div class="section-label" style="margin-bottom:8px;">Esquema de pagos · Christian Salinas</div>
+      <div class="cuotas-row">
+        <div class="cuota">
+          <div class="cuota-n">Cuota 1</div>
+          <div class="cuota-bs">Bs. 3.000</div>
+          <div class="cuota-when">Al iniciar · Tasas Gobernación</div>
+        </div>
+        <div class="cuota-arrow">›</div>
+        <div class="cuota">
+          <div class="cuota-n">Cuota 2</div>
+          <div class="cuota-bs">Bs. 3.000</div>
+          <div class="cuota-when">A los 30 días · Honorarios</div>
+        </div>
+        <div class="cuota-arrow">›</div>
+        <div class="cuota">
+          <div class="cuota-n">Cuota 3</div>
+          <div class="cuota-bs">Bs. 3.000</div>
+          <div class="cuota-when">Al finalizar · Honorarios restantes</div>
+        </div>
+      </div>
+      <div class="cuota-total-row">
+        <span>Total pagos estructurados</span>
+        <span class="cuota-total-val">3 × Bs. 3.000 = Bs. 9.000</span>
+      </div>
+      <div class="warn" style="margin-top:10px;">
+        <span>📋</span>
+        <div>Gastos de <strong>notaría, denominación y otros</strong> (~Bs. 2.700) se pagan <strong>conforme se necesiten</strong> durante el trámite.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PROCESO ── -->
+  <div class="section reveal" id="sec-proceso">
+    <div class="section-label">Gobernación Autónoma · Ley Dptal. N° 50</div>
+    <div class="section-title">Proceso paso a paso</div>
+    <p style="color:var(--ink-muted); font-size:14px; margin-bottom:24px;">Haz clic en cada paso para ver los documentos requeridos.</p>
+
+    <div class="accordion">
+
+      <!-- PASO 1 -->
+      <div class="acc-item" id="acc1">
+        <div class="acc-header" onclick="toggleAcc('acc1')">
+          <div class="acc-num">1</div>
+          <div class="acc-info">
+            <div class="acc-title">Control de Denominación</div>
+            <div class="acc-subtitle">PRIMER PASO · ~1 semana</div>
+          </div>
+          <div class="acc-meta">
+            <span class="acc-cost">Bs. 400</span>
+            <span class="acc-chevron">⌄</span>
+          </div>
+        </div>
+        <div class="acc-body">
+          <p>Verificar que el nombre "Santa María 1" esté disponible. Se presentan hasta <strong>3 nombres con posible sigla</strong> ante la Gobernación. El nombre debe ser corto, en castellano y sin mencionar municipios o departamentos.</p>
+          <ul class="doc-list">
+            <li><span class="doc-n">→</span><div class="doc-text">Memorial de solicitud dirigido al Gobernador del Departamento <span class="doc-sub">Firmado por solicitante y abogado. Base legal: Arts. 21 y 300 CPE, Art. 58 Cód. Civil, Ley Dptal. N° 50.</span></div></li>
+            <li><span class="doc-n">→</span><div class="doc-text">Lista de 3 posibles nombres y sigla en castellano</div></li>
+          </ul>
+          <div class="warn"><span>⚠️</span><div>El Certificado tiene validez de <strong>60 días hábiles</strong>. Toda la carpeta debe presentarse dentro de ese plazo.</div></div>
+        </div>
+      </div>
+
+      <!-- PASO 2 -->
+      <div class="acc-item" id="acc2">
+        <div class="acc-header" onclick="toggleAcc('acc2')">
+          <div class="acc-num">2</div>
+          <div class="acc-info">
+            <div class="acc-title">Armado de la Carpeta Completa</div>
+            <div class="acc-subtitle">SEGUNDO PASO · 10 días hábiles</div>
+          </div>
+          <div class="acc-meta">
+            <span class="acc-cost">16 docs</span>
+            <span class="acc-chevron">⌄</span>
+          </div>
+        </div>
+        <div class="acc-body">
+          <p>Con el nombre aprobado se redactan y notarian todos los documentos. <strong>Cada acta debe tener fecha distinta.</strong> La denominación debe ser idéntica en todos los documentos.</p>
+          <ul class="doc-list">
+            <li><span class="doc-n">1</span><div class="doc-text"><strong>Certificado de Control de Denominación</strong> <span class="badge badge-gold">Original vigente</span><span class="doc-sub">Aprobado en el Paso 1, dentro de los 60 días hábiles.</span></div></li>
+            <li><span class="doc-n">2</span><div class="doc-text"><strong>Memorial de Solicitud de Personalidad Jurídica</strong><span class="doc-sub">Dirigido al Gobernador, con firma del solicitante y abogado.</span></div></li>
+            <li><span class="doc-n">3</span><div class="doc-text"><strong>Poder Específico de Representación</strong> <span class="badge badge-gold">Notariado · Original</span><span class="doc-sub">Otorgado por todos los miembros del directorio. Facultades: iniciar trámite, corregir, retirar carpeta, firmar protocolo.</span></div></li>
+            <li><span class="doc-n">4</span><div class="doc-text"><strong>Acta de Fundación o Constitución</strong> <span class="badge badge-gold">Notariada · Original</span><span class="doc-sub">Lugar, fecha, denominación exacta, domicilio, deliberaciones. CI, profesión y firma de todos los propietarios fundadores.</span></div></li>
+            <li><span class="doc-n">5</span><div class="doc-text"><strong>Acta de Elección y Posesión del Directorio</strong> <span class="badge badge-gold">Notariada · Original</span><span class="doc-sub">Estructura: Presidente, Vicepresidente, Secretario de Actas, Secretario de Hacienda, Vocales. Período de gestión. Juramento.</span></div></li>
+            <li><span class="doc-n">6</span><div class="doc-text"><strong>Acta de Aprobación del Estatuto y Reglamento</strong> <span class="badge badge-gold">Notariada · Original</span><span class="doc-sub">Número exacto de títulos, capítulos y artículos. Aprobado en 3 instancias: en grande, en detalle y en revisión.</span></div></li>
+            <li><span class="doc-n">7</span><div class="doc-text"><strong>Estatuto Orgánico</strong> <span class="badge badge-blue">Redacción nueva</span><span class="doc-sub">Denominación, domicilio, ámbito, fines, admisión/baja, derechos, órganos de gobierno, régimen económico, extinción (Arts. 64–65 Cód. Civil). Sin sindicalismo ni actividades comerciales.</span></div></li>
+            <li><span class="doc-n">8</span><div class="doc-text"><strong>Reglamento Interno</strong> <span class="badge badge-blue">Redacción nueva</span><span class="doc-sub">Admisión/baja, estructura, quorum, régimen contable, responsabilidades, liquidación. No debe contradecir la minuta de constitución.</span></div></li>
+            <li><span class="doc-n">9</span><div class="doc-text"><strong>Fotocopias simples de CI del directorio</strong> <span class="badge badge-gold">Vigentes y firmadas</span></div></li>
+            <li><span class="doc-n">10</span><div class="doc-text"><strong>Certificado Domiciliario</strong> <span class="badge badge-gold">Policía Nacional</span><span class="doc-sub">A nombre del Presidente del directorio. O declaración jurada ante notario de fe pública.</span></div></li>
+            <li><span class="doc-n">11</span><div class="doc-text"><strong>Fotocopia simple de apertura del Libro de Actas</strong></div></li>
+            <li><span class="doc-n">12</span><div class="doc-text"><strong>Copia digital (CD) de todos los documentos</strong><span class="doc-sub">En formato Microsoft Word. Decreto Dptal. N° 205, Art. 14, Parágrafo III.</span></div></li>
+            <li><span class="doc-n">14</span><div class="doc-text"><strong>Fotocopias del derecho propietario de cada fundador</strong> <span class="badge badge-red">Específico condominios</span><span class="doc-sub">Folio Real (Alodial) vigente y actualizado. Escritura pública o minuta con reconocimiento de firmas.</span></div></li>
+            <li><span class="doc-n">15</span><div class="doc-text"><strong>Declaración Jurada ante Notario sobre derecho propietario</strong> <span class="badge badge-red">Específico condominios</span><span class="doc-sub">Lista de fundadores con nombre completo, CI y número de matrícula del Folio Real.</span></div></li>
+            <li><span class="doc-n">16</span><div class="doc-text"><strong>Fotocopia de la Minuta de Constitución (minuta madre)</strong> <span class="badge badge-red">Específico condominios</span><span class="doc-sub">Donde consta el reglamento y administración de la copropiedad.</span></div></li>
+          </ul>
+          <div class="warn"><span>⚠️</span><div>La participación de <strong>50% + 1</strong> de los propietarios es obligatoria. No se requiere el 100%.</div></div>
+        </div>
+      </div>
+
+      <!-- PASO 3 -->
+      <div class="acc-item" id="acc3">
+        <div class="acc-header" onclick="toggleAcc('acc3')">
+          <div class="acc-num">3</div>
+          <div class="acc-info">
+            <div class="acc-title">Notariado de Documentos</div>
+            <div class="acc-subtitle">TERCER PASO · 1–2 semanas</div>
+          </div>
+          <div class="acc-meta">
+            <span class="acc-cost">Bs. 2.000</span>
+            <span class="acc-chevron">⌄</span>
+          </div>
+        </div>
+        <div class="acc-body">
+          <p>El abogado lleva la carpeta completa a notariar. Las actas de Fundación, Elección y Aprobación del Estatuto deben tener <strong>fechas distintas entre sí</strong>.</p>
+          <ul class="doc-list">
+            <li><span class="doc-n">→</span><div class="doc-text">Protocolización de Acta de Fundación</div></li>
+            <li><span class="doc-n">→</span><div class="doc-text">Protocolización de Acta de Elección y Posesión</div></li>
+            <li><span class="doc-n">→</span><div class="doc-text">Protocolización de Acta de Aprobación del Estatuto</div></li>
+            <li><span class="doc-n">→</span><div class="doc-text">Protocolización del Poder Específico de Representación</div></li>
+          </ul>
+          <div class="warn"><span>💡</span><div>Costo estimado total de aranceles notariales: <strong>Bs. 2.000</strong></div></div>
+        </div>
+      </div>
+
+      <!-- PASO 4 -->
+      <div class="acc-item" id="acc4">
+        <div class="acc-header" onclick="toggleAcc('acc4')">
+          <div class="acc-num">4</div>
+          <div class="acc-info">
+            <div class="acc-title">Ingreso de Carpeta a la Gobernación (VUT)</div>
+            <div class="acc-subtitle">CUARTO PASO · El más largo: 4–6 meses</div>
+          </div>
+          <div class="acc-meta">
+            <span class="acc-cost">Bs. 3.000</span>
+            <span class="acc-chevron">⌄</span>
+          </div>
+        </div>
+        <div class="acc-body">
+          <p>Se presenta la carpeta completa y notariada en la <strong>Ventanilla Única de Trámites (V.U.T.)</strong> de la Gobernación. Se pagan las tasas departamentales en ese momento.</p>
+          <ul class="doc-list">
+            <li><span class="doc-n">→</span><div class="doc-text">Tasa por Trámite de Personalidad Jurídica</div></li>
+            <li><span class="doc-n">→</span><div class="doc-text">Tasa por Protocolización por Notaría de Gobierno</div></li>
+            <li><span class="doc-n">→</span><div class="doc-text">Tasa por Reposición de Material</div></li>
+            <li><span class="doc-n">→</span><div class="doc-text">Tasa por Folder e Imprenta</div></li>
+          </ul>
+          <div class="warn"><span>⏱</span><div>Este es el paso de mayor demora. La Gobernación tarda entre <strong>4 y 6 meses</strong> en emitir la Resolución Administrativa.</div></div>
+        </div>
+      </div>
+
+      <!-- PASO 5 -->
+      <div class="acc-item" id="acc5">
+        <div class="acc-header" onclick="toggleAcc('acc5')">
+          <div class="acc-num">5</div>
+          <div class="acc-info">
+            <div class="acc-title">Resolución Administrativa y Protocolización Final</div>
+            <div class="acc-subtitle">QUINTO PASO · Fin del trámite</div>
+          </div>
+          <div class="acc-meta">
+            <span class="acc-cost">✓ Final</span>
+            <span class="acc-chevron">⌄</span>
+          </div>
+        </div>
+        <div class="acc-body">
+          <p>La Gobernación emite la <strong>Resolución Administrativa</strong> que otorga la personalidad jurídica. El abogado la recoge con el Poder Específico y se protocoliza en la Notaría de Gobierno.</p>
+          <ul class="doc-list">
+            <li><span class="doc-n">→</span><div class="doc-text">Resolución Administrativa firmada por el Secretario Departamental de Gestión Institucional</div></li>
+            <li><span class="doc-n">→</span><div class="doc-text">Protocolización del Estatuto Orgánico en la Notaría de Gobierno</div></li>
+            <li><span class="doc-n">→</span><div class="doc-text">Publicación en Gaceta Oficial del Departamento de Santa Cruz</div></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── RECOMENDACIONES ── -->
+  <div class="section reveal" id="sec-tips">
+    <div class="section-label">Fuente: Gobernación Autónoma de Santa Cruz</div>
+    <div class="section-title">Recomendaciones oficiales para condominios</div>
+    <div class="tips">
+      <div class="tips-title">⚡ Puntos críticos para asociaciones de copropietarios</div>
+      <div class="tip"><span class="tip-ic">📌</span><span>Las actas de Fundación, Elección y Aprobación del Estatuto deben tener <strong>fechas diferentes</strong> entre sí.</span></div>
+      <div class="tip"><span class="tip-ic">📌</span><span>El término correcto para los miembros es <strong>"Asociados"</strong>, nunca "afiliados" ni "socios".</span></div>
+      <div class="tip"><span class="tip-ic">📌</span><span>La denominación debe ser <strong>exactamente igual</strong> en todos y cada uno de los documentos de la carpeta.</span></div>
+      <div class="tip"><span class="tip-ic">📌</span><span>El Estatuto <strong>no debe</strong> mencionar sindicalismo, cooperativismo ni actividades comerciales o mercantiles.</span></div>
+      <div class="tip"><span class="tip-ic">📌</span><span>No confundir el patrimonio de la asociación con los bienes propios de los copropietarios ni con las áreas comunes del condominio.</span></div>
+      <div class="tip"><span class="tip-ic">📌</span><span>Incluir un artículo en el Estatuto que permita aprobar reglamentos internos específicos (parqueos, mascotas, piscina, mantenimiento) sin modificar el estatuto registrado.</span></div>
+      <div class="tip"><span class="tip-ic">📌</span><span>El Folio Real (Alodial) de cada propietario debe estar <strong>vigente y actualizado</strong> en Derechos Reales.</span></div>
+      <div class="tip"><span class="tip-ic">📌</span><span>Adjuntar CD con todos los documentos en formato Word. Es obligatorio por el Decreto Dptal. N° 205, Art. 14.</span></div>
+    </div>
+  </div>
+
+  <!-- ── CHECKLIST INTERACTIVO ── -->
+  <div class="section reveal" id="sec-checklist">
+    <div class="section-label">Acción inmediata · Haz clic para marcar completado</div>
+    <div class="section-title">¿Qué hacer ahora?</div>
+
+    <div class="check-progress">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-label" id="progressLabel">0 / 7</div>
+    </div>
+
+    <div class="checklist" id="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">○</div>
+        <div class="check-n">01</div>
+        <div class="check-text">Confirmar contratación de <strong>Christian Salinas</strong> y firmar acuerdo: Bs. 3.000 al inicio (tasas Gobernación), Bs. 3.000 a los 30 días (honorarios) y Bs. 3.000 al finalizar. Gastos de notaría según necesidad.</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">○</div>
+        <div class="check-n">02</div>
+        <div class="check-text">Reunir <strong>fotocopias de CI vigentes y firmadas</strong> de todos los propietarios que participarán como fundadores.</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">○</div>
+        <div class="check-n">03</div>
+        <div class="check-text">Obtener los <strong>Folios Reales (Alodial) vigentes</strong> de cada propietario fundador en Derechos Reales, más fotocopias de escrituras y catastro.</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">○</div>
+        <div class="check-n">04</div>
+        <div class="check-text">Confirmar la <strong>dirección exacta del condominio</strong> (Municipio, Provincia, Departamento) para el certificado domiciliario.</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">○</div>
+        <div class="check-n">05</div>
+        <div class="check-text">Definir la estructura del <strong>directorio</strong>: Presidente, Vicepresidente, Secretario de Actas y Secretario de Hacienda.</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">○</div>
+        <div class="check-n">06</div>
+        <div class="check-text">Pagar <strong>Bs. 400</strong> para el Control de Denominación e iniciar el trámite en la Gobernación. Certificado válido por 60 días hábiles.</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">○</div>
+        <div class="check-n">07</div>
+        <div class="check-text">Entregar al abogado la <strong>Minuta de Constitución</strong> (minuta madre) donde consta el reglamento de copropiedad del condominio.</div>
+      </div>
+    </div>
+
+    <div class="legal-note">
+      <strong>Base legal:</strong> Ley Departamental N° 50 (Personalidad Jurídica), Decreto Departamental N° 205 (Reglamento), Arts. 21 y 300 CPE, Arts. 58–65 Código Civil boliviano, Decreto Dptal. N° 205 Art. 39 (requisitos específicos para copropietarios). Fuente oficial: <em>gacetaoficial.santacruz.gob.bo</em>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Condominio Santa María 1 · Santa Cruz de la Sierra, Bolivia · Preparado Jun 2025
+</footer>
+
+<script>
+  /* ── NAV SCROLL ── */
+  function scrollTo(id) {
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Active nav on scroll
+  const sections = ['sec-abogados','sec-costos','sec-proceso','sec-tips','sec-checklist'];
+  const navLinks = document.querySelectorAll('.nav-link');
+  window.addEventListener('scroll', () => {
+    let current = 0;
+    sections.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 100) current = i;
+    });
+    navLinks.forEach((l, i) => l.classList.toggle('active', i === current));
+  }, { passive: true });
+
+  /* ── ACCORDION ── */
+  function toggleAcc(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.acc-item').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+  // Open first by default
+  document.getElementById('acc1').classList.add('open');
+
+  /* ── CHECKLIST ── */
+  function toggleCheck(el) {
+    el.classList.toggle('done');
+    el.querySelector('.check-box').textContent = el.classList.contains('done') ? '✓' : '○';
+    updateProgress();
+  }
+  function updateProgress() {
+    const items = document.querySelectorAll('.check-item');
+    const done = document.querySelectorAll('.check-item.done').length;
+    const pct = Math.round((done / items.length) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = done + ' / ' + items.length;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.07 });
+  revealEls.forEach(el => observer.observe(el));
+
+  /* ── CHARTS ── */
+  const ACCENT = '#667dff';
+  const GREEN  = '#22b870';
+  const GOLD   = '#d4a030';
+  const RED    = '#e06050';
+  const MUTED  = '#21213a';
+
+  Chart.defaults.font.family = "'Inter', sans-serif";
+  Chart.defaults.color = '#8090c0';
+
+  // 1. Comparativo abogados (barras verticales)
+  new Chart(document.getElementById('chartAbogados'), {
+    type: 'bar',
+    data: {
+      labels: ['Ana María\nMoya', 'Claudia Paola\nJiménez', 'Christian\nSalinas ✓'],
+      datasets: [{
+        label: 'Total estimado (Bs.)',
+        data: [12810, 15700, 11700],
+        backgroundColor: [GOLD + 'cc', RED + 'cc', GREEN + 'cc'],
+        borderColor: [GOLD, RED, GREEN],
+        borderWidth: 2,
+        borderRadius: 8,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => ' Bs. ' + ctx.parsed.y.toLocaleString('es-BO')
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: { color: MUTED },
+          ticks: { callback: v => 'Bs. ' + (v/1000).toFixed(0) + 'k' }
+        },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+
+  // 2. Gastos fijos (dona)
+  new Chart(document.getElementById('chartFijos'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Denominación', 'Tasas Gobernación', 'Notaría', 'Cert. Domiciliario'],
+      datasets: [{
+        data: [400, 3000, 2000, 300],
+        backgroundColor: [ACCENT + 'cc', '#6b3fa0cc', GREEN + 'cc', GOLD + 'cc'],
+        borderColor: [ACCENT, '#6b3fa0', GREEN, GOLD],
+        borderWidth: 2,
+        hoverOffset: 8,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      cutout: '62%',
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { padding: 12, boxWidth: 12, font: { size: 11 } }
+        },
+        tooltip: {
+          callbacks: {
+            label: ctx => ' Bs. ' + ctx.parsed.toLocaleString('es-BO')
+          }
+        }
+      }
+    }
+  });
+
+  // 3. Apilado horizontal
+  new Chart(document.getElementById('chartApilado'), {
+    type: 'bar',
+    data: {
+      labels: ['Ana María Moya', 'Claudia Paola Jiménez', 'Christian Salinas ✓'],
+      datasets: [
+        {
+          label: 'Honorarios abogado',
+          data: [7110, 10000, 6000],
+          backgroundColor: [GOLD + 'dd', RED + 'dd', GREEN + 'dd'],
+          borderColor: [GOLD, RED, GREEN],
+          borderWidth: 1.5,
+          borderRadius: { topRight: 6, bottomRight: 6 },
+          borderSkipped: false,
+        },
+        {
+          label: 'Gastos fijos (gobernación + notaría)',
+          data: [5700, 5700, 5700],
+          backgroundColor: ACCENT + '55',
+          borderColor: ACCENT,
+          borderWidth: 1.5,
+          borderRadius: { topRight: 6, bottomRight: 6 },
+          borderSkipped: false,
+        }
+      ]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { padding: 16, boxWidth: 14, font: { size: 12 } }
+        },
+        tooltip: {
+          callbacks: {
+            label: ctx => ' ' + ctx.dataset.label + ': Bs. ' + ctx.parsed.x.toLocaleString('es-BO')
+          }
+        }
+      },
+      scales: {
+        x: {
+          stacked: true,
+          grid: { color: MUTED },
+          ticks: { callback: v => 'Bs. ' + (v/1000).toFixed(0) + 'k' }
+        },
+        y: { stacked: true, grid: { display: false } }
+      }
+    }
+  });
+</script>
+</body>
+</html>
