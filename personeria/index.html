@@ -5,29 +5,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Personería Jurídica — Condominio Santa María 1</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../smnav.css">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
   :root {
-    --ink: #dde0f8;
-    --ink-light: #9090be;
-    --ink-muted: #5a5a88;
-    --surface: #0d0d1a;
-    --white: #14142a;
-    --accent: #667dff;
-    --accent-light: #161b48;
-    --accent-mid: #8090e8;
-    --gold: #d4a030;
-    --gold-light: #251a08;
-    --green: #22b870;
-    --green-light: #0a2016;
-    --red: #e06050;
-    --red-light: #2a1010;
-    --border: #21213a;
+    --ink: #e6ecf5;
+    --ink-light: #b9c3d6;
+    --ink-muted: #7c8aa5;
+    --surface: #070b14;
+    --white: #111a2e;
+    --accent: #4fd8e8;
+    --accent-light: #10222e;
+    --accent-mid: #7fe6f2;
+    --gold: #e8b85c;
+    --gold-light: #241d10;
+    --green: #5fd99a;
+    --green-light: #10241a;
+    --red: #f47b9b;
+    --red-light: #2a1420;
+    --border: #1e2a44;
     --radius: 16px;
     --radius-sm: 10px;
     --shadow: 0 2px 16px rgba(0,0,0,0.5);
-    --shadow-hover: 0 6px 28px rgba(0,0,0,0.7);
+    --shadow-hover: 0 6px 28px rgba(0,0,0,0.6);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -43,10 +47,10 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ─── NAV ─── */
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(15,15,26,0.95);
+  /* ─── NAV de secciones (no aplica al menú superior .smnav) ─── */
+  nav:not(.smnav) {
+    position: sticky; top: 64px; z-index: 90;
+    background: rgba(7,11,20,0.92);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(255,255,255,0.07);
     padding: 0 32px;
@@ -57,7 +61,7 @@
     overflow-x: auto;
     scrollbar-width: none;
   }
-  nav::-webkit-scrollbar { display: none; }
+  nav:not(.smnav)::-webkit-scrollbar { display: none; }
   .nav-logo {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
@@ -87,7 +91,7 @@
 
   /* ─── HERO ─── */
   .hero {
-    background: #080814;
+    background: #090d18;
     color: white;
     padding: 60px 40px 68px;
     text-align: center;
@@ -97,18 +101,29 @@
   .hero-grid {
     position: absolute; inset: 0;
     background-image:
-      linear-gradient(rgba(61,90,241,0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(61,90,241,0.06) 1px, transparent 1px);
+      linear-gradient(rgba(79,216,232,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79,216,232,0.06) 1px, transparent 1px);
     background-size: 48px 48px;
     pointer-events: none;
   }
   .hero::after {
     content: '';
     position: absolute; inset: 0;
-    background: radial-gradient(ellipse 80% 70% at 50% -10%, rgba(61,90,241,0.35) 0%, transparent 65%);
+    background: radial-gradient(ellipse 80% 70% at 50% -10%, rgba(79,216,232,0.28) 0%, transparent 65%);
     pointer-events: none;
   }
   .hero > * { position: relative; z-index: 1; }
+  .pj-back {
+    position: absolute; top: 18px; left: 18px; z-index: 2;
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: rgba(255,255,255,0.7); text-decoration: none;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.14);
+    padding: 8px 14px; border-radius: 30px; transition: .15s;
+  }
+  .pj-back:hover { color: #fff; border-color: var(--accent); background: rgba(79,216,232,0.14); }
+  .pj-back svg { width: 14px; height: 14px; }
   .hero-eyebrow {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
@@ -134,7 +149,7 @@
     letter-spacing: -0.02em;
     margin-bottom: 14px;
   }
-  .hero h1 em { font-style: italic; color: #a8b4ff; }
+  .hero h1 em { font-style: italic; color: #7fe6f2; }
   .hero-sub {
     color: rgba(255,255,255,0.45);
     font-size: 14px;
@@ -184,7 +199,7 @@
   }
   .dot-live {
     width: 6px; height: 6px; border-radius: 50%;
-    background: #4dff91;
+    background: #5fd99a;
     animation: blink 2s infinite;
   }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
@@ -500,7 +515,7 @@
     display: flex; gap: 10px;
     font-size: 13.5px; color: var(--ink-light);
     padding: 7px 0; line-height: 1.55;
-    border-bottom: 1px solid rgba(61,90,241,0.1);
+    border-bottom: 1px solid rgba(79,216,232,0.12);
   }
   .tip:last-child { border-bottom: none; }
   .tip-ic { flex-shrink: 0; }
@@ -579,21 +594,35 @@
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">SM1 · PJ</div>
-  <div class="nav-links">
-    <button class="nav-link active" onclick="scrollTo('#sec-abogados')">Abogados</button>
-    <button class="nav-link" onclick="scrollTo('#sec-costos')">Costos</button>
-    <button class="nav-link" onclick="scrollTo('#sec-proceso')">Proceso</button>
-    <button class="nav-link" onclick="scrollTo('#sec-tips')">Recomendaciones</button>
-    <button class="nav-link" onclick="scrollTo('#sec-checklist')">Checklist</button>
+<!-- MENÚ SUPERIOR -->
+<nav class="smnav">
+  <div class="smnav-inner">
+    <a class="smnav-brand" href="../">
+      <span class="smnav-mark">SM</span>
+      <span>Santa María<small>Santa Cruz · Bolivia</small></span>
+    </a>
+    <button class="smnav-toggle" aria-label="Menú" aria-expanded="false">☰</button>
+    <div class="smnav-links">
+      <a href="../#ubicacion">Ubicación</a>
+      <a href="../#edificio">El edificio</a>
+      <a href="../#areas">Áreas sociales</a>
+      <a href="../#departamento">Departamentos</a>
+      <a href="../planos_edificio/">Planos</a>
+      <a href="../censo/">Censo</a>
+      <a href="../finanzas/">Finanzas</a>
+      <a href="../personeria/">Personería</a>
+      <a class="cta" href="../reuniones/">Reuniones</a>
+    </div>
   </div>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
   <div class="hero-grid"></div>
+  <a class="pj-back" href="../">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Volver al inicio
+  </a>
   <div class="hero-eyebrow">Gobernación Autónoma de Santa Cruz — Bolivia</div>
   <h1>Personería Jurídica<br><em>Condominio Santa María 1</em></h1>
   <div class="hero-sub">Asociación Civil de Copropietarios · Sin fines de lucro · Ley Dptal. N° 50</div>
@@ -1042,11 +1071,11 @@
   revealEls.forEach(el => observer.observe(el));
 
   /* ── CHARTS ── */
-  const ACCENT = '#667dff';
-  const GREEN  = '#22b870';
-  const GOLD   = '#d4a030';
-  const RED    = '#e06050';
-  const MUTED  = '#21213a';
+  const ACCENT = '#4fd8e8';
+  const GREEN  = '#5fd99a';
+  const GOLD   = '#e8b85c';
+  const RED    = '#f47b9b';
+  const MUTED  = '#3a4763';
 
   Chart.defaults.font.family = "'Inter', sans-serif";
   Chart.defaults.color = '#8090c0';
@@ -1168,5 +1197,6 @@
     }
   });
 </script>
+<script src="../smnav.js"></script>
 </body>
 </html>

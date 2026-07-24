@@ -12,6 +12,9 @@
 
    <link rel="stylesheet" href="../css/plugins.css">
    <link rel="stylesheet" href="../css/style.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="../smnav.css">
 
    <!--Popup-->
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.15/dist/sweetalert2.min.css">
@@ -46,34 +49,27 @@
    </div>
    <!--PreLoader Ends-->
 
-   <!-- header -->
-   <header class="site-header">
-      <nav class="navbar navbar-expand-lg transparent-bg static-nav">
-         <div class="container">
-            <a class="navbar-brand" href="../index.html" style="font-weight: bold; color: #fff;">
-               Santa María
-            </a>
-            <div class="collapse navbar-collapse" id="xenav">
-               <ul class="navbar-nav ms-auto">
-                  <li class="nav-item link1">
-                     <a class="nav-link pagescroll btn" href="#our-testimonial">
-                        Informaciòn
-                        <img src="../images/icons/icon-mesage.svg" class="mov-img1 delete-img" />
-                     </a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link pagescroll" href="#our-blog">
-                        <img src="../images/icons/icon-esp.svg" class="mov-img1" />
-                     </a>
-                  </li>
-
-               </ul>
-            </div>
-         </div>
-      </nav>
-
-   </header>
-   <!-- header -->
+   <!-- MENÚ SUPERIOR -->
+   <nav class="smnav">
+     <div class="smnav-inner">
+       <a class="smnav-brand" href="../">
+         <span class="smnav-mark">SM</span>
+         <span>Santa María<small>Santa Cruz · Bolivia</small></span>
+       </a>
+       <button class="smnav-toggle" aria-label="Menú" aria-expanded="false">☰</button>
+       <div class="smnav-links">
+         <a href="../#ubicacion">Ubicación</a>
+         <a href="../#edificio">El edificio</a>
+         <a href="../#areas">Áreas sociales</a>
+         <a href="../#departamento">Departamentos</a>
+         <a href="../planos_edificio/">Planos</a>
+         <a href="../censo/">Censo</a>
+         <a href="../finanzas/">Finanzas</a>
+         <a href="../personeria/">Personería</a>
+         <a class="cta" href="../reuniones/">Reuniones</a>
+       </div>
+     </div>
+   </nav>
 
 
 
@@ -316,6 +312,7 @@
 
    <script src="../js/smtp.js"></script>
    <script src="index.js"></script>
+   <script src="../smnav.js"></script>
 
 
 </body>

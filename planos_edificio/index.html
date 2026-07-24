@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../smnav.css">
 <style>
 :root{
   --bg:#070b14; --panel:#0d1424; --panel-2:#111a2e;
@@ -148,6 +149,26 @@ footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--line);font-fa
 </style>
 </head>
 <body>
+<nav class="smnav">
+  <div class="smnav-inner">
+    <a class="smnav-brand" href="../">
+      <span class="smnav-mark">SM</span>
+      <span>Santa María<small>Santa Cruz · Bolivia</small></span>
+    </a>
+    <button class="smnav-toggle" aria-label="Menú" aria-expanded="false">☰</button>
+    <div class="smnav-links">
+      <a href="../#ubicacion">Ubicación</a>
+      <a href="../#edificio">El edificio</a>
+      <a href="../#areas">Áreas sociales</a>
+      <a href="../#departamento">Departamentos</a>
+      <a href="../planos_edificio/">Planos</a>
+      <a href="../censo/">Censo</a>
+      <a href="../finanzas/">Finanzas</a>
+      <a href="../personeria/">Personería</a>
+      <a class="cta" href="../reuniones/">Reuniones</a>
+    </div>
+  </div>
+</nav>
 <div class="wrap">
 
   <a class="back" href="../">
@@ -443,5 +464,6 @@ lb.addEventListener('click',()=>lb.classList.remove('open'));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('open');});
 render();
 </script>
+<script src="../smnav.js"></script>
 </body>
 </html>

@@ -88,6 +88,26 @@ body::before {
     z-index: 2;
 }
 
+.hero .back {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: .8rem;
+    color: var(--text-soft);
+    background: rgba(124, 162, 214, .1);
+    border: 1px solid var(--line);
+    padding: 8px 14px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: .15s;
+}
+.hero .back:hover { color: var(--cyan); border-color: var(--cyan); }
+.hero .back svg { width: 15px; height: 15px; }
+
 .badge {
     display: inline-flex;
     align-items: center;

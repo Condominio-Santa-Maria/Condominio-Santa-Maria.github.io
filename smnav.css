@@ -1,0 +1,48 @@
+/* ===== Menú superior compartido (igual que la página principal) ===== */
+.smnav{
+  position:sticky;top:0;z-index:200;
+  backdrop-filter:blur(14px);
+  background:rgba(7,11,20,.82);
+  border-bottom:1px solid rgba(124,162,214,.14);
+}
+.smnav *{box-sizing:border-box}
+.smnav-inner{
+  max-width:1180px;margin:0 auto;padding:0 24px;height:64px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.smnav-brand{
+  display:flex;align-items:center;gap:11px;text-decoration:none;
+  font-family:'Space Grotesk',system-ui,sans-serif;font-weight:700;letter-spacing:-.01em;
+  color:#e6ecf5;
+}
+.smnav-mark{
+  width:32px;height:32px;border-radius:9px;flex:0 0 auto;
+  background:linear-gradient(150deg,#4fd8e8,#8b7bf4);
+  display:grid;place-items:center;color:#07101c;font-weight:700;font-size:.9rem;
+}
+.smnav-brand small{
+  display:block;font-family:'IBM Plex Mono',monospace;font-weight:400;font-size:.6rem;
+  letter-spacing:.24em;color:#7c8aa5;text-transform:uppercase;
+}
+.smnav-links{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.smnav-links a{
+  font-family:'IBM Plex Sans',system-ui,sans-serif;
+  font-size:.82rem;color:#7c8aa5;padding:8px 12px;border-radius:9px;
+  transition:.15s;white-space:nowrap;text-decoration:none;
+}
+.smnav-links a:hover{color:#e6ecf5;background:rgba(124,162,214,.08)}
+.smnav-links a.cta{color:#4fd8e8;border:1px solid rgba(79,216,232,.16)}
+.smnav-links a.cta:hover{background:rgba(79,216,232,.16)}
+.smnav-toggle{
+  display:none;background:none;border:1px solid rgba(124,162,214,.14);color:#e6ecf5;
+  border-radius:9px;padding:8px 11px;cursor:pointer;font-size:1rem;line-height:1;
+}
+@media (max-width:960px){
+  .smnav-links{
+    display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;align-items:stretch;
+    background:rgba(7,11,20,.98);border-bottom:1px solid rgba(124,162,214,.14);padding:12px 24px 18px;gap:2px;
+  }
+  .smnav-links.open{display:flex}
+  .smnav-links a{padding:11px 12px}
+  .smnav-toggle{display:block}
+}

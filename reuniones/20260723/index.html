@@ -9,12 +9,37 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../smnav.css">
     <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
+    <nav class="smnav">
+      <div class="smnav-inner">
+        <a class="smnav-brand" href="../../">
+          <span class="smnav-mark">SM</span>
+          <span>Santa María<small>Santa Cruz · Bolivia</small></span>
+        </a>
+        <button class="smnav-toggle" aria-label="Menú" aria-expanded="false">☰</button>
+        <div class="smnav-links">
+          <a href="../../#ubicacion">Ubicación</a>
+          <a href="../../#edificio">El edificio</a>
+          <a href="../../#areas">Áreas sociales</a>
+          <a href="../../#departamento">Departamentos</a>
+          <a href="../../planos_edificio/">Planos</a>
+          <a href="../../censo/">Censo</a>
+          <a href="../../finanzas/">Finanzas</a>
+          <a href="../../personeria/">Personería</a>
+          <a class="cta" href="../../reuniones/">Reuniones</a>
+        </div>
+      </div>
+    </nav>
     <header class="hero">
         <div class="wrap">
+            <a class="back" href="../">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Volver a reuniones
+            </a>
             <span class="badge"><span class="dot"></span> Resumen de la reunión</span>
             <h1>Asamblea Extraordinaria de Propietarios</h1>
             <p class="lead">Revisión de las cotizaciones de la personería jurídica, la nueva política de agua y la pintura del edificio.</p>
@@ -376,6 +401,7 @@
         © 2026 Condominio Santa María 1 · Asamblea Extraordinaria
     </footer>
     <script src="./index.js"></script>
+    <script src="../../smnav.js"></script>
 </body>
 
 </html>
