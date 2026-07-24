@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planos del edificio · Condominio Santa María 1</title>
+<link rel="icon" href="../images/favicon.png">
+<meta name="description" content="Plano interactivo de la planta tipo del Condominio Santa María 1: 4 departamentos por piso, 2 ascensores, escalera, red de agua PVC 3/4 y tour guiado.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070b14; --panel:#0d1424; --panel-2:#111a2e;
+  --line:rgba(124,162,214,.14);
+  --cyan:#4fd8e8; --cyan-dim:rgba(79,216,232,.16);
+  --gold:#e8b85c; --gold-dim:rgba(232,184,92,.14);
+  --violet:#8b7bf4; --rose:#f47b9b; --ok:#5fd99a;
+  --text:#e6ecf5; --text-soft:#b9c3d6; --muted:#7c8aa5;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;line-height:1.6;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(900px 500px at 85% -10%,rgba(79,216,232,.07),transparent 60%),
+            radial-gradient(700px 480px at 0% 110%,rgba(139,123,244,.06),transparent 60%)}
+a{color:inherit;text-decoration:none}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 24px 90px}
+
+.back{display:inline-flex;align-items:center;gap:8px;margin-top:30px;font-size:.82rem;color:var(--muted);
+  padding:8px 14px;border:1px solid var(--line);border-radius:10px;transition:.15s}
+.back:hover{color:var(--cyan);border-color:var(--cyan)}
+.back svg{width:15px;height:15px}
+
+header{padding:34px 0 20px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--cyan);display:flex;align-items:center;gap:14px}
+.eyebrow::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--cyan-dim),transparent)}
+h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2rem,5vw,3.2rem);letter-spacing:-.02em;margin-top:12px}
+.sub{color:var(--muted);max-width:680px;margin-top:10px;font-size:.98rem}
+
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:30px}
+.kpi{background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line);
+  border-radius:14px;padding:16px 18px;position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent,var(--cyan));opacity:.7}
+.kpi .n{font-family:'IBM Plex Mono',monospace;font-size:1.8rem;font-weight:600;color:var(--accent,var(--cyan))}
+.kpi .l{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+
+section{margin-top:52px;scroll-margin-top:24px}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.sec-head h2{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:500;letter-spacing:-.01em}
+.sec-head .tag{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+
+.explorer{display:grid;grid-template-columns:1.4fr .85fr;gap:18px;align-items:start}
+.plan-card{background:#0a0f1c;border:1px solid var(--line);border-radius:18px;padding:14px}
+.plan-card svg{width:100%;height:auto;display:block;border-radius:12px}
+
+/* svg base */
+.floor-bg{fill:#0b1220;stroke:var(--line);stroke-width:2}
+.room{fill:rgba(124,162,214,.045);stroke:none}
+.wall{stroke:#8ea0bd;stroke-width:4;fill:none;stroke-linecap:square;stroke-linejoin:miter}
+.wall-ext{stroke:#aab8d0;stroke-width:7}
+.spine{stroke:#aab8d0;stroke-width:8}
+.fx{fill:none;stroke:#9fb2d2;stroke-width:1.3}
+.fx-fill{fill:rgba(159,178,210,.22);stroke:#9fb2d2;stroke-width:1.2}
+.door{fill:none;stroke:rgba(159,178,210,.55);stroke-width:1.2}
+.balcony{fill:rgba(79,216,232,.05);stroke:#6b7b98;stroke-width:2}
+.rail{stroke:rgba(124,162,214,.45);stroke-width:1}
+.tile{stroke:rgba(124,162,214,.22);stroke-width:.7;fill:none}
+.rlabel{fill:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:11px;text-anchor:middle}
+.unit-tag{fill:var(--text-soft);font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:500;text-anchor:middle}
+.corelabel{fill:var(--text-soft);font-family:'IBM Plex Mono',monospace;font-size:11px;text-anchor:middle}
+
+.hot{cursor:pointer}
+.aptzone{fill:transparent;stroke:transparent;transition:.2s;rx:8}
+.hot.active .aptzone,.hot:hover .aptzone{fill:rgba(79,216,232,.07);stroke:var(--cyan);stroke-dasharray:7 6;stroke-width:1.6}
+.fillbox{fill:transparent;stroke:transparent;transition:fill .2s,stroke .2s}
+.hot:hover .fillbox,.hot.active .fillbox{fill:var(--cyan-dim);stroke:var(--cyan);stroke-width:2}
+.elev{fill:#2b3a57;stroke:var(--violet);stroke-width:1.6}
+.elev-x{stroke:var(--violet);stroke-width:1;opacity:.7}
+.hot.active .elev,.hot:hover .elev{fill:rgba(139,123,244,.4)}
+.stair{stroke:#8ea0bd;stroke-width:1.3;fill:none}
+.stair-arrow{stroke:var(--cyan);stroke-width:1.5;fill:none}
+.pnode{fill:var(--gold)}
+.fire-ic{fill:var(--rose)}
+
+.pipe{fill:none;stroke:var(--gold);stroke-width:2.4;stroke-dasharray:8 6;opacity:.42;transition:opacity .2s}
+#water.active .pipe,#water:hover .pipe{opacity:1;stroke-width:3.4;animation:flow 1.2s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-28}}
+.pipe-lbl{fill:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:10px;opacity:.5}
+#water.active .pipe-lbl,#water:hover .pipe-lbl{opacity:1}
+
+.info{position:sticky;top:20px;background:linear-gradient(180deg,var(--panel-2),var(--panel));
+  border:1px solid var(--line);border-radius:18px;padding:22px;min-height:400px;display:flex;flex-direction:column}
+.info .step-no{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan)}
+.info h3{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:1.35rem;margin:6px 0 12px}
+.info p{color:var(--text-soft);font-size:.94rem}
+.info .note{margin-top:14px;border-left:2px solid var(--gold);background:var(--gold-dim);padding:11px 14px;border-radius:0 10px 10px 0;font-size:.86rem;color:var(--text-soft)}
+.info .note b{color:var(--gold)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.chips button{background:var(--panel);border:1px solid var(--line);color:var(--muted);font-family:'IBM Plex Mono',monospace;
+  font-size:.72rem;padding:7px 12px;border-radius:100px;cursor:pointer;transition:.15s}
+.chips button:hover{color:var(--text);border-color:var(--cyan)}
+.chips button.on{background:var(--cyan);color:#07101c;border-color:var(--cyan);font-weight:600}
+.tour-ctrl{margin-top:auto;padding-top:18px;display:flex;align-items:center;gap:10px}
+.tour-ctrl button{flex:0 0 auto;width:40px;height:40px;border-radius:11px;border:1px solid var(--line);background:var(--panel);
+  color:var(--text);font-size:1rem;cursor:pointer;transition:.15s;display:grid;place-items:center}
+.tour-ctrl button:hover{border-color:var(--cyan);color:var(--cyan)}
+.tour-ctrl .play{flex:1;width:auto;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.88rem;
+  background:linear-gradient(120deg,var(--cyan),var(--violet));color:#07101c;border:none}
+.progress{height:4px;border-radius:4px;background:rgba(124,162,214,.12);margin-top:14px;overflow:hidden}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--violet));width:0;transition:width .3s}
+
+.legend{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.leg{display:flex;align-items:center;gap:10px;font-size:.82rem;color:var(--text-soft);
+  background:var(--panel-2);border:1px solid var(--line);border-radius:11px;padding:11px 14px}
+.sw{width:26px;height:16px;border-radius:5px;flex:0 0 auto}
+.sw.elev{background:#2b3a57;border:1px solid var(--violet)}
+.sw.stair{background:repeating-linear-gradient(0deg,#8ea0bd 0 2px,transparent 2px 5px);border:1px solid var(--line)}
+.sw.pipe{background:repeating-linear-gradient(90deg,var(--gold) 0 6px,transparent 6px 11px)}
+.sw.tank{background:var(--gold);border-radius:50%;width:16px}
+.sw.fire{background:var(--rose);border-radius:50%;width:16px}
+.sw.apt{background:rgba(79,216,232,.15);border:1px dashed var(--cyan)}
+
+.callout{background:linear-gradient(120deg,rgba(232,184,92,.1),rgba(139,123,244,.08));border:1px solid var(--line);
+  border-radius:16px;padding:24px;margin-top:20px}
+.callout h3{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:1.15rem;margin-bottom:8px;color:var(--gold)}
+.callout p{color:var(--text-soft);font-size:.94rem}
+.callout a{color:var(--cyan);text-decoration:underline;text-underline-offset:3px}
+
+.scan{background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line);border-radius:16px;padding:16px;text-align:center}
+.scan img{max-width:100%;border-radius:10px;border:1px solid var(--line);cursor:zoom-in;filter:contrast(1.05)}
+.scan p{color:var(--muted);font-size:.8rem;margin-top:10px;font-family:'IBM Plex Mono',monospace}
+.lightbox{position:fixed;inset:0;background:rgba(4,7,14,.92);z-index:100;display:none;place-items:center;padding:24px;cursor:zoom-out}
+.lightbox.open{display:grid}
+.lightbox img{max-width:100%;max-height:92vh;border-radius:10px}
+
+footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--line);font-family:'IBM Plex Mono',monospace;
+  font-size:.7rem;color:var(--muted);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+
+@media (max-width:900px){
+  .explorer{grid-template-columns:1fr}
+  .info{position:relative;top:0}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .legend{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back" href="../">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Volver al inicio
+  </a>
+
+  <header>
+    <div class="eyebrow">Condominio Santa María 1 · Planta tipo</div>
+    <h1>Planos del edificio</h1>
+    <p class="sub">Recorre la planta tipo: cuatro departamentos idénticos en espejo alrededor de un núcleo central con dos ascensores, la escalera de tramos y las instalaciones. Pasa el cursor sobre cada elemento o sigue el tour guiado.</p>
+    <div class="kpis">
+      <div class="kpi" style="--accent:var(--cyan)"><div class="n">4</div><div class="l">Deptos por piso</div></div>
+      <div class="kpi" style="--accent:var(--violet)"><div class="n">2</div><div class="l">Ascensores</div></div>
+      <div class="kpi" style="--accent:var(--gold)"><div class="n">1</div><div class="l">Escalera central</div></div>
+      <div class="kpi" style="--accent:var(--rose)"><div class="n">10</div><div class="l">Pisos iguales</div></div>
+    </div>
+  </header>
+
+  <section id="plano">
+    <div class="sec-head"><h2>Plano interactivo</h2><span class="tag">Hover · click · tour</span></div>
+    <div class="explorer">
+      <div class="plan-card">
+        <svg viewBox="0 0 900 1000" role="img" aria-label="Planta tipo del edificio">
+          <rect class="floor-bg" x="16" y="16" width="868" height="968" rx="10"/>
+
+          <!-- ===== UNIT DEFINITION (upper-left, local coords) ===== -->
+          <defs>
+            <g id="unit">
+              <!-- room fills -->
+              <rect class="room" x="8" y="8" width="172" height="112"/>
+              <rect class="room" x="180" y="8" width="120" height="102"/>
+              <rect class="room" x="300" y="8" width="107" height="92"/>
+              <rect class="room" x="300" y="100" width="60" height="80"/>
+              <rect class="room" x="360" y="100" width="47" height="80"/>
+              <rect class="room" x="180" y="120" width="160" height="130"/>
+              <rect class="room" x="8" y="120" width="172" height="130"/>
+              <rect class="room" x="8" y="255" width="112" height="97"/>
+              <rect class="room" x="120" y="255" width="135" height="97"/>
+              <rect class="room" x="255" y="120" width="152" height="232"/>
+
+              <!-- balcony (outer top-left) -->
+              <rect class="balcony" x="8" y="-30" width="150" height="30"/>
+              <line class="rail" x1="8" y1="-24" x2="158" y2="-24"/>
+              <line class="rail" x1="40" y1="-30" x2="40" y2="0"/>
+              <line class="rail" x1="80" y1="-30" x2="80" y2="0"/>
+              <line class="rail" x1="120" y1="-30" x2="120" y2="0"/>
+
+              <!-- kitchen counter + burners + sink -->
+              <path class="fx" d="M304 14 H403 M398 14 V60"/>
+              <circle class="fx" cx="316" cy="24" r="4"/><circle class="fx" cx="332" cy="24" r="4"/>
+              <circle class="fx" cx="316" cy="40" r="4"/><circle class="fx" cx="332" cy="40" r="4"/>
+              <ellipse class="fx-fill" cx="388" cy="34" rx="8" ry="6"/>
+              <rect class="tile" x="304" y="70" width="12" height="12"/><rect class="tile" x="318" y="70" width="12" height="12"/><rect class="tile" x="332" y="70" width="12" height="12"/>
+              <rect class="tile" x="304" y="84" width="12" height="12"/><rect class="tile" x="318" y="84" width="12" height="12"/><rect class="tile" x="332" y="84" width="12" height="12"/>
+
+              <!-- baño 1 (near kitchen): WC + sink + shower -->
+              <rect class="fx-fill" x="308" y="112" width="15" height="9" rx="2"/>
+              <ellipse class="fx-fill" cx="315" cy="132" rx="8" ry="9"/>
+              <rect class="fx" x="332" y="112" width="16" height="12" rx="2"/><circle class="fx" cx="340" cy="118" r="1.4"/>
+              <rect class="fx" x="308" y="150" width="26" height="24"/><line class="fx" x1="308" y1="150" x2="334" y2="174"/><circle class="fx" cx="321" cy="162" r="1.6"/>
+
+              <!-- baño cluster (2 baños, lower-left) -->
+              <rect class="fx-fill" x="16" y="262" width="14" height="9" rx="2"/><ellipse class="fx-fill" cx="23" cy="281" rx="7" ry="8"/>
+              <rect class="fx" x="40" y="262" width="15" height="11" rx="2"/><circle class="fx" cx="47.5" cy="267" r="1.3"/>
+              <rect class="fx-fill" x="16" y="312" width="14" height="9" rx="2"/><ellipse class="fx-fill" cx="23" cy="331" rx="7" ry="8"/>
+              <rect class="fx" x="40" y="312" width="15" height="11" rx="2"/><circle class="fx" cx="47.5" cy="317" r="1.3"/>
+
+              <!-- laundry sink -->
+              <rect class="fx" x="330" y="300" width="24" height="18" rx="2"/><circle class="fx" cx="342" cy="309" r="1.4"/>
+
+              <!-- WALLS -->
+              <!-- exterior top + left -->
+              <path class="wall-ext" d="M8 8 H407"/>
+              <path class="wall-ext" d="M8 8 V352"/>
+              <!-- right (party) + bottom with entry gap -->
+              <path class="wall" d="M407 8 V352"/>
+              <path class="wall" d="M8 352 H300 M352 352 H407"/>
+              <!-- partitions -->
+              <path class="wall" d="M180 8 V250"/>
+              <path class="wall" d="M300 8 V100"/>
+              <path class="wall" d="M8 120 H180"/>
+              <path class="wall" d="M180 110 H300"/>
+              <path class="wall" d="M300 100 H407"/>
+              <path class="wall" d="M300 180 H407"/>
+              <path class="wall" d="M360 100 V180"/>
+              <path class="wall" d="M8 250 H180"/>
+              <path class="wall" d="M180 250 H340"/>
+              <path class="wall" d="M340 120 V352"/>
+              <path class="wall" d="M120 255 V352"/>
+              <path class="wall" d="M255 255 V352"/>
+              <path class="wall" d="M8 300 H55"/>
+
+              <!-- DOORS (swing arcs) -->
+              <path class="door" d="M320 352 A34 34 0 0 1 320 318"/><line class="door" x1="320" y1="352" x2="320" y2="318"/>
+              <path class="door" d="M180 210 A34 34 0 0 0 214 210"/><line class="door" x1="180" y1="210" x2="214" y2="210"/>
+              <path class="door" d="M118 120 A30 30 0 0 1 118 150"/><line class="door" x1="118" y1="120" x2="118" y2="150"/>
+              <path class="door" d="M255 300 A28 28 0 0 1 283 300"/><line class="door" x1="255" y1="300" x2="283" y2="300"/>
+              <path class="door" d="M300 60 A26 26 0 0 1 326 60"/><line class="door" x1="300" y1="60" x2="326" y2="60"/>
+            </g>
+          </defs>
+
+          <!-- ===== PLACE 4 UNITS (mirrored) ===== -->
+          <g class="hot" data-spot="apt"><rect class="aptzone" x="30" y="12" width="418" height="400"/><use href="#unit" transform="translate(35,45)"/></g>
+          <g class="hot" data-spot="apt"><rect class="aptzone" x="452" y="12" width="418" height="400"/><use href="#unit" transform="translate(865,45) scale(-1,1)"/></g>
+          <g class="hot" data-spot="apt"><rect class="aptzone" x="30" y="588" width="418" height="400"/><use href="#unit" transform="translate(35,955) scale(1,-1)"/></g>
+          <g class="hot" data-spot="apt"><rect class="aptzone" x="452" y="588" width="418" height="400"/><use href="#unit" transform="translate(865,955) scale(-1,-1)"/></g>
+
+          <!-- central party wall spine -->
+          <line class="spine" x1="450" y1="20" x2="450" y2="405"/>
+          <line class="spine" x1="450" y1="595" x2="450" y2="980"/>
+
+          <!-- ===== CORE ===== -->
+          <!-- elevators (center-left) -->
+          <g class="hot" data-spot="elev">
+            <rect class="fillbox" x="300" y="430" width="118" height="140" rx="6"/>
+            <rect class="elev" x="308" y="442" width="48" height="116" rx="2"/>
+            <line class="elev-x" x1="308" y1="442" x2="356" y2="558"/><line class="elev-x" x1="356" y1="442" x2="308" y2="558"/>
+            <rect class="elev" x="362" y="442" width="48" height="116" rx="2"/>
+            <line class="elev-x" x1="362" y1="442" x2="410" y2="558"/><line class="elev-x" x1="410" y1="442" x2="362" y2="558"/>
+          </g>
+          <!-- stairs (center-right) -->
+          <g class="hot" data-spot="stairs">
+            <rect class="fillbox" x="486" y="430" width="120" height="150" rx="6"/>
+            <rect class="stair" x="494" y="440" width="104" height="132"/>
+            <line class="wall" x1="546" y1="440" x2="546" y2="506"/>
+            <line class="stair" x1="494" y1="452" x2="546" y2="452"/><line class="stair" x1="494" y1="464" x2="546" y2="464"/><line class="stair" x1="494" y1="476" x2="546" y2="476"/><line class="stair" x1="494" y1="488" x2="546" y2="488"/><line class="stair" x1="494" y1="500" x2="546" y2="500"/>
+            <line class="stair" x1="546" y1="512" x2="598" y2="512"/><line class="stair" x1="546" y1="524" x2="598" y2="524"/><line class="stair" x1="546" y1="536" x2="598" y2="536"/><line class="stair" x1="546" y1="548" x2="598" y2="548"/><line class="stair" x1="546" y1="560" x2="598" y2="560"/>
+            <path class="stair-arrow" d="M520 500 V460 M514 468 L520 460 L526 468"/>
+          </g>
+          <!-- tank downpipe -->
+          <g class="hot" data-spot="tank">
+            <rect class="fillbox" x="614" y="436" width="150" height="42" rx="8"/>
+            <circle class="pnode" cx="628" cy="457" r="7"/>
+            <text class="corelabel" x="700" y="453" font-size="11">Bajada</text>
+            <text class="corelabel" x="700" y="466" font-size="11">de tanque</text>
+          </g>
+          <!-- fire -->
+          <g class="hot" data-spot="fire">
+            <rect class="fillbox" x="614" y="500" width="150" height="42" rx="8"/>
+            <rect x="622" y="514" width="14" height="14" fill="none" stroke="#f47b9b" stroke-width="2"/>
+            <circle class="fire-ic" cx="646" cy="521" r="7"/>
+            <text class="corelabel" x="700" y="525" font-size="11">Incendio</text>
+          </g>
+
+          <!-- ===== WATER (PVC 3/4") ===== -->
+          <g class="hot" id="water" data-spot="water">
+            <!-- tronco horizontal principal (línea a media altura) -->
+            <path class="pipe" d="M205 405 H700"/>
+            <!-- columna central sobre el muro medianero -->
+            <path class="pipe" d="M450 62 V938"/>
+            <!-- columnas verticales interiores (izq/der del centro) -->
+            <path class="pipe" d="M205 150 V855"/>
+            <path class="pipe" d="M700 150 V855"/>
+            <!-- ramales cortos a las 4 cocinas -->
+            <path class="pipe" d="M450 100 H388"/>
+            <path class="pipe" d="M450 100 H514"/>
+            <path class="pipe" d="M450 900 H388"/>
+            <path class="pipe" d="M450 900 H514"/>
+            <!-- bajada al tanque desde el tronco -->
+            <path class="pipe" d="M628 405 V451"/>
+            <!-- nudos -->
+            <circle class="pnode" cx="450" cy="405" r="6"/>
+            <circle class="pnode" cx="205" cy="405" r="5"/>
+            <circle class="pnode" cx="700" cy="405" r="5"/>
+            <circle class="pnode" cx="450" cy="100" r="4"/>
+            <circle class="pnode" cx="450" cy="900" r="4"/>
+            <circle class="pnode" cx="628" cy="405" r="4"/>
+            <!-- etiquetas -->
+            <text class="pipe-lbl" x="300" y="398">P.V.C. 3/4"</text>
+            <text class="pipe-lbl" x="600" y="398">P.V.C. 3/4"</text>
+            <text class="pipe-lbl" x="360" y="120">P.V.C. 3/4"</text>
+            <text class="pipe-lbl" x="472" y="120">P.V.C. 3/4"</text>
+            <text class="pipe-lbl" x="360" y="888">P.V.C. 3/4"</text>
+            <text class="pipe-lbl" x="472" y="888">P.V.C. 3/4"</text>
+            <text class="pipe-lbl" x="197" y="258" transform="rotate(-90 197 258)">P.V.C. 3/4"</text>
+            <text class="pipe-lbl" x="197" y="762" transform="rotate(-90 197 762)">P.V.C. 3/4"</text>
+            <text class="pipe-lbl" x="708" y="258" transform="rotate(-90 708 258)">P.V.C. 3/4"</text>
+            <text class="pipe-lbl" x="708" y="762" transform="rotate(-90 708 762)">P.V.C. 3/4"</text>
+            <text class="pipe-lbl" x="442" y="320" transform="rotate(-90 442 320)">P.V.C. 3/4"</text>
+          </g>
+
+          <!-- ===== LABELS (upright) ===== -->
+          <!-- featured unit (top-left) room labels -->
+          <text class="rlabel" x="129" y="105">Suite</text>
+          <text class="rlabel" x="275" y="103">Comedor</text>
+          <text class="rlabel" x="388" y="98">Cocina</text>
+          <text class="rlabel" x="330" y="220">Baño</text>
+          <text class="rlabel" x="295" y="230">Sala</text>
+          <text class="rlabel" x="129" y="235">Dormitorio</text>
+          <text class="rlabel" x="99" y="345">Baños</text>
+          <text class="rlabel" x="222" y="345">Dorm.</text>
+          <text class="unit-tag" x="240" y="60">Depto 01</text>
+          <!-- other units -->
+          <text class="unit-tag" x="660" y="60">Depto 02</text>
+          <text class="unit-tag" x="240" y="948">Depto 03</text>
+          <text class="unit-tag" x="660" y="948">Depto 04</text>
+          <!-- core labels -->
+          <text class="corelabel" x="430" y="500" transform="rotate(-90 430 500)" fill="#b9c3d6">Ascensores</text>
+          <text class="corelabel" x="546" y="590">Escalera</text>
+        </svg>
+
+        <div class="legend">
+          <div class="leg"><span class="sw apt"></span> Departamento (×4)</div>
+          <div class="leg"><span class="sw elev"></span> Ascensores</div>
+          <div class="leg"><span class="sw stair"></span> Escalera</div>
+          <div class="leg"><span class="sw pipe"></span> Agua PVC 3/4"</div>
+          <div class="leg"><span class="sw tank"></span> Bajada de tanque</div>
+          <div class="leg"><span class="sw fire"></span> Punto de incendio</div>
+        </div>
+      </div>
+
+      <div class="info">
+        <div class="step-no" id="stepNo">Elemento 1 / 7</div>
+        <h3 id="infoTitle">La planta tipo</h3>
+        <p id="infoText"></p>
+        <div class="note" id="infoNote" hidden></div>
+        <div class="chips" id="chips"></div>
+        <div class="progress"><i id="bar"></i></div>
+        <div class="tour-ctrl">
+          <button id="prev" aria-label="Anterior">‹</button>
+          <button class="play" id="play"><span id="playTxt">▶ Iniciar tour</span></button>
+          <button id="next" aria-label="Siguiente">›</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="agua">
+    <div class="sec-head"><h2>Por qué es difícil poner medidores por departamento</h2><span class="tag">Tema de la asamblea</span></div>
+    <div class="callout">
+      <h3>El plano lo explica</h3>
+      <p>Las líneas <b style="color:var(--gold)">P.V.C. 3/4"</b> que rodean la planta muestran que a cada departamento entran <strong>varias matrices de agua</strong>, no una sola. Por eso no hay un punto único donde colocar un medidor por departamento. Lo que sí existe es una <strong>llave de paso por piso</strong> que corta los cuatro departamentos, así que la opción viable sería un <strong>medidor por piso</strong> (posiblemente dos). Esto es exactamente lo que se discutió en la <a href="../reuniones/20260723/">Asamblea del 23 de julio</a>.</p>
+    </div>
+  </section>
+
+  <section id="original">
+    <div class="sec-head"><h2>Plano original escaneado</h2><span class="tag">Documento fuente</span></div>
+    <div class="scan">
+      <img src="images/planos.jpeg" alt="Plano escaneado de la planta tipo" id="scanImg">
+      <p>Toca la imagen para ampliar · planta tipo del edificio</p>
+    </div>
+  </section>
+
+</div>
+
+<div class="lightbox" id="lightbox"><img src="images/planos.jpeg" alt="Plano ampliado"></div>
+
+<footer>
+  <span>CONDOMINIO SANTA MARÍA 1 · PLANTA TIPO</span>
+  <span>4 DEPTOS · 2 ASCENSORES · 10 PISOS</span>
+</footer>
+
+<script>
+const SPOTS=[
+  {id:'intro',title:'La planta tipo',text:'Este es el piso que se repite en toda la torre. Cuatro departamentos idénticos, espejados entre sí, ocupan las esquinas y comparten un núcleo central con dos ascensores, la escalera, la bajada del tanque y el punto de incendio.'},
+  {id:'apt',title:'Departamento (4 por piso)',text:'Cada departamento tiene balcón, cocina y comedor junto al núcleo, una amplia sala, la suite principal con baño, dos dormitorios más y un grupo de baños. Los cuatro son iguales, reflejados en espejo.',note:'Están entre los departamentos más amplios de Santa Cruz.'},
+  {id:'water',title:'Red de agua · PVC 3/4"',text:'Las tuberías PVC de 3/4" recorren los pasillos y perímetros alimentando cada departamento. A cada uno entran varias matrices, no una sola línea.',note:'Por esto poner un medidor por departamento es complicado: lo viable es un medidor por piso.'},
+  {id:'elev',title:'Dos ascensores',text:'El núcleo tiene dos ascensores contiguos que conectan los 10 pisos. Los repuestos, por ser equipos antiguos, solo los provee una empresa (Interlogy).'},
+  {id:'stairs',title:'Escalera de tramos',text:'Escalera de dos tramos con descanso, junto a los ascensores. Sus gradas y los huecos a tapar forman parte de los trabajos de pintura previstos por el condominio.'},
+  {id:'tank',title:'Bajada de tanque',text:'Punto por donde baja el agua desde el tanque hacia la red del piso. Su tapa presentó una rotura que será reparada; es clave para la calidad del agua.'},
+  {id:'fire',title:'Punto de incendio',text:'Toma y gabinete contra incendios junto al núcleo de circulación, disponible en cada piso como medida de seguridad.'}
+];
+
+const el=id=>document.getElementById(id);
+let i=0, timer=null;
+const groups=[...document.querySelectorAll('.hot')];
+function clearActive(){groups.forEach(g=>g.classList.remove('active'));}
+function highlight(id){clearActive();if(id==='intro')return;document.querySelectorAll('.hot[data-spot="'+id+'"]').forEach(g=>g.classList.add('active'));}
+function render(){
+  const s=SPOTS[i];
+  el('stepNo').textContent='Elemento '+(i+1)+' / '+SPOTS.length;
+  el('infoTitle').textContent=s.title;
+  el('infoText').textContent=s.text;
+  const n=el('infoNote');
+  if(s.note){n.hidden=false;n.innerHTML='<b>Nota:</b> '+s.note;}else{n.hidden=true;}
+  el('bar').style.width=((i+1)/SPOTS.length*100)+'%';
+  [...el('chips').children].forEach((c,k)=>c.classList.toggle('on',k===i));
+  highlight(s.id);
+}
+function go(n){i=(n+SPOTS.length)%SPOTS.length;render();}
+function stopTour(){if(timer){clearInterval(timer);timer=null;el('playTxt').textContent='▶ Iniciar tour';}}
+function toggleTour(){if(timer){stopTour();return;}el('playTxt').textContent='⏸ Pausar';timer=setInterval(()=>go(i+1),3200);}
+el('chips').innerHTML=SPOTS.map((s,k)=>'<button data-k="'+k+'">'+s.title.split(' ')[0]+'</button>').join('');
+el('chips').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;stopTour();go(+b.dataset.k);});
+el('prev').addEventListener('click',()=>{stopTour();go(i-1);});
+el('next').addEventListener('click',()=>{stopTour();go(i+1);});
+el('play').addEventListener('click',toggleTour);
+groups.forEach(g=>g.addEventListener('click',()=>{stopTour();const idx=SPOTS.findIndex(s=>s.id===g.dataset.spot);if(idx>=0)go(idx);}));
+const lb=el('lightbox');
+el('scanImg').addEventListener('click',()=>lb.classList.add('open'));
+lb.addEventListener('click',()=>lb.classList.remove('open'));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('open');});
+render();
+</script>
+</body>
+</html>

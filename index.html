@@ -1,580 +1,274 @@
 <!DOCTYPE html>
 <html lang="es">
-
-<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-
 <head>
-   <!-- Required meta tags -->
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   <title>Santa Marìa 1</title>
-   <link href="images/favicon.png" rel="icon">
-
-   <link rel="stylesheet" href="css/plugins.css">
-   <link rel="stylesheet" href="css/style.css">
-
-   <!--Popup-->
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.15/dist/sweetalert2.min.css">
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.15/dist/sweetalert2.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Condominio Santa María · Santa Cruz de la Sierra</title>
+<link rel="icon" href="images/favicon.png">
+<meta name="description" content="Condominio Santa María 1 — Santa Cruz de la Sierra. Torre residencial de 10 pisos con departamentos entre los más amplios de la ciudad, piscina, parque infantil, churrasqueras y terraza con vista panorámica.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
 
 </head>
+<body>
 
-<body data-bs-spy="scroll" data-bs-target="#xenav">
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <span class="mark">SM</span>
+      <span>Santa María<small>Santa Cruz · Bolivia</small></span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menú" aria-expanded="false">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="#ubicacion">Ubicación</a>
+      <a href="#edificio">El edificio</a>
+      <a href="#areas">Áreas sociales</a>
+      <a href="#departamento">Departamentos</a>
+      <a href="planos_edificio/">Planos</a>
+      <a href="censo/">Censo</a>
+      <a href="finanzas/">Finanzas</a>
+      <a href="personeria/">Personería</a>
+      <a class="cta" href="reuniones/">Reuniones</a>
+    </div>
+  </div>
+</nav>
 
-   <!--PreLoader-->
-   <div class="loader">
-      <div class="loader-inner">
-         <div class="loader-blocks">
-            <span class="block-1"></span>
-            <span class="block-2"></span>
-            <span class="block-3"></span>
-            <span class="block-4"></span>
-            <span class="block-5"></span>
-            <span class="block-6"></span>
-            <span class="block-7"></span>
-            <span class="block-8"></span>
-            <span class="block-9"></span>
-            <span class="block-10"></span>
-            <span class="block-11"></span>
-            <span class="block-12"></span>
-            <span class="block-13"></span>
-            <span class="block-14"></span>
-            <span class="block-15"></span>
-            <span class="block-16"></span>
-         </div>
+<div class="wrap" id="top">
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="eyebrow">Condominio Santa María 1 · Santa Cruz de la Sierra</div>
+  <h1>Vivir en <span class="g">altura</span>,<br>en el corazón de Santa Cruz</h1>
+  <p class="sub">Una torre residencial de 10 pisos con departamentos entre los más amplios de la ciudad, rodeada de áreas verdes, piscina y una terraza con vista panorámica. Este es el portal de la comunidad de copropietarios.</p>
+  <div class="hero-cta">
+    <a class="btn primary" href="#ubicacion">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0116 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Ver ubicación
+    </a>
+    <a class="btn ghost" href="#edificio">Conocer el edificio</a>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi" style="--accent:var(--cyan)"><div class="n">10</div><div class="l">Pisos</div></div>
+    <div class="kpi" style="--accent:var(--violet)"><div class="n">40</div><div class="l">Departamentos</div></div>
+    <div class="kpi" style="--accent:var(--gold)"><div class="n">4</div><div class="l">Deptos por piso</div></div>
+    <div class="kpi" style="--accent:var(--cyan)"><div class="n">2</div><div class="l">Ascensores</div></div>
+    <div class="kpi" style="--accent:var(--rose)"><div class="n">1</div><div class="l">Torre única</div></div>
+  </div>
+</header>
+
+<!-- ============ UBICACIÓN ============ -->
+<section id="ubicacion">
+  <div class="sec-head"><h2>Ubicación</h2><span class="tag">-17.744555, -63.168989</span></div>
+  <div class="grid g-loc">
+    <div class="map-frame">
+      <iframe
+        src="https://maps.google.com/maps?q=-17.744555,-63.168989&z=17&hl=es&output=embed"
+        loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        title="Ubicación del Condominio Santa María"></iframe>
+    </div>
+    <div class="panel">
+      <ul class="loc-list">
+        <li>
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0116 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+          <div><b>Condominio Santa María 1</b><span>Santa Cruz de la Sierra, Bolivia</span></div>
+        </li>
+        <li>
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 010 20 15 15 0 010-20z"/></svg></span>
+          <div><b>Coordenadas</b><span class="mono">-17.744555, -63.168989</span></div>
+        </li>
+        <li>
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg></span>
+          <div><b>Cómo llegar</b><span>Abre la ruta en tu app de mapas</span></div>
+        </li>
+      </ul>
+      <div class="hero-cta" style="margin-top:18px">
+        <a class="btn primary" href="https://www.google.com/maps/search/?api=1&query=-17.744555,-63.168989" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+          Abrir en Google Maps
+        </a>
       </div>
-   </div>
-   <!--PreLoader Ends-->
+    </div>
+  </div>
+</section>
 
-   <!-- header -->
-   <header class="site-header">
-      <nav class="navbar navbar-expand-lg transparent-bg static-nav">
-         <div class="container">
-            <a class="navbar-brand" href="/" style="font-weight: bold; color: #fff;">
-               Santa María
-            </a>
-            <div class="collapse navbar-collapse" id="xenav">
-               <ul class="navbar-nav ms-auto">
-                  <li class="nav-item link1">
-                     <a class="nav-link pagescroll btn" href="#our-testimonial">
-                        Informaciòn
-                        <img src="images/icons/icon-mesage.svg" class="mov-img1 delete-img" />
-                     </a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link pagescroll" href="#our-blog">
-                        <img src="images/icons/icon-esp.svg" class="mov-img1" />
-                     </a>
-                  </li>
+<!-- ============ EL EDIFICIO ============ -->
+<section id="edificio">
+  <div class="sec-head"><h2>El edificio, de la terraza a la planta baja</h2><span class="tag">Corte vertical</span></div>
+  <div class="building">
 
-               </ul>
-            </div>
-         </div>
-      </nav>
-
-   </header>
-   <!-- header -->
-
-   <!--Main Slider-->
-   <div id="revo_main_wrapper" class="rev_slider_wrapper fullwidthbanner-container">
-      <div id="banner-main" class="rev_slider fullwidthabanner " style="display:none;" data-version="5.4.1">
-         <ul>
-            <!-- SLIDE  -->
-            <li data-index="rs-01" data-transition="fade" data-slotamount="default" data-easein="Power3.easeInOut"
-               data-easeout="Power3.easeInOut" data-masterspeed="2000" data-fsmasterspeed="1500" class="rev_gradient">
-
-               <!-- MAIN IMAGE -->
-               <img src="images/transparent.png" alt="" data-bgposition="center center" data-bgfit="cover"
-                  data-bgrepeat="no-repeat" class="rev-slidebg" data-bgparallax="10" data-no-retina>
-               <!-- LAYER NR. 1 -->
-               <div class="tp-caption tp-resizeme" data-x="['right','right','center','center']"
-                  data-hoffset="['0','0','0','0']" data-y="['middle','middle','top10,'middle']"
-                  data-voffset="['0','0','0','0']" data-whitespace="normal" data-responsive_offset="on"
-                  data-width="['none','none','none','responsive]" data-type="text" data-transform_idle="o:1;"
-                  data-transform_in="x:-50px;opacity:0;s:2000;e:Power3.easeOut;"
-                  data-transform_out="s:1000;e:Power3.easeInOut;s:1000;e:Power3.easeInOut;" data-start="1000"
-                  data-splitin="none" data-splitout="none">
-                  <img src="images/index-map.svg" class="img-responsive1" />
-               </div>
-               <div class="tp-caption tp-resizeme" data-x="['left','left','center','center']"
-                  data-hoffset="['35','35','65','20']" data-y="['middle','middle','bottom','bottom']"
-                  data-voffset="['50','70',-120','-90']" data-whitespace="nowrap" data-responsive_offset="on"
-                  data-width="['none','none','none','none']" data-type="text"
-                  data-textalign="['left','left','left','left']" data-fontsize="['35','35','30','30']"
-                  data-transform_idle="o:1;"
-                  data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;"
-                  data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
-                  data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;" data-start="1200" data-splitin="none"
-                  data-splitout="none">
-                  
-                  <div class="fontbold whitecolor line1">"Constantemente trabajando</div>
-                  <div class=" fontbold whitecolor line1">para mejorar nuestra </div>
-                  <div class="fontbold whitecolor line1">convivencia"</div>
-               </div>
-
-               <a class="tp-caption tp-resizeme" href="/identificacion/index.html"
-                  data-x="['left','left','left','left']" data-hoffset="['20','20','200','60']"
-                  data-y="['middle','middle','bottom','bottom']" data-voffset="['180','180','-180','-170']"
-                  data-width="250" data-height="none" data-whitespace="normal" data-type="button" data-actions=''
-                  data-responsive_offset="on" data-textAlign="['center','center','center','center']"
-                  data-fontsize="['23','23','18','15']" data-margintop="[0,0,0,0]" data-marginright="[0,0,0,0]"
-                  data-marginbottom="[0,0,0,0]" data-marginleft="[0,0,0,0]"
-                  data-frames='[{"delay":700,"speed":2000,"frame":"0","from":"sX:1;sY:1;opacity:0;fb:40px;","to":"o:1;fb:0;","ease":"Power4.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"200","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;fb:0;"}]'
-                  style=" box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;">
-                  <span class="button btnprimary-alt  pagescroll border1"> <img
-                        src="images/icons/icon-fiber-smart-record.svg" /> &nbsp;
-                     Identificación
-                  </span>
-               </a>
-            </li>
-         </ul>
+    <div class="level terrace">
+      <div class="lv-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg></div>
+      <div>
+        <h3>Terraza</h3>
+        <p>Churrasqueras, salón de eventos y una increíble vista panorámica a la ciudad de Santa Cruz.</p>
       </div>
-   </div>
-   <!--Main Slider ends -->
+      <span class="badge">Nivel superior</span>
+    </div>
 
-
-   <!-- Mobile Apps -->
-   <section id="our-apps" class="pad1 bg-content1 fullscreen">
-      <div class="container">
-         <div class="row" id="app-feature">
-            <div class="col-lg-7 col-md-12 col-sm-12">
-               <div class="content-right clearfix pad1">
-                  <div class=" left top30  wow fadeInUp" data-wow-delay="300ms">
-                     <div class="">
-                        <h2 class="darkcolor fontbold fontsize-resp">Areas </h2>
-                     </div>
-                  </div>
-                  <div class=" left   wow fadeInUp" data-wow-delay="350ms">
-                     <div class=" ">
-                        <h2 class="darkcolor heading_space fontbold fontsize-resp">e información.</h2>
-                     </div>
-                  </div>
-                  
-               </div>
-               <div class="content-left clearfix pad1 row">
-                  <div class="col-lg-3 col-md-12 col-sm-12"></div>
-                  <div class="col-lg-9 col-md-6 col-sm-12">
-                     <div class=" left top30  wow fadeInUp list-button1" data-wow-delay="300ms">
-                        <a class="button btnsecondary" href="apartamentos/">
-                           <img src="images/phone.png" style="width: 20px;" /> &nbsp;Departamentos
-                        </a>
-                        <a class="button btnsecondary" href="parqueos/">
-                           <img src="images/parqueo.png" style="width: 20px;" /> &nbsp;Parqueos
-                        </a>
-                        <a class="button btnsecondary" href="bauleras/">
-                           <img src="images/baulera.png" style="width: 20px;" /> &nbsp;Bauleras
-                        </a>
-                        <a class="button btnsecondary">
-                           <img src="images/parrilla.png" style="width: 20px;" /> &nbsp;Terraza
-                        </a>
-                        <a class="button btnsecondary">
-                           <img src="images/piscina.png" style="width: 20px;" /> &nbsp;Piscina
-                        </a>
-                        <a class="button btnsecondary">
-                           <img src="images/game.png" style="width: 20px;"/> &nbsp;Parque de  juegos
-                        </a>
-                        <a class="button btnsecondary">
-                           <img src="images/reuniones.png" style="width: 20px;"/> &nbsp;Reuniones
-                        </a>
-                        <a class="button btnsecondary" href="usuarios/">
-                           <img src="images/habitantes.png" style="width: 20px;"/> &nbsp;Habitantes
-                        </a>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-lg-5 col-md-12 col-sm-12 box-1">
-                  <div class="image feature-item text-center  wow fadeInRight" data-wow-delay="500ms">
-                     <img src="images/phone.png" alt="">
-                  </div>
-               </div>
-            </div>
-         </div>
-   </section>
-   <!--Mobile Apps ends-->
-
-   <!-- Mobile Motos 
-   <section id="" class="pad2 bg-content2 fullscreen">
-      <div class="container">
-         <div class="row" id="app-feature">
-            <div class="col-sm-12">
-               <div class=" left top30 text-center wow fadeInLeft" data-wow-delay="300ms">
-                  <div class="">
-                     <h2 class="whitecolor fontbold">Proyectos</h2>
-                  </div>
-               </div>
-            </div>
-         </div>
+    <div class="level">
+      <div class="lv-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+      <div>
+        <h3>Bauleras</h3>
+        <p>Depósitos privados ubicados en la parte superior del edificio.</p>
       </div>
-      <div class="container pad2 fadeInUp">
-         <div class="row">
-            <div class="col-md-12 col-sm-12 ">
-               <div id="" class="owl-carousel">
-                  <div class="item">
-                     <div class="logo-item">
-                        <img alt="" src="images/productos/h1.png">
-                     </div>
-                     <div class="descrip-item">
-                        <div class="fontsize-25 whitecolor">Empresa de Seguridad</div>
-                        <div class="fontsize-15 whitecolor">Contratando una nueva empresa de seguridad</div>
-                        <a href="#">
-                           <span class="button btnprimary-alt  pagescroll fontsize-15 buttoncarro">
-                              <img src="images/icons/icon-fiber-smart-record.svg" class="iconsize" /> &nbsp;
-                              Ver</span>
-                        </a>
-                     </div>
-                  </div>
-                  <div class="item">
-                     <div class="logo-item">
-                        <img alt="" src="images/productos/h2.png">
-                     </div>
-                     <div class="descrip-item">
-                        <div class="fontsize-25 whitecolor">Pintado del edificio</div>
-                        <div class="fontsize-15 whitecolor">Proyecto de pintado y cambio de color.</div>
-                        <a href="#">
-                           <span class="button btnprimary-alt  pagescroll fontsize-15 buttoncarro">
-                              <img src="images/icons/icon-fiber-smart-record.svg" class="iconsize" /> &nbsp;
-                              Ver</span>
-                        </a>
-                     </div>
-                  </div>
-                  <div class="item">
-                     <div class="logo-item">
-                        <img alt="" src="images/productos/h3.png">
-                     </div>
-                     <div class="descrip-item">
-                        <div class="fontsize-25 whitecolor">Personería Jurídica</div>
-                        <div class="fontsize-15 whitecolor">Creación de la Personería Jurídica del condominio.</div>
-                        <a href="#">
-                           <span class="button btnprimary-alt  pagescroll fontsize-15 buttoncarro">
-                              <img src="images/icons/icon-fiber-smart-record.svg" class="iconsize" /> &nbsp;
-                              Ver</span>
-                        </a>
-                     </div>
-                  </div>
-             -->
-                  <!-- <div class="item">
-                     <div class="logo-item">
-                        <img alt="" src="images/productos/h1.png">
-                     </div>
-                     <div class="descrip-item">
-                        <div class="fontsize-25 whitecolor">Classic</div>
-                        <div class="fontsize-15 whitecolor">Lifetime value 24 months</div>
-                        <a href="#">
-                           <span class="button btnprimary-alt  pagescroll fontsize-15 buttoncarro">
-                              <img src="images/icons/icon-fiber-smart-record.svg" class="iconsize" /> &nbsp;
-                              Activa tu ciudad</span>
-                        </a>
-                     </div>
-                  </div>
-                  <div class="item">
-                     <div class="logo-item">
-                        <img alt="" src="images/productos/h2.png">
-                     </div>
-                     <div class="descrip-item">
-                        <div class="fontsize-25 whitecolor">E-Bike</div>
-                        <div class="fontsize-15 whitecolor">Lifetime value 24 months</div>
-                        <a href="#">
-                           <span class="button btnprimary-alt  pagescroll fontsize-15 buttoncarro">
-                              <img src="images/icons/icon-fiber-smart-record.svg" class="iconsize" /> &nbsp;
-                              Activa tu ciudad</span>
-                        </a>
-                     </div>
-                  </div>
-                  <div class="item">
-                     <div class="logo-item">
-                        <img alt="" src="images/productos/h3.png">
-                     </div>
-                     <div class="descrip-item">
-                        <div class="fontsize-25 whitecolor">Moped</div>
-                        <div class="fontsize-15 whitecolor">Lifetime value 48 months</div>
-                        <a href="#">
-                           <span class="button btnprimary-alt  pagescroll fontsize-15 buttoncarro">
-                              <img src="images/icons/icon-fiber-smart-record.svg" class="iconsize" /> &nbsp;
-                              Activa tu ciudad</span>
-                        </a>
-                     </div>
-                  </div>
-                  <div class="item">
-                     <div class="logo-item">
-                        <img alt="" src="images/productos/h4.png">
-                     </div>
-                     <div class="descrip-item">
-                        <div class="fontsize-25 whitecolor">S-Lite</div>
-                        <div class="fontsize-15 whitecolor">Lifetime value 24 months</div>
-                        <a href="#">
-                           <span class="button btnprimary-alt  pagescroll fontsize-15 buttoncarro">
-                              <img src="images/icons/icon-fiber-smart-record.svg" class="iconsize" /> &nbsp;
-                              Activa tu ciudad</span>
-                        </a>
-                     </div>
-                  </div>
-                  <div class="item">
-                     <div class="logo-item">
-                        <img alt="" src="images/productos/h5.png">
-                     </div>
-                     <div class="descrip-item">
-                        <div class="fontsize-25 whitecolor">S-Black</div>
-                        <div class="fontsize-15 whitecolor">Lifetime value 24 months</div>
-                        <a href="#">
-                           <span class="button btnprimary-alt  pagescroll fontsize-15 buttoncarro">
-                              <img src="images/icons/icon-fiber-smart-record.svg" class="iconsize" /> &nbsp;
-                              Activa tu ciudad</span>
-                        </a>
-                     </div>
-                  </div> -->
-               </div>
-            </div>
-         </div>
+      <span class="badge">Nivel de servicio</span>
+    </div>
+
+    <div class="level">
+      <div class="lv-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22V4a1 1 0 011-1h9a1 1 0 011 1v18M15 8h4a1 1 0 011 1v13M8 7h.01M8 11h.01M8 15h.01M11 7h.01M11 11h.01M11 15h.01"/></svg></div>
+      <div>
+        <h3>Pisos residenciales · 1 a 10</h3>
+        <p>4 departamentos por piso y 2 ascensores que conectan toda la torre.</p>
       </div>
-   </section>
-   <!--Mobile motos ends-->
-
-   <!-- Mobile Technology -->
-   <section id="" class="pad3 bg-content2 fullscreen">
-      <div class="container">
-         <div class="row" id="app-feature">
-            <div class="col-lg-6  col-md-12 col-sm-12">
-               <div class=" left top30 text-md-start2 wow fadeInRight content-center" data-wow-delay="300ms">
-                  <div class="">
-                     <h2 class="whitecolor fontbold">Plantel Administrativo</h2>
-                  </div>
-               </div>
-            </div>
-            <div class="col-lg-6  col-md-12 col-sm-12">
-               <div class=" right top30 wow fadeInUp aling-right" data-wow-delay="350ms">
-                  <a class="tp-caption tp-resizeme " href="https://github.com/Condominio-Santa-Maria" target="_blank">
-                     <span class="button btnprimary-alt  pagescroll border1"> <img
-                           src="images/icons/icon-fiber-smart-record.svg" /> &nbsp;
-                        Visita nuestra wiki</span>
-                  </a>
-               </div>
-            </div>
-            <div class="text-center row justify-content-md-center" data-textAlign="center">
-               <div class="col-lg-6  col-md-8 col-sm-12">
-                  <div class=" left top30 text-md-start wow fadeInUp" data-wow-delay="300ms">
-                    
-                     <div class="text-center whitecolor">
-                        <ul class="list-monitor">
-                           <li>
-                              <div class="image" style="display: flex; justify-content: center;">
-                                 Vice-Presidente
-                              </div>
-                              <h3>Mauro H.</h3>
-                           </li>
-                           <li style="position: relative; bottom: -5vh;">
-                              <div class="image" style="display: flex; justify-content: center;">
-                                 Presidente
-                              </div>
-                              <h3>Ruddy P.</h3>
-                           </li>
-                           <li>
-                              <div class="image" style="display: flex; justify-content: center;">
-                                 Tesorera
-                              </div>
-                              <h3>Ursula E.</h3>
-                           </li>
-                        </ul>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-lg-6 col-md-8 col-sm-12" style="margin-top: 50px;">
-                  <div class=" left top30 text-md-start wow fadeInUp" data-wow-delay="300ms">
-                     <div class="image" style="display: flex; justify-content: center;">
-                        Administración
-                     </div>
-                     <div class="text-center whitecolor">
-                        <h3>Irene Portocarrero</h3>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
+      <div class="floors-strip">
+        <i>P10</i><i>P9</i><i>P8</i><i>P7</i><i>P6</i><i>P5</i><i>P4</i><i>P3</i><i>P2</i><i>P1</i>
       </div>
+    </div>
 
-   </section>
-   <!--Mobile Technology ends-->
-
-
-
-   <!-- Mobile ciudad -->
-   <section id="" class=" bg-content1 fullscreen2">
-      <div class="contenido-centro">
-         <div class="bg-ciudad2 wow fadeInLeft" data-wow-delay="300ms"> </div>
-         <div class="container">
-            <div class="row">
-               <div class="col-lg-12 col-md-12 col-sm-12  ">
-                  <div class="content-right clearfix  " style="text-align: center;">
-                     <div class=" left top30  wow fadeInUp" data-wow-delay="300ms">
-                        <div class="">
-                           <h2 class="darkcolor fontbold">Trabajando <br /> 24/7. </h2>
-                           <h3>Estamos trabajando para mejorar y mantener nuestra comunidad.</h3>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-lg-12 col-md-12 col-sm-12 top30 bg-responsive wow fadeInRight" data-wow-delay="300ms"
-                  style="text-align: center;">
-                  <img src="images/ciudad3.png" />
-               </div>
-            </div>
-         </div>
-         <div class="bg-ciudad wow fadeInRight" data-wow-delay="300ms"> </div>
+    <div class="level ground">
+      <div class="lv-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20M4 20V9l8-5 8 5v11M9 20v-5h6v5"/><circle cx="19" cy="6" r="2"/></svg></div>
+      <div>
+        <h3>Planta baja</h3>
+        <p>El edificio se ubica en el centro, con los parqueos alrededor. Al fondo, una piscina y un parque para niños.</p>
       </div>
+      <span class="badge">Nivel de acceso</span>
+    </div>
 
-   </section>
-   <!--Mobile ciudad ends-->
+  </div>
+</section>
 
+<!-- ============ ÁREAS SOCIALES ============ -->
+<section id="areas">
+  <div class="sec-head"><h2>Áreas sociales</h2><span class="tag">Espacios comunes</span></div>
+  <div class="grid g-3">
 
-   <!--Contact US Ends-->
-   <footer id="site-footer" class="padding_half bg-footer">
-      <div class="container">
-         <div class="row">
-            <div class="col-lg-6 col-md-12 col-sm-12 text-md-start wow fadeInUp " data-wow-delay="300ms">
-               <p>&copy; 2024 Condominio Santa María 1 - Información actualizada sobre la comunidad</p>
-               <p>Conéctate con nosotros para obtener más detalles o resolver dudas.</p>
-            </div>
-            <div class="col-lg-6 col-md-12 col-sm-12 text-center2" style="text-align: right; padding-top: 15px;">
-               <ul class="social-icons bottom25 wow fadeInUp" data-wow-delay="300ms">
-                  <li><a href="javascript:void(0)"><i class="fa fa-linkedin"></i> </a> </li>
-                  <li><a href="javascript:void(0)" class="icon-cb">cb </a> </li>
-                  <li><a href="javascript:void(0)"><i class="fa fa-instagram"></i> </a> </li>
-                  <li><a href="javascript:void(0)"><i class="fa fa-facebook"></i> </a> </li>
-               </ul>
-            </div>
-         </div>
-      </div>
-   </footer>
-   <!--Footer ends-->
+    <div class="amenity">
+      <div class="a-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 15c1.5 0 1.5 1.5 3 1.5S8.5 15 10 15s1.5 1.5 3 1.5S14.5 15 16 15s1.5 1.5 3 1.5S20.5 15 22 15M2 20c1.5 0 1.5 1.5 3 1.5S8.5 20 10 20s1.5 1.5 3 1.5S14.5 20 16 20s1.5 1.5 3 1.5S20.5 20 22 20M6 15V5a2 2 0 012-2h1M6 8h3"/></svg></div>
+      <h3>Piscina</h3>
+      <p>Ubicada al fondo de la planta baja, rodeada de área verde para el descanso de la comunidad.</p>
+    </div>
 
+    <div class="amenity">
+      <div class="a-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v6M8 6l4-3 4 3M5 21v-6a7 7 0 0114 0v6M9 21v-4M15 21v-4"/></svg></div>
+      <h3>Parque para niños</h3>
+      <p>Un espacio de juegos seguro al aire libre, pensado para las familias del condominio.</p>
+    </div>
 
-   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-   <script src="js/bootstrap.min.js"></script>
-   <script src="js/jquery-3.6.0.min.js"></script>
+    <div class="amenity">
+      <div class="a-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16M6 20v-6M18 20v-6M4 14h16l-2-6H6l-2 6zM9 8V5M13 8V4M17 8V5"/></svg></div>
+      <h3>Churrasqueras</h3>
+      <p>Parrillas en la terraza para reuniones y asados con familia y amigos.</p>
+    </div>
 
-   <!--Bootstrap Core-->
-   <script src="js/popper.min.js"></script>
+    <div class="amenity">
+      <div class="a-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V8l8-5 8 5v13M4 21h16M9 21v-5a3 3 0 016 0v5M8 3l4 3 4-3"/></svg></div>
+      <h3>Salón de eventos</h3>
+      <p>Un lugar en la terraza para celebrar y organizar eventos de la comunidad.</p>
+    </div>
 
-   <!--to view items on reach-->
-   <script src="js/jquery.appear.js"></script>
+    <div class="amenity">
+      <div class="a-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20M4 20V10l6-4M10 20V6l10 6v8M13 12h.01M13 15h.01M16 13h.01M16 16h.01"/></svg></div>
+      <h3>Vista panorámica</h3>
+      <p>Desde lo alto de la terraza, una increíble vista a la ciudad de Santa Cruz de la Sierra.</p>
+    </div>
 
-   <!--Equal-Heights-->
-   <script src="js/jquery.matchHeight-min.js"></script>
+    <div class="amenity">
+      <div class="a-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h2M12 15h5"/></svg></div>
+      <h3>Parqueos</h3>
+      <p>Estacionamientos distribuidos alrededor del edificio en la planta baja.</p>
+    </div>
 
-   <!--Owl Slider-->
-   <script src="js/owl.carousel.min.js"></script>
+  </div>
+</section>
 
-   <!--number counters-->
-   <script src="js/jquery-countTo.js"></script>
+<!-- ============ EL DEPARTAMENTO ============ -->
+<section id="departamento">
+  <div class="sec-head"><h2>El departamento</h2><span class="tag">Entre los más amplios de Santa Cruz</span></div>
+  <div class="grid g-2">
+    <div class="panel">
+      <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:1.05rem;margin-bottom:6px">Amplitud que marca la diferencia</h3>
+      <p style="color:var(--muted);font-size:.9rem">Cada departamento está entre los más grandes de la ciudad, con ambientes generosos y una distribución pensada para la comodidad de toda la familia.</p>
+      <p class="apt-highlight" style="margin-top:16px"><b>4 departamentos por piso</b> · una torre única de 10 niveles · 2 ascensores.</p>
+    </div>
+    <div class="panel">
+      <ul class="apt-rooms">
+        <li><span class="r-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a3 3 0 013-3h12a3 3 0 013 3v6M3 18h18M6 9V6a2 2 0 012-2h8a2 2 0 012 2v3"/></svg></span><div><b>Suite principal</b><span>Con baño privado</span></div></li>
+        <li><span class="r-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a3 3 0 013-3h12a3 3 0 013 3v6M3 18h18M6 9V6a2 2 0 012-2h8a2 2 0 012 2v3"/></svg></span><div><b>2 habitaciones</b><span>Con baño compartido</span></div></li>
+        <li><span class="r-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16v3a4 4 0 01-4 4H8a4 4 0 01-4-4v-3zM6 12V6a2 2 0 012-2 2 2 0 012 2M8 19l-1 2M17 19l1 2"/></svg></span><div><b>Baño de visitas</b><span>Independiente</span></div></li>
+        <li><span class="r-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20v-9l9-6 9 6v9M3 20h18M8 20v-5h8v5M12 3v2"/></svg></span><div><b>Sala de estar</b><span>Amplia</span></div></li>
+        <li><span class="r-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v7a3 3 0 006 0V2M9 9v13M15 2c-1 0-2 1-2 4s1 4 2 4 2-1 2-4-1-4-2-4zM15 10v12"/></svg></span><div><b>Cocina amplia</b><span>Con espacio de trabajo</span></div></li>
+        <li><span class="r-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="13" r="4"/><path d="M8 6h.01"/></svg></span><div><b>Lavandería</b><span>Ambiente propio</span></div></li>
+        <li style="grid-column:1/-1"><span class="r-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 016-6h4a6 6 0 016 6v1"/></svg></span><div><b>Habitación de servicio</b><span>Para el personal, con baño privado</span></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-   <!--Parallax Background-->
-   <script src="js/parallaxie.js"></script>
+<!-- ============ ACCESOS ============ -->
+<section id="accesos">
+  <div class="sec-head"><h2>Gestión del condominio</h2><span class="tag">Accesos rápidos</span></div>
+  <div class="grid g-3">
 
-   <!--Cubefolio Gallery-->
-   <script src="js/jquery.cubeportfolio.min.js"></script>
+    <a class="access" href="planos_edificio/">
+      <span class="ac-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3zM3 9h18M9 21V9M15 9v12"/><circle cx="6" cy="6" r="0.6"/></svg></span>
+      <div><h3>Planos del edificio</h3><p>Planta tipo interactiva</p></div>
+      <span class="arrow">→</span>
+    </a>
 
-   <!--FancyBox popup-->
-   <script src="js/jquery.fancybox.min.js"></script>
+    <a class="access" href="censo/">
+      <span class="ac-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18M8 17V9M13 17V5M18 17v-6"/></svg></span>
+      <div><h3>Censo 2026</h3><p>Resultados del relevamiento</p></div>
+      <span class="arrow">→</span>
+    </a>
 
-   <!-- Video Background-->
-   <script src="js/jquery.background-video.js"></script>
+    <a class="access" href="finanzas/">
+      <span class="ac-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5A2.5 2.5 0 0112 8c1.5 0 2.5.8 2.5 2M14.5 14.5A2.5 2.5 0 0112 16c-1.5 0-2.5-.8-2.5-2"/></svg></span>
+      <div><h3>Finanzas</h3><p>Estado de cuentas</p></div>
+      <span class="arrow">→</span>
+    </a>
 
-   <!--TypeWriter-->
-   <script src="js/typewriter.js"></script>
+    <a class="access" href="personeria/">
+      <span class="ac-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg></span>
+      <div><h3>Personería Jurídica</h3><p>Trámite legal</p></div>
+      <span class="arrow">→</span>
+    </a>
 
-   <!--Particles-->
-   <script src="js/particles.min.js"></script>
+    <a class="access" href="identificacion/">
+      <span class="ac-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="12" r="2.5"/><path d="M14 10h4M14 14h4"/></svg></span>
+      <div><h3>Identificación</h3><p>Registro de residentes</p></div>
+      <span class="arrow">→</span>
+    </a>
 
-   <!--WOw animations-->
-   <script src="js/wow.min.js"></script>
-   <script>
-      $('.owl-carousel').owlCarousel({
-         autoplay: true,
-         nav: false,
-         loop: true,
-         margin: 10,
-         autoHeight: true,
-         dots: true,
+    <a class="access" href="usuarios/">
+      <span class="ac-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20v-1a5 5 0 015-5h2a5 5 0 015 5v1M16 3.5a3 3 0 010 6M18 14h1a4 4 0 014 4v1"/></svg></span>
+      <div><h3>Usuarios</h3><p>Cuentas y accesos</p></div>
+      <span class="arrow">→</span>
+    </a>
 
-         responsive: {
-            0: {
-               items: 1
-            },
-            600: {
-               items: 1
-            },
-            1000: {
-               items: 2
-            },
-            1200: {
-               items: 3
-            },
-            1500: {
-               items: 3
-            }
-         }
-      })
-   </script>
+    <a class="access" href="reuniones/">
+      <span class="ac-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+      <div><h3>Reuniones</h3><p>Asambleas y convocatorias</p></div>
+      <span class="arrow">→</span>
+    </a>
 
-   <script>
-      // popup CORREO
-      $('.btn').click(function () {
-         Swal.fire({
-            title: 'Completa los datos para recibir por e-mail nuestro newsletter investor:',
-            html: `<input type="text" id="nombre" class="swal2-input" placeholder="*Nombre Completo">
-                  <input type="email" id="email" class="swal2-input" placeholder="*E-mail">
-                  <input type="text" id="link" class="swal2-input" placeholder="Link Linkedin">`,
-            confirmButtonText: 'Enviar',
-            focusConfirm: false,
-            preConfirm: () => {
-               const nombre = Swal.getPopup().querySelector('#nombre').value
-               const email = Swal.getPopup().querySelector('#email').value
-               const link = Swal.getPopup().querySelector('#link').value
-               if (!nombre || !email) {
-                  Swal.showValidationMessage(`Por favor introduce nombre y correo`)
-               }
-               return { nombre: nombre, email: email, link: link }
-            }
-         }).then((result) => {
-            if (result.isConfirmed) {
-               alert(JSON.stringify(result.value));
-               
-            }
-         })
-      });
-   </script>
+  </div>
+</section>
 
-   <!--Revolution SLider-->
-   <script src="js/jquery.themepunch.tools.min.js"></script>
-   <script src="js/jquery.themepunch.revolution.min.js"></script>
-   <!-- SLIDER REVOLUTION 5.0 EXTENSIONS  (Load Extensions only on Local File Systems !  The following part can be removed on Server for On Demand Loading) -->
-   <script src="js/revolution.extension.actions.min.js"></script>
-   <script src="js/revolution.extension.carousel.min.js"></script>
-   <script src="js/revolution.extension.kenburn.min.js"></script>
-   <script src="js/revolution.extension.layeranimation.min.js"></script>
-   <script src="js/revolution.extension.migration.min.js"></script>
-   <script src="js/revolution.extension.navigation.min.js"></script>
-   <script src="js/revolution.extension.parallax.min.js"></script>
-   <script src="js/revolution.extension.slideanims.min.js"></script>
-   <script src="js/revolution.extension.video.min.js"></script>
+<footer>
+  <span>CONDOMINIO SANTA MARÍA 1 · SANTA CRUZ DE LA SIERRA</span>
+  <span>10 PISOS · 40 DEPARTAMENTOS · 4 POR PISO</span>
+</footer>
 
-   <!--Google Map API-->
-   <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJnKEvlwpyjXfS_h-J1Cne2fPMqeb44Mk"></script> -->
-   <script src="js/functions.js"></script>
+</div>
 
-   <!--Popup-->
-   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.15/dist/sweetalert2.all.min.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.15/dist/sweetalert2.all.min.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.15/dist/sweetalert2.min.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.15/dist/sweetalert2.min.js"></script>
-
-   <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
-   <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
-   <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
-
-   <script src="js/smtp.js"></script>
-   <script type="module" src="js/index.js"></script>
-
-
+<script>
+const t=document.getElementById('navToggle'),l=document.getElementById('navLinks');
+t.addEventListener('click',()=>{const o=l.classList.toggle('open');t.setAttribute('aria-expanded',o)});
+l.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{l.classList.remove('open');t.setAttribute('aria-expanded',false)}));
+</script>
 </body>
-
 </html>
