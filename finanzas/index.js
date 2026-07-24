@@ -113,6 +113,11 @@ function dibujarGrafico(datos) {
     if (!ctx) return;
     if (chart) chart.destroy();
 
+    // Estilo oscuro (paleta del sitio)
+    Chart.defaults.font.family = "'IBM Plex Sans', sans-serif";
+    Chart.defaults.color = "#7c8aa5";
+    Chart.defaults.borderColor = "rgba(124,162,214,.1)";
+
     const fmtBs = v => "Bs " + Number(v).toLocaleString("es-BO",
         { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
@@ -135,27 +140,32 @@ function dibujarGrafico(datos) {
                     type: "bar",
                     label: "Total ingresos",
                     data: datos.map(d => d.ingresos),
-                    backgroundColor: "rgba(27, 110, 60, 0.75)",
-                    borderColor: "#1b6e3c",
+                    backgroundColor: "rgba(95, 217, 154, 0.7)",
+                    borderColor: "#5fd99a",
                     borderWidth: 1,
+                    borderRadius: 5,
+                    maxBarThickness: 40,
                 },
                 {
                     type: "bar",
                     label: "Total egresos",
                     data: datos.map(d => d.egresos),
-                    backgroundColor: "rgba(155, 44, 44, 0.75)",
-                    borderColor: "#9b2c2c",
+                    backgroundColor: "rgba(244, 123, 155, 0.7)",
+                    borderColor: "#f47b9b",
                     borderWidth: 1,
+                    borderRadius: 5,
+                    maxBarThickness: 40,
                 },
                 {
                     type: "line",
                     label: "Utilidad",
                     data: datos.map(d => d.utilidad),
-                    borderColor: "#1f4e79",
-                    backgroundColor: "#1f4e79",
+                    borderColor: "#4fd8e8",
+                    backgroundColor: "#4fd8e8",
                     borderWidth: 2,
                     tension: 0.3,
                     pointRadius: 4,
+                    pointBackgroundColor: "#4fd8e8",
                 },
             ],
         },
@@ -176,7 +186,15 @@ function dibujarGrafico(datos) {
             scales: {
                 y: {
                     beginAtZero: true,
-                    ticks: { callback: v => "Bs " + Number(v).toLocaleString("es-BO") },
+                    grid: { color: "rgba(124,162,214,.1)" },
+                    ticks: {
+                        color: "#7c8aa5",
+                        callback: v => "Bs " + Number(v).toLocaleString("es-BO"),
+                    },
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: "#7c8aa5" },
                 },
             },
         },

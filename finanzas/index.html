@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finanzas - Condominio Santa María</title>
+    <title>Finanzas · Condominio Santa María 1</title>
+    <link rel="icon" href="../images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
     <!-- SheetJS: lee archivos .xlsx en el navegador -->
     <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
@@ -11,15 +15,23 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 </head>
 <body>
+<div class="wrap">
+
+    <a class="back" href="../">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Volver al inicio
+    </a>
+
     <header>
-        <h1>INFORME ECONÓMICO</h1>
-        <p class="subtitle">Condominio Santa María</p>
+        <div class="eyebrow">Condominio Santa María 1 · Santa Cruz de la Sierra</div>
+        <h1>Informe económico</h1>
+        <p class="subtitle">Ingresos, egresos y utilidad del condominio por gestión.</p>
     </header>
 
     <main>
         <section id="grafico-seccion">
             <div class="controls">
-                <label for="gestion">Gestión:</label>
+                <label for="gestion">Gestión</label>
                 <select id="gestion"></select>
             </div>
             <h2>Ingresos, egresos y utilidad por mes</h2>
@@ -27,7 +39,7 @@
                 <canvas id="grafico"></canvas>
             </div>
             <p id="grafico-msg" class="placeholder"></p>
-            <p class="hint">💡 Haz clic en una barra de <b>ingresos</b> o de <b>egresos</b> para ver su detalle.</p>
+            <p class="hint">Haz clic en una barra de <b>ingresos</b> o de <b>egresos</b> para ver su detalle.</p>
         </section>
 
         <section id="detalle">
@@ -35,6 +47,12 @@
         </section>
     </main>
 
+    <footer>
+        <span>CONDOMINIO SANTA MARÍA 1 · FINANZAS</span>
+        <span>INFORME ECONÓMICO</span>
+    </footer>
+
+</div>
     <script src="index.js"></script>
 </body>
 </html>
