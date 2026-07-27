@@ -1,0 +1,128 @@
+/* =====================================================================
+   Solicitudes registradas · complementa ../style.css
+   ===================================================================== */
+
+/* ---------- KPIs ---------- */
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:34px}
+.kpi{
+  background:linear-gradient(180deg,var(--panel-2),var(--panel));
+  border:1px solid var(--line);border-radius:14px;padding:18px;position:relative;overflow:hidden;
+}
+.kpi::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent,var(--cyan));opacity:.7}
+.kpi .n{font-family:'IBM Plex Mono',monospace;font-size:1.9rem;font-weight:600;color:var(--accent,var(--cyan));line-height:1.2}
+.kpi .l{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+
+/* ---------- barra de filtros ---------- */
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+.buscador{
+  position:relative;flex:1 1 300px;min-width:240px;
+}
+.buscador svg{
+  width:16px;height:16px;color:var(--muted);
+  position:absolute;left:13px;top:50%;transform:translateY(-50%);pointer-events:none;
+}
+.buscador input{
+  width:100%;background:var(--panel-2);color:var(--text);
+  border:1px solid var(--line);border-radius:11px;padding:11px 14px 11px 38px;
+  font-family:'IBM Plex Sans',sans-serif;font-size:.88rem;transition:.15s;
+}
+.buscador input::placeholder{color:rgba(124,138,165,.6)}
+.buscador input:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(79,216,232,.1)}
+.buscador input::-webkit-search-cancel-button{filter:invert(.6)}
+
+.filtros{display:flex;gap:0;border:1px solid var(--line);border-radius:11px;overflow:hidden;background:var(--panel-2)}
+.filtros .f{
+  background:none;border:none;cursor:pointer;color:var(--muted);
+  font-family:'IBM Plex Sans',sans-serif;font-size:.8rem;padding:11px 15px;transition:.15s;
+  border-right:1px solid var(--line);white-space:nowrap;
+}
+.filtros .f:last-child{border-right:none}
+.filtros .f:hover{color:var(--text);background:rgba(124,162,214,.08)}
+.filtros .f.on{background:var(--cyan-dim);color:var(--cyan);font-weight:500}
+
+/* ---------- estados ---------- */
+.estado-carga{
+  display:flex;align-items:center;gap:12px;
+  font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--muted);
+}
+.spin.dark{border-color:rgba(124,162,214,.25);border-top-color:var(--cyan)}
+
+.estado-error{display:flex;align-items:center;gap:15px;border-color:rgba(244,123,155,.3);flex-wrap:wrap}
+.estado-error .e-ic{
+  width:42px;height:42px;border-radius:11px;flex:0 0 auto;display:grid;place-items:center;
+  background:rgba(244,123,155,.14);color:var(--rose);
+}
+.estado-error .e-ic svg{width:22px;height:22px}
+.estado-error b{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:.98rem;display:block}
+.estado-error p{color:var(--muted);font-size:.84rem;margin-top:2px;word-break:break-word}
+.estado-error .btn{margin-left:auto}
+
+.estado-vacio{text-align:center;padding:44px 22px}
+.estado-vacio .v-ic{
+  width:52px;height:52px;border-radius:14px;margin:0 auto 16px;display:grid;place-items:center;
+  background:var(--cyan-dim);color:var(--cyan);
+}
+.estado-vacio .v-ic svg{width:26px;height:26px}
+.estado-vacio b{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:1.05rem;display:block}
+.estado-vacio p{color:var(--muted);font-size:.86rem;margin-top:6px}
+
+/* ---------- tarjetas de solicitud ---------- */
+.solicitudes{display:grid;gap:12px}
+.sol{
+  background:linear-gradient(180deg,var(--panel-2),var(--panel));
+  border:1px solid var(--line);border-radius:15px;padding:18px 20px;
+  position:relative;overflow:hidden;transition:.18s;
+}
+.sol::before{content:"";position:absolute;top:0;bottom:0;left:0;width:2px;background:var(--gold);opacity:.75}
+.sol.tratada::before{background:var(--ok)}
+.sol:hover{border-color:var(--cyan);transform:translateX(3px)}
+
+.sol-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:11px}
+.sol-folio{
+  font-family:'IBM Plex Mono',monospace;font-size:.78rem;font-weight:600;color:var(--gold);
+  letter-spacing:.04em;
+}
+.sol-apto{
+  font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:600;
+  background:linear-gradient(120deg,var(--cyan),var(--violet));color:#07101c;
+  border-radius:7px;padding:4px 10px;
+}
+.badge{
+  font-family:'IBM Plex Mono',monospace;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;
+  border-radius:20px;padding:4px 11px;border:1px solid var(--line);color:var(--muted);white-space:nowrap;
+}
+.badge.consulta{border-color:var(--cyan-dim);color:var(--cyan);background:rgba(79,216,232,.07)}
+.badge.reclamo{border-color:rgba(244,123,155,.28);color:var(--rose);background:rgba(244,123,155,.07)}
+.badge.pendiente{border-color:var(--gold-dim);color:var(--gold);background:rgba(232,184,92,.08)}
+.badge.tratada{border-color:rgba(95,217,154,.28);color:var(--ok);background:rgba(95,217,154,.07)}
+.sol-fecha{
+  margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--muted);white-space:nowrap;
+}
+.sol-detalle{font-size:.9rem;color:var(--text);opacity:.92;white-space:pre-wrap;word-break:break-word}
+.sol-pie{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px;padding-top:11px;
+  border-top:1px dashed var(--line);font-size:.8rem;color:var(--muted);
+}
+.sol-pie .quien{display:flex;align-items:center;gap:7px}
+.sol-pie svg{width:15px;height:15px;color:var(--muted);flex:0 0 auto}
+.sol-pie .acta{
+  margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--ok);
+  border:1px dashed rgba(95,217,154,.3);border-radius:8px;padding:4px 10px;
+}
+
+.sin-resultados{
+  text-align:center;padding:34px 20px;color:var(--muted);font-size:.88rem;
+  border:1px dashed var(--line);border-radius:14px;
+}
+
+@media (max-width:960px){
+  .kpis{grid-template-columns:repeat(3,1fr)}
+  .filtros{flex:1 1 100%}
+  .filtros .f{flex:1}
+}
+@media (max-width:560px){
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .sol-fecha{margin-left:0;width:100%}
+  .estado-error .btn{margin-left:0;width:100%}
+  .filtros .f{font-size:.74rem;padding:10px 8px}
+}

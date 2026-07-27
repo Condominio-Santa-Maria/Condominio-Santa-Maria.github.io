@@ -155,7 +155,11 @@
 
       <div class="state-legend">
         <span class="pill"><span class="dot"></span> Estado actual: pendiente</span>
-        <p>Próximamente publicaremos en esta misma sección el listado de todas las solicitudes pendientes y su seguimiento.</p>
+        <p>Puede consultar en cualquier momento todas las solicitudes registradas y en qué estado se encuentran.</p>
+        <a class="btn ghost" href="pendientes/" style="margin-top:14px;width:100%">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+          Ver solicitudes registradas
+        </a>
       </div>
     </aside>
 
@@ -190,8 +194,23 @@
     <h3 id="tituloExito">Solicitud registrada</h3>
     <p>Su solicitud será tratada en asamblea por todos los propietarios. Por el momento está <b style="color:var(--gold)">pendiente</b>.</p>
     <div class="folio" id="folioExito">—</div>
+    <p class="aviso-local" id="avisoLocal" style="display:none"></p>
     <div class="m-actions">
       <button type="button" class="btn primary" id="btnCerrarExito">Entendido</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL: ERROR DE ENVÍO ============ -->
+<div class="modal-bg" id="modalError" role="dialog" aria-modal="true" aria-labelledby="tituloError">
+  <div class="modal err">
+    <div class="m-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.4 18.4A9 9 0 005.6 5.6M1 1l22 22"/><path d="M12 8v4M12 16h.01"/></svg></div>
+    <h3 id="tituloError">No pudimos enviar su solicitud</h3>
+    <p>Revise su conexión a internet e intente nuevamente. Sus datos siguen cargados en el formulario.</p>
+    <p class="detalle-tec" id="errorDetalle"></p>
+    <div class="m-actions">
+      <button type="button" class="btn primary" id="btnReintentar">Reintentar</button>
+      <button type="button" class="btn ghost" id="btnCerrarError">Cerrar</button>
     </div>
   </div>
 </div>

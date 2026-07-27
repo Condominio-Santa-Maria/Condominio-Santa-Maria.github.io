@@ -1,14 +1,22 @@
 /* =====================================================================
    Consultas y reclamos · Condominio Santa María
    Selector de departamento (10 pisos × 4 deptos), validación,
-   confirmación "¿está seguro?" y registro en estado pendiente.
+   confirmación "¿está seguro?" y envío a Google Sheets.
    ===================================================================== */
 (function () {
   'use strict';
 
+  /* ------------------------------------------------------------------
+     CONFIGURACIÓN · pegue aquí la URL del Apps Script publicado,
+     la que termina en /exec (instrucciones en apps-script.gs).
+
+     Hoja de destino: docs.google.com/spreadsheets/d/13C0QQRZt0zIO6QtWYQvtbPQBPci7Jl3UW8MDv-aAWog
+     Mientras esté vacío, el formulario avisa que no está conectado.
+     ------------------------------------------------------------------ */
+  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbykcvy74xJhTsu6CzJ1VhIk4USVLDzqamcmg20KEQ3Gvx4lYmoerXTMemcYpMBLScg1/exec';
+
   var PISOS = 10;
   var POR_PISO = 4;
-  var STORE_KEY = 'sm_solicitudes';       // lo leerá el listado de pendientes
   var MIN_MENSAJE = 15;
   var MIN_TELEFONO = 7;
 
@@ -28,6 +36,12 @@
   var btnSi      = document.getElementById('btnSi');
   var btnNo      = document.getElementById('btnNo');
   var btnCerrar  = document.getElementById('btnCerrarExito');
+
+  var mError     = document.getElementById('modalError');
+  var errDetalle = document.getElementById('errorDetalle');
+  var btnReintentar = document.getElementById('btnReintentar');
+  var btnCerrarError = document.getElementById('btnCerrarError');
+  var avisoLocal = document.getElementById('avisoLocal');
 
   var aptoSel = null;
   var ultimoFoco = null;
@@ -139,12 +153,13 @@
     if (ultimoFoco && ultimoFoco.focus) ultimoFoco.focus();
   }
   document.addEventListener('keydown', function (e) {
-    if (e.key !== 'Escape') return;
+    if (e.key !== 'Escape' || enviando) return;
     if (mConfirmar.classList.contains('open')) cerrar(mConfirmar);
     else if (mExito.classList.contains('open')) cerrar(mExito);
+    else if (mError.classList.contains('open')) cerrar(mError);
   });
   mConfirmar.addEventListener('click', function (e) {
-    if (e.target === mConfirmar) cerrar(mConfirmar);
+    if (e.target === mConfirmar && !enviando) cerrar(mConfirmar);
   });
 
   function esc(s) {
@@ -162,30 +177,47 @@
       '<div><span>Detalle</span><b class="msg">' + esc(mensaje.value.trim()) + '</b></div>';
   }
 
-  /* ---------- 6. guardar (queda pendiente) ---------- */
-  function leerRegistros() {
-    try {
-      var raw = localStorage.getItem(STORE_KEY);
-      var arr = raw ? JSON.parse(raw) : [];
-      return Array.isArray(arr) ? arr : [];
-    } catch (err) { return []; }
-  }
+  /* ---------- 6. envío a Google Sheets (Apps Script) ---------- */
+  /* Único destino de la solicitud: la hoja de cálculo. No se guarda
+     ninguna copia en el navegador.
+     Se envía como text/plain para que sea una petición "simple" y el
+     navegador no pida preflight CORS, que Apps Script no responde.      */
+  function enviarAlSheet(datos) {
+    if (!ENDPOINT) {
+      return Promise.reject(new Error('el formulario todavía no está conectado a la hoja de solicitudes'));
+    }
 
-  function guardar(registro) {
-    try {
-      var arr = leerRegistros();
-      arr.push(registro);
-      localStorage.setItem(STORE_KEY, JSON.stringify(arr));
-    } catch (err) { /* almacenamiento no disponible: la solicitud igual se confirma */ }
-  }
-
-  function nuevoFolio() {
-    var ahora = new Date();
-    var n = leerRegistros().length + 1;
-    return 'SM-' + ahora.getFullYear() + '-' + String(n).padStart(4, '0');
+    return fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(datos),
+      redirect: 'follow'
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (res) {
+        if (res && res.ok) return { folio: res.folio };
+        throw new Error((res && res.error) || 'respuesta inesperada del servidor');
+      })
+      .catch(function (err) {
+        // Si el navegador bloqueó la lectura de la respuesta, reintentamos
+        // sin poder leerla: el dato llega a la hoja, pero no hay folio de vuelta.
+        return fetch(ENDPOINT, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(datos)
+        }).then(function () {
+          return {};
+        }).catch(function () {
+          throw err;
+        });
+      });
   }
 
   /* ---------- 7. flujo de envío ---------- */
+  var enviando = false;
+  var pendiente = null;   // datos listos para (re)enviar
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (!validar()) return;
@@ -193,35 +225,75 @@
     abrir(mConfirmar);
   });
 
-  btnNo.addEventListener('click', function () { cerrar(mConfirmar); });
+  btnNo.addEventListener('click', function () { if (!enviando) cerrar(mConfirmar); });
 
   btnSi.addEventListener('click', function () {
-    var folio = nuevoFolio();
-    guardar({
-      folio: folio,
+    pendiente = {
       apto: aptoSel,
       nombre: nombre.value.trim(),
       telefono: telefono.value.trim(),
       tipo: tipoSeleccionado(),
       mensaje: mensaje.value.trim(),
-      estado: 'pendiente',
       fecha: new Date().toISOString()
-    });
-
-    cerrar(mConfirmar);
-    folioOut.textContent = 'Folio ' + folio + ' · Estado: pendiente';
-    abrir(mExito);
-
-    form.reset();
-    reiniciarSeleccion();
+    };
+    procesar();
   });
+
+  btnReintentar.addEventListener('click', function () {
+    cerrar(mError);
+    if (pendiente) { abrir(mConfirmar); procesar(); }
+  });
+
+  function procesar() {
+    if (enviando || !pendiente) return;
+    enviando = true;
+    btnSi.disabled = true;
+    btnNo.disabled = true;
+    btnSi.innerHTML = '<span class="spin"></span> Enviando…';
+
+    enviarAlSheet(pendiente)
+      .then(function (res) {
+        restaurarBoton();
+        cerrar(mConfirmar);
+
+        if (res.folio) {
+          folioOut.textContent = 'Folio ' + res.folio + ' · Estado: pendiente';
+          avisoLocal.style.display = 'none';
+        } else {
+          // Envío realizado pero sin poder leer la respuesta del servidor.
+          folioOut.textContent = 'Estado: pendiente';
+          avisoLocal.textContent = 'Su solicitud fue enviada. El folio queda asignado en el registro de solicitudes.';
+          avisoLocal.style.display = 'block';
+        }
+        abrir(mExito);
+
+        pendiente = null;
+        form.reset();
+        reiniciarSeleccion();
+      })
+      .catch(function (err) {
+        restaurarBoton();
+        cerrar(mConfirmar);
+        errDetalle.textContent = String(err && err.message ? err.message : err);
+        abrir(mError);
+      });
+  }
+
+  function restaurarBoton() {
+    enviando = false;
+    btnSi.disabled = false;
+    btnNo.disabled = false;
+    btnSi.textContent = 'Sí, enviar';
+  }
 
   btnCerrar.addEventListener('click', function () {
     cerrar(mExito);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  /* ---------- 8. reset ---------- */
+  btnCerrarError.addEventListener('click', function () { cerrar(mError); });
+
+  /* ---------- 9. reset ---------- */
   function reiniciarSeleccion() {
     aptoSel = null;
     aptOut.textContent = '—';

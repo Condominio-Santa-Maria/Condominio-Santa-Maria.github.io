@@ -227,8 +227,26 @@ input.err,textarea.err,.apt-picker.err{border-color:var(--rose)}
   font-family:'IBM Plex Mono',monospace;font-size:.9rem;color:var(--gold);
   border:1px dashed var(--gold-dim);border-radius:10px;padding:11px 14px;margin-top:18px;text-align:center;
 }
+.modal.err .m-ic{background:rgba(244,123,155,.14);color:var(--rose)}
+.modal .aviso-local{
+  font-size:.8rem;color:var(--muted);margin-top:12px;text-align:center;
+}
+.modal .detalle-tec{
+  font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--rose);
+  background:rgba(244,123,155,.06);border:1px solid rgba(244,123,155,.18);
+  border-radius:9px;padding:9px 12px;margin-top:14px;word-break:break-word;
+}
+.modal .detalle-tec:empty{display:none}
 .modal .m-actions{display:flex;gap:11px;margin-top:22px}
 .modal .m-actions .btn{flex:1}
+.btn[disabled]{opacity:.7;cursor:wait;transform:none!important;box-shadow:none!important}
+.spin{
+  width:14px;height:14px;flex:0 0 auto;border-radius:50%;
+  border:2px solid rgba(7,16,28,.28);border-top-color:#07101c;
+  display:inline-block;vertical-align:-2px;margin-right:7px;
+  animation:girar .7s linear infinite;
+}
+@keyframes girar{to{transform:rotate(360deg)}}
 
 footer{margin-top:70px;padding:26px 0 0;border-top:1px solid var(--line);
   font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--muted);
