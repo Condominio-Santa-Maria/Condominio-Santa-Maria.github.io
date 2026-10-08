@@ -96,13 +96,27 @@
 
   /* ---------- llamada al Apps Script ----------
      text/plain: petición "simple", sin preflight CORS. */
+  var ESPERA_MAX = 25000;   // ms; Apps Script puede tardar varios segundos en arrancar
+
   function llamar(datos) {
+    var ctrl = window.AbortController ? new AbortController() : null;
+    var timer = ctrl && setTimeout(function () { ctrl.abort(); }, ESPERA_MAX);
     return fetch(ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(datos),
-      redirect: 'follow'
-    }).then(function (r) { return r.json(); });
+      redirect: 'follow',
+      signal: ctrl ? ctrl.signal : undefined
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (res) { clearTimeout(timer); return res; },
+            function (err) { clearTimeout(timer); throw err; });
+  }
+
+  function errorDeRed(err) {
+    return err && err.name === 'AbortError'
+      ? 'El servidor tardó demasiado en responder. Intentá de nuevo en unos segundos.'
+      : 'No se pudo conectar. Revisá tu conexión e intentá de nuevo.';
   }
 
   /* ---------- verificar teléfono ---------- */
@@ -113,7 +127,7 @@
     if (numero.length < 7) { setMsg(msgVerif, 'Escribí tu número de teléfono completo.', 'err'); return; }
 
     btnVerif.disabled = true;
-    setMsg(msgVerif, 'Verificando…');
+    setMsg(msgVerif, 'Verificando… puede tardar unos segundos.');
     llamar({ accion: 'verificar', apto: apto, telefono: numero })
       .then(function (res) {
         if (res && res.ok) {
@@ -132,9 +146,9 @@
           setMsg(msgVerif, 'No se pudo verificar: ' + ((res && res.error) || 'respuesta inesperada') + '.', 'err');
         }
       })
-      .catch(function () {
+      .catch(function (err) {
         bloquear();
-        setMsg(msgVerif, 'No se pudo conectar. Revisá tu conexión e intentá de nuevo.', 'err');
+        setMsg(msgVerif, errorDeRed(err), 'err');
       })
       .then(function () { btnVerif.disabled = false; });
   });
@@ -169,10 +183,10 @@
           setMsg(msgEnvio, 'No se registró el voto: ' + ((res && res.error) || 'respuesta inesperada') + '.', 'err');
         }
       })
-      .catch(function () {
+      .catch(function (err) {
         enviando = false;
         actualizarEnvio();
-        setMsg(msgEnvio, 'No se pudo conectar. Intentá de nuevo.', 'err');
+        setMsg(msgEnvio, errorDeRed(err), 'err');
       });
   });
 })();
