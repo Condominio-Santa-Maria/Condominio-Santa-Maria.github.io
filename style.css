@@ -47,16 +47,16 @@ a{color:inherit;text-decoration:none}
   max-width:1180px;margin:0 auto;padding:0 24px;height:64px;
   display:flex;align-items:center;justify-content:space-between;gap:16px;
 }
-.brand{display:flex;align-items:center;gap:11px;font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-.01em}
+.brand{flex:0 0 auto;white-space:nowrap;display:flex;align-items:center;gap:11px;font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-.01em}
 .brand .mark{
   width:32px;height:32px;border-radius:9px;flex:0 0 auto;
   background:linear-gradient(150deg,var(--cyan),var(--violet));
   display:grid;place-items:center;color:#07101c;font-weight:700;font-size:.9rem;
 }
 .brand small{display:block;font-family:'IBM Plex Mono',monospace;font-weight:400;font-size:.6rem;letter-spacing:.24em;color:var(--muted);text-transform:uppercase}
-.nav-links{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.nav-links{display:flex;align-items:center;gap:2px;flex-wrap:nowrap}
 .nav-links a{
-  font-size:.82rem;color:var(--muted);padding:8px 12px;border-radius:9px;transition:.15s;white-space:nowrap;
+  font-size:.82rem;color:var(--muted);padding:8px 8px;border-radius:9px;transition:.15s;white-space:nowrap;
 }
 .nav-links a:hover{color:var(--text);background:rgba(124,162,214,.08)}
 .nav-links a.cta{color:var(--cyan);border:1px solid var(--cyan-dim)}
@@ -191,6 +191,15 @@ footer{margin-top:80px;padding:26px 0 0;border-top:1px solid var(--line);
   font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--muted);
   display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
 
+@media (max-width:1240px){
+  .nav-links{
+    display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;align-items:stretch;
+    background:rgba(7,11,20,.97);border-bottom:1px solid var(--line);padding:12px 24px 18px;gap:2px;
+  }
+  .nav-links.open{display:flex}
+  .nav-links a{padding:11px 12px}
+  .nav-toggle{display:block}
+}
 @media (max-width:960px){
   .kpis{grid-template-columns:repeat(3,1fr)}
   .g-loc,.g-2,.g-3,.g-4{grid-template-columns:1fr}

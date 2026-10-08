@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encuesta · Condominio Santa María</title>
+<link rel="icon" href="../images/favicon.png">
+<meta name="description" content="Encuesta de aprobación de los propietarios del Condominio Santa María.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../smnav.css">
+<style>
+:root{
+  --bg:#070b14;
+  --panel:#0d1424;
+  --panel-2:#111a2e;
+  --line:rgba(124,162,214,.14);
+  --cyan:#4fd8e8;
+  --cyan-dim:rgba(79,216,232,.16);
+  --gold:#e8b85c;
+  --gold-dim:rgba(232,184,92,.14);
+  --violet:#8b7bf4;
+  --ok:#5fd99a;
+  --rose:#f47b9b;
+  --text:#e6ecf5;
+  --muted:#7c8aa5;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'IBM Plex Sans',sans-serif;line-height:1.55;overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(900px 500px at 85% -10%, rgba(79,216,232,.07), transparent 60%),
+    radial-gradient(700px 480px at 0% 110%, rgba(139,123,244,.06), transparent 60%);
+}
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+  background-image:linear-gradient(rgba(124,162,214,.04) 1px, transparent 1px),
+                   linear-gradient(90deg, rgba(124,162,214,.04) 1px, transparent 1px);
+  background-size:44px 44px;
+}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 24px 80px}
+.back{display:inline-flex;align-items:center;gap:8px;margin-top:28px;font-size:.82rem;color:var(--muted);padding:8px 14px;border:1px solid var(--line);border-radius:10px;transition:.15s;text-decoration:none}
+.back:hover{color:var(--cyan);border-color:var(--cyan)}
+.back svg{width:15px;height:15px}
+
+header{padding:54px 0 30px}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.32em;
+  text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:14px;
+}
+.eyebrow::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--cyan-dim),transparent)}
+h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.1rem,5vw,3.4rem);letter-spacing:-.02em;margin-top:10px}
+.sub{color:var(--muted);max-width:640px;margin-top:8px;font-size:.95rem}
+
+.tools{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:28px}
+.tools input{
+  flex:1;min-width:220px;max-width:420px;
+  background:var(--panel-2);border:1px solid var(--line);color:var(--text);
+  border-radius:10px;padding:10px 14px;font-family:'IBM Plex Mono',monospace;font-size:.82rem;
+}
+.tools input:focus{outline:none;border-color:var(--cyan)}
+.tools .count{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--muted)}
+
+/* ---------- encuesta ---------- */
+.banner{
+  display:flex;gap:12px;align-items:flex-start;margin-top:26px;
+  background:var(--gold-dim);border:1px solid rgba(232,184,92,.35);border-radius:14px;padding:14px 16px;
+  font-size:.88rem;
+}
+.banner b{color:var(--gold)}
+.panel{
+  background:linear-gradient(180deg,var(--panel-2),var(--panel));
+  border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:18px;
+}
+.panel h2{font-family:'Space Grotesk',sans-serif;font-size:1.15rem;font-weight:500}
+.panel .hint{font-size:.8rem;color:var(--muted);margin-top:4px}
+.who{display:grid;grid-template-columns:200px 1fr;gap:14px;margin-top:16px;align-items:end}
+.f{display:block;font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+select,.ro{
+  width:100%;background:var(--panel-2);border:1px solid var(--line);color:var(--text);
+  border-radius:10px;padding:10px 14px;font-family:'IBM Plex Mono',monospace;font-size:.85rem;
+}
+select:focus{outline:none;border-color:var(--cyan)}
+.ro{color:var(--muted);min-height:41px}
+.ro.set{color:var(--text)}
+.q{border-top:1px dashed var(--line);padding-top:18px;margin-top:18px}
+.q:first-of-type{border-top:none;padding-top:0}
+.q .n{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--cyan);letter-spacing:.18em}
+.q h3{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:1.02rem;margin-top:2px}
+.q p{font-size:.85rem;color:var(--muted);margin-top:4px;max-width:760px}
+.q p b{color:var(--gold);font-weight:600}
+.opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.opts label{
+  display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+  border:1px solid var(--line);border-radius:10px;padding:8px 14px;font-size:.85rem;transition:.15s;
+}
+.opts input{accent-color:var(--cyan)}
+.opts label:hover{border-color:var(--cyan)}
+.opts label:has(input:checked){border-color:var(--cyan);background:var(--cyan-dim)}
+.q.pend h3{color:var(--muted)}
+.tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);background:var(--gold-dim);border-radius:20px;padding:3px 10px;margin-top:10px}
+.decl{display:flex;gap:10px;align-items:flex-start;font-size:.85rem;margin-top:6px}
+.decl input{margin-top:4px;accent-color:var(--cyan)}
+.actions{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:18px}
+button.send{
+  font-family:'IBM Plex Sans',sans-serif;font-size:.9rem;font-weight:600;
+  background:var(--cyan);color:#07101c;border:none;border-radius:10px;padding:11px 22px;cursor:pointer;
+}
+button.send:disabled{background:rgba(124,138,165,.25);color:var(--muted);cursor:not-allowed}
+.actions small{font-size:.78rem;color:var(--muted)}
+footer{
+  margin-top:70px;padding-top:22px;border-top:1px solid var(--line);
+  font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--muted);
+  display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+}
+@media (max-width:640px){
+  .wrap{padding:0 16px 60px}
+  .who{grid-template-columns:1fr}
+  .panel{padding:18px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<nav class="smnav">
+  <div class="smnav-inner">
+    <a class="smnav-brand" href="../">
+      <span class="smnav-mark">SM</span>
+      <span>Santa María<small>Santa Cruz · Bolivia</small></span>
+    </a>
+    <button class="smnav-toggle" aria-label="Menú" aria-expanded="false">☰</button>
+    <div class="smnav-links">
+      <a href="../#ubicacion">Ubicación</a>
+      <a href="../#edificio">El edificio</a>
+      <a href="../#areas">Áreas sociales</a>
+      <a href="../#departamento">Departamentos</a>
+      <a href="../planos_edificio/">Planos</a>
+      <a href="../censo/">Censo</a>
+      <a href="../propietarios/">Propietarios</a>
+      <a href="../finanzas/">Finanzas</a>
+      <a href="../personeria/">Personería</a>
+      <a href="../solicitudes/">Solicitudes</a>
+      <a href="../encuesta/">Encuesta</a>
+      <a class="cta" href="../reuniones/">Reuniones</a>
+    </div>
+  </div>
+</nav>
+<div class="wrap">
+
+<a class="back" href="../">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+  Volver al inicio
+</a>
+
+<header>
+  <div class="eyebrow">Condominio Santa María · Santa Cruz de la Sierra</div>
+  <h1>Encuesta</h1>
+  <p class="sub">Aprobación firmada de los propietarios sobre lo tratado en la <a href="../reuniones/20260723/" style="color:var(--cyan)">Asamblea Extraordinaria del 23 de julio de 2026</a>. Un voto por departamento.</p>
+</header>
+
+<div class="banner" role="status">
+  <span aria-hidden="true">⏳</span>
+  <div><b>Borrador.</b> La votación todavía no está habilitada. Revisá las preguntas; avisaremos por el grupo cuando se abra.</div>
+</div>
+
+<form id="encuesta" onsubmit="return false">
+  <div class="panel">
+    <h2>¿Quién vota?</h2>
+    <p class="hint">Elegí tu departamento; el nombre del propietario se completa solo.</p>
+    <div class="who">
+      <div>
+        <label class="f" for="depto">Departamento</label>
+        <select id="depto" required><option value="">Elegir…</option></select>
+      </div>
+      <div>
+        <span class="f">Propietario</span>
+        <div class="ro" id="propietario">—</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Preguntas</h2>
+    <p class="hint">Montos según las cotizaciones presentadas en la asamblea.</p>
+
+    <div class="q">
+      <div class="n">PREGUNTA 1</div>
+      <h3>Personería jurídica con el abogado Cristian Salinas</h3>
+      <p>Contratar al abogado Cristian Salinas por <b>Bs 11.700</b> (Bs 9.000 en 3 cuotas de Bs 3.000 + Bs 2.700 en gastos según se necesiten). La primera cuota se cubre con fondos de caja.</p>
+      <div class="opts" data-q="pj"></div>
+    </div>
+
+    <div class="q">
+      <div class="n">PREGUNTA 2</div>
+      <h3>Pintura de pasillos y gradas</h3>
+      <p>Aprobar la cotización de Kevin / Douglas: <b>Bs 9.000</b> de mano de obra + <b>Bs 5.000</b> de pintura, con pago semanal, incluyendo la colocación de tapas en las gradas.</p>
+      <div class="opts" data-q="pintura"></div>
+    </div>
+
+    <div class="q">
+      <div class="n">PREGUNTA 3</div>
+      <h3>Cuota extraordinaria</h3>
+      <p>Una cuota de <b>Bs 900 por departamento</b>, en 3 cuotas de Bs 300, para financiar la personería jurídica, la pintura y las tapas de las gradas.</p>
+      <div class="opts" data-q="cuota"></div>
+    </div>
+
+    <div class="q pend">
+      <div class="n">PREGUNTA 4</div>
+      <h3>Nueva política de cobro del agua</h3>
+      <p>Cobro de ≈ Bs 51 por persona con expensas de Bs 500, o instalación de medidores.</p>
+      <span class="tag">Se votará cuando lleguen las cotizaciones de medidores</span>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Firma</h2>
+    <label class="decl"><input type="checkbox" id="declaro"> Declaro ser el propietario (o su representante) del departamento elegido y que mis respuestas reflejan su decisión.</label>
+    <div class="actions">
+      <button class="send" type="submit" disabled>Enviar mi voto</button>
+      <small>Disponible cuando se habilite la votación.</small>
+    </div>
+  </div>
+</form>
+
+<footer>
+  <span>ENCUESTA · CONDOMINIO SANTA MARÍA</span>
+  <span>ASAMBLEA DEL 23 · 07 · 2026</span>
+</footer>
+</div>
+
+<script src="../propietarios/propietarios.js"></script>
+<script>
+(function () {
+  var sel = document.getElementById('depto');
+  var out = document.getElementById('propietario');
+  PROPIETARIOS.forEach(function (x) {
+    var o = document.createElement('option');
+    o.value = x.d; o.textContent = x.d;
+    sel.appendChild(o);
+  });
+  sel.addEventListener('change', function () {
+    var x = PROPIETARIOS.find(function (p) { return String(p.d) === sel.value; });
+    out.textContent = x ? x.nombre : '—';
+    out.classList.toggle('set', !!x);
+  });
+  document.querySelectorAll('.opts').forEach(function (box) {
+    var q = box.dataset.q;
+    box.innerHTML = ['Apruebo', 'No apruebo', 'Me abstengo'].map(function (t, i) {
+      return '<label><input type="radio" name="' + q + '" value="' + ['si', 'no', 'abs'][i] + '"> ' + t + '</label>';
+    }).join('');
+  });
+})();
+</script>
+<script src="../smnav.js"></script>
+</body>
+</html>
