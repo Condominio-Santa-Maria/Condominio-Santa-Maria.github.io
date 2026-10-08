@@ -1,6 +1,6 @@
 /* =====================================================================
    Condominio Santa María · Consultas y reclamos
-   Receptor de solicitudes → Google Sheets
+   Receptor de solicitudes y de la encuesta → Google Sheets
 
    Hoja de destino:
    https://docs.google.com/spreadsheets/d/13C0QQRZt0zIO6QtWYQvtbPQBPci7Jl3UW8MDv-aAWog/edit
@@ -44,6 +44,10 @@ function doPost(e) {
     }
 
     var d = JSON.parse(e.postData.contents);
+
+    // Encuesta: verificación de teléfono y votos (ver encuesta/index.js)
+    if (d.accion === 'verificar') return respuesta(verificarPropietario(d));
+    if (d.accion === 'votar')     return respuesta(registrarVoto(d));
 
     var apto     = String(d.apto || '').trim();
     var nombre   = String(d.nombre || '').trim().slice(0, 120);
@@ -128,6 +132,102 @@ function doGet() {
   } catch (err) {
     return respuesta({ ok: false, error: String(err) });
   }
+}
+
+/* ---------- encuesta ----------
+   Verifica que el teléfono escrito coincida con el de la hoja
+   "Propietarios" (columnas Apto, Nombre, Telefono) y guarda un voto
+   por departamento en la hoja "Encuesta". Si el depto vuelve a votar,
+   se reemplaza su voto anterior.
+   Ponga ENCUESTA_ABIERTA en true para aceptar votos.               */
+var ENCUESTA_ABIERTA = false;
+var HOJA_PROPIETARIOS = 'Propietarios';
+var HOJA_ENCUESTA = 'Encuesta';
+var CABECERAS_ENCUESTA = [
+  'Fecha y hora', 'Departamento', 'Propietario', 'Teléfono',
+  'Personería jurídica', 'Pintura', 'Cuota extraordinaria'
+];
+var PREGUNTAS = ['pj', 'pintura', 'cuota'];
+var VOTOS_VALIDOS = { si: 'Apruebo', no: 'No apruebo', abs: 'Me abstengo' };
+
+// Últimos 8 dígitos: así "+591 70012345" y "70012345" coinciden.
+function normalizarTelefono(t) {
+  var dig = String(t || '').replace(/\D/g, '');
+  return dig.slice(-8);
+}
+
+function buscarPropietario(apto) {
+  var hoja = SpreadsheetApp.openById(ID_HOJA).getSheetByName(HOJA_PROPIETARIOS);
+  if (!hoja || hoja.getLastRow() < 2) return null;
+  var filas = hoja.getRange(2, 1, hoja.getLastRow() - 1, 3).getValues();
+  for (var i = 0; i < filas.length; i++) {
+    if (String(filas[i][0]).trim() === apto) {
+      // Una celda puede tener más de un número (separados por espacios, comas o barras).
+      var telefonos = String(filas[i][2]).split(/[^\d+]+/)
+        .map(normalizarTelefono)
+        .filter(function (n) { return n.length >= 7; });
+      return { nombre: String(filas[i][1]).trim(), telefonos: telefonos };
+    }
+  }
+  return null;
+}
+
+function validarPropietario(d) {
+  var apto = String(d.apto || '').trim();
+  if (!/^([1-9]|10)0[1-4]$/.test(apto)) return { ok: false, error: 'departamento inválido' };
+  var tel = normalizarTelefono(d.telefono);
+  if (tel.length < 7) return { ok: false, error: 'teléfono inválido' };
+  var p = buscarPropietario(apto);
+  if (!p) return { ok: false, error: 'departamento no registrado' };
+  if (p.telefonos.indexOf(tel) === -1) return { ok: false, error: 'telefono' };
+  return { ok: true, apto: apto, nombre: p.nombre, telefono: tel };
+}
+
+function hojaEncuesta() {
+  var libro = SpreadsheetApp.openById(ID_HOJA);
+  var hoja = libro.getSheetByName(HOJA_ENCUESTA) || libro.insertSheet(HOJA_ENCUESTA);
+  if (hoja.getLastRow() === 0) {
+    hoja.appendRow(CABECERAS_ENCUESTA);
+    hoja.getRange(1, 1, 1, CABECERAS_ENCUESTA.length)
+      .setFontWeight('bold').setBackground('#0d1424').setFontColor('#e6ecf5');
+    hoja.setFrozenRows(1);
+  }
+  return hoja;
+}
+
+function filaDeVoto(hoja, apto) {
+  if (hoja.getLastRow() < 2) return 0;
+  var deptos = hoja.getRange(2, 2, hoja.getLastRow() - 1, 1).getValues();
+  for (var i = 0; i < deptos.length; i++) {
+    if (String(deptos[i][0]).replace(/^'/, '').trim() === apto) return i + 2;
+  }
+  return 0;
+}
+
+function verificarPropietario(d) {
+  var v = validarPropietario(d);
+  if (!v.ok) return v;
+  return { ok: true, yaVoto: filaDeVoto(hojaEncuesta(), v.apto) > 0 };
+}
+
+function registrarVoto(d) {
+  if (!ENCUESTA_ABIERTA) return { ok: false, error: 'la votación no está abierta' };
+  var v = validarPropietario(d);
+  if (!v.ok) return v;
+
+  var votos = d.votos || {};
+  var fila = [new Date(), "'" + v.apto, v.nombre, "'" + v.telefono];
+  for (var i = 0; i < PREGUNTAS.length; i++) {
+    var r = VOTOS_VALIDOS[votos[PREGUNTAS[i]]];
+    if (!r) return { ok: false, error: 'falta responder una pregunta' };
+    fila.push(r);
+  }
+
+  var hoja = hojaEncuesta();
+  var n = filaDeVoto(hoja, v.apto);
+  if (n) hoja.getRange(n, 1, 1, fila.length).setValues([fila]);
+  else hoja.appendRow(fila);
+  return { ok: true };
 }
 
 /* ---------- prueba desde el editor de Apps Script ----------

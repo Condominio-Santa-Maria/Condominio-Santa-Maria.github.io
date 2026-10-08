@@ -89,6 +89,23 @@ select,.ro{
 select:focus{outline:none;border-color:var(--cyan)}
 .ro{color:var(--muted);min-height:41px}
 .ro.set{color:var(--text)}
+.in{
+  width:100%;background:var(--panel-2);border:1px solid var(--line);color:var(--text);
+  border-radius:10px;padding:10px 14px;font-family:'IBM Plex Mono',monospace;font-size:.85rem;
+}
+.in:focus{outline:none;border-color:var(--cyan)}
+.verif{display:flex;gap:12px;align-items:center;flex-wrap:wrap;min-height:41px}
+button.ghost{
+  font-family:'IBM Plex Sans',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;
+  background:transparent;color:var(--cyan);border:1px solid var(--cyan);border-radius:10px;padding:9px 18px;
+}
+button.ghost:disabled{opacity:.5;cursor:wait}
+.msg{font-size:.85rem}
+.msg.ok{color:var(--ok)}
+.msg.err{color:var(--rose)}
+.locked{opacity:.45;pointer-events:none}
+.actions small.ok{color:var(--ok)}
+.actions small.err{color:var(--rose)}
 .q{border-top:1px dashed var(--line);padding-top:18px;margin-top:18px}
 .q:first-of-type{border-top:none;padding-top:0}
 .q .n{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--cyan);letter-spacing:.18em}
@@ -167,15 +184,15 @@ footer{
   <p class="sub">Aprobación firmada de los propietarios sobre lo tratado en la <a href="../reuniones/20260723/" style="color:var(--cyan)">Asamblea Extraordinaria del 23 de julio de 2026</a>. Un voto por departamento.</p>
 </header>
 
-<div class="banner" role="status">
+<div class="banner" id="banner" role="status">
   <span aria-hidden="true">⏳</span>
-  <div><b>Borrador.</b> La votación todavía no está habilitada. Revisá las preguntas; avisaremos por el grupo cuando se abra.</div>
+  <div><span id="bannerTxt"><b>Borrador.</b> La votación todavía no está habilitada. Revisá las preguntas; avisaremos por el grupo cuando se abra.</span></div>
 </div>
 
-<form id="encuesta" onsubmit="return false">
+<form id="encuesta" novalidate>
   <div class="panel">
     <h2>¿Quién vota?</h2>
-    <p class="hint">Elegí tu departamento; el nombre del propietario se completa solo.</p>
+    <p class="hint">Elegí tu departamento y escribí el teléfono registrado en la administración.</p>
     <div class="who">
       <div>
         <label class="f" for="depto">Departamento</label>
@@ -186,9 +203,19 @@ footer{
         <div class="ro" id="propietario">—</div>
       </div>
     </div>
+    <div class="who">
+      <div>
+        <label class="f" for="telefono">Teléfono</label>
+        <input id="telefono" class="in" type="tel" inputmode="numeric" autocomplete="tel" placeholder="Ej. 70012345" required>
+      </div>
+      <div class="verif">
+        <button class="ghost" type="button" id="btnVerificar">Verificar</button>
+        <span class="msg" id="msgVerif" role="status" aria-live="polite"></span>
+      </div>
+    </div>
   </div>
 
-  <div class="panel">
+  <div class="panel locked" id="pPreguntas">
     <h2>Preguntas</h2>
     <p class="hint">Montos según las cotizaciones presentadas en la asamblea.</p>
 
@@ -221,12 +248,12 @@ footer{
     </div>
   </div>
 
-  <div class="panel">
+  <div class="panel locked" id="pFirma">
     <h2>Firma</h2>
     <label class="decl"><input type="checkbox" id="declaro"> Declaro ser el propietario (o su representante) del departamento elegido y que mis respuestas reflejan su decisión.</label>
     <div class="actions">
-      <button class="send" type="submit" disabled>Enviar mi voto</button>
-      <small>Disponible cuando se habilite la votación.</small>
+      <button class="send" type="submit" id="btnEnviar" disabled>Enviar mi voto</button>
+      <small id="msgEnvio" role="status" aria-live="polite">Primero verificá tu teléfono.</small>
     </div>
   </div>
 </form>
@@ -238,28 +265,7 @@ footer{
 </div>
 
 <script src="../propietarios/propietarios.js"></script>
-<script>
-(function () {
-  var sel = document.getElementById('depto');
-  var out = document.getElementById('propietario');
-  PROPIETARIOS.forEach(function (x) {
-    var o = document.createElement('option');
-    o.value = x.d; o.textContent = x.d;
-    sel.appendChild(o);
-  });
-  sel.addEventListener('change', function () {
-    var x = PROPIETARIOS.find(function (p) { return String(p.d) === sel.value; });
-    out.textContent = x ? x.nombre : '—';
-    out.classList.toggle('set', !!x);
-  });
-  document.querySelectorAll('.opts').forEach(function (box) {
-    var q = box.dataset.q;
-    box.innerHTML = ['Apruebo', 'No apruebo', 'Me abstengo'].map(function (t, i) {
-      return '<label><input type="radio" name="' + q + '" value="' + ['si', 'no', 'abs'][i] + '"> ' + t + '</label>';
-    }).join('');
-  });
-})();
-</script>
+<script src="index.js"></script>
 <script src="../smnav.js"></script>
 </body>
 </html>
