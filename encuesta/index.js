@@ -95,22 +95,30 @@
   form.addEventListener('change', actualizarEnvio);
 
   /* ---------- llamada al Apps Script ----------
-     text/plain: petición "simple", sin preflight CORS. */
+     JSONP: se carga la URL como <script>, así el navegador no aplica
+     CORS a la respuesta (el POST con fetch fallaba al leerla). */
   var ESPERA_MAX = 25000;   // ms; Apps Script puede tardar varios segundos en arrancar
+  var nLlamada = 0;
 
   function llamar(datos) {
-    var ctrl = window.AbortController ? new AbortController() : null;
-    var timer = ctrl && setTimeout(function () { ctrl.abort(); }, ESPERA_MAX);
-    return fetch(ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(datos),
-      redirect: 'follow',
-      signal: ctrl ? ctrl.signal : undefined
-    })
-      .then(function (r) { return r.json(); })
-      .then(function (res) { clearTimeout(timer); return res; },
-            function (err) { clearTimeout(timer); throw err; });
+    return new Promise(function (resolve, reject) {
+      var cb = '__encuesta' + Date.now() + '_' + (nLlamada++);
+      var params = Object.keys(datos).map(function (k) {
+        return encodeURIComponent(k) + '=' + encodeURIComponent(datos[k]);
+      });
+      params.push('callback=' + cb);
+      var s = document.createElement('script');
+      var timer = setTimeout(function () { fin(); var e = new Error('timeout'); e.name = 'AbortError'; reject(e); }, ESPERA_MAX);
+      function fin() {
+        clearTimeout(timer);
+        delete window[cb];
+        if (s.parentNode) s.parentNode.removeChild(s);
+      }
+      window[cb] = function (res) { fin(); resolve(res); };
+      s.onerror = function () { fin(); reject(new Error('red')); };
+      s.src = ENDPOINT + '?' + params.join('&');
+      document.head.appendChild(s);
+    });
   }
 
   function errorDeRed(err) {
@@ -164,7 +172,7 @@
     enviando = true;
     actualizarEnvio();
     setMsg(msgEnvio, 'Enviando…');
-    llamar({ accion: 'votar', apto: verificado.apto, telefono: verificado.telefono, votos: votos })
+    llamar({ accion: 'votar', apto: verificado.apto, telefono: verificado.telefono, pj: votos.pj, pintura: votos.pintura, cuota: votos.cuota })
       .then(function (res) {
         if (res && res.ok) {
           setMsg(msgEnvio, '✓ Voto registrado. ¡Gracias por participar!', 'ok');

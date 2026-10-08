@@ -92,7 +92,14 @@ function doPost(e) {
    sin identificar al solicitante.                                         */
 var MOSTRAR_NOMBRE = true;
 
-function doGet() {
+function doGet(e) {
+  // Encuesta por JSONP: la página carga esta URL como <script>, así el
+  // navegador no aplica CORS (ver encuesta/index.js).
+  var p = (e && e.parameter) || {};
+  if (p.accion === 'verificar' || p.accion === 'votar') {
+    return respuestaJsonp(p.callback, encuestaDesdeGet(p));
+  }
+
   try {
     var hoja = obtenerHoja();
 
@@ -223,6 +230,19 @@ function registrarVoto(d) {
   return { ok: true };
 }
 
+function encuestaDesdeGet(p) {
+  try {
+    var d = { apto: p.apto, telefono: p.telefono };
+    if (p.accion === 'verificar') return verificarPropietario(d);
+    d.votos = { pj: p.pj, pintura: p.pintura, cuota: p.cuota };
+    var lock = LockService.getScriptLock();
+    lock.waitLock(30000);
+    try { return registrarVoto(d); } finally { lock.releaseLock(); }
+  } catch (err) {
+    return { ok: false, error: String(err) };
+  }
+}
+
 /* ---------- prueba desde el editor de Apps Script ----------
    Seleccione "probarEscritura" en el menú de funciones y presione
    Ejecutar: debe aparecer una fila de prueba en la hoja.
@@ -280,6 +300,14 @@ function generarFolio(hoja) {
   }
 
   return 'SM-' + anio + '-' + ('0000' + (n + 1)).slice(-4);
+}
+
+function respuestaJsonp(callback, obj) {
+  var cb = String(callback || '');
+  if (!/^[A-Za-z_$][\w$]*$/.test(cb)) return respuesta(obj);   // sin callback válido: JSON común
+  return ContentService
+    .createTextOutput(cb + '(' + JSON.stringify(obj) + ');')
+    .setMimeType(ContentService.MimeType.JAVASCRIPT);
 }
 
 function respuesta(obj) {
