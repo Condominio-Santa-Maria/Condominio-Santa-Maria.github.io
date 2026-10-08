@@ -135,20 +135,20 @@ function doGet() {
 }
 
 /* ---------- encuesta ----------
-   Verifica que el teléfono escrito coincida con el de la hoja
-   "Propietarios" (columnas Apto, Nombre, Telefono) y guarda un voto
-   por departamento en la hoja "Encuesta". Si el depto vuelve a votar,
-   se reemplaza su voto anterior.
+   Cada encuesta tiene su propia pestaña (por ejemplo "Encuesta202610")
+   con el padrón: columnas Apto, Nombre, Telefono, una fila por depto.
+   El teléfono escrito en la web se compara con el de esa fila y el
+   voto se anota en la misma fila, en las columnas siguientes. Si el
+   depto vuelve a votar, se reemplaza su voto anterior.
    Ponga ENCUESTA_ABIERTA en true para aceptar votos.               */
 var ENCUESTA_ABIERTA = false;
-var HOJA_PROPIETARIOS = 'Propietarios';
-var HOJA_ENCUESTA = 'Encuesta';
-var CABECERAS_ENCUESTA = [
-  'Fecha y hora', 'Departamento', 'Propietario', 'Teléfono',
-  'Personería jurídica', 'Pintura', 'Cuota extraordinaria'
+var HOJA_ENCUESTA = 'Encuesta202610';
+var COLUMNAS_VOTO = [
+  'Fecha del voto', 'Personería jurídica', 'Pintura', 'Cuota extraordinaria'
 ];
 var PREGUNTAS = ['pj', 'pintura', 'cuota'];
 var VOTOS_VALIDOS = { si: 'Apruebo', no: 'No apruebo', abs: 'Me abstengo' };
+var COL_VOTO = 4;   // columna D: primera columna después de Apto, Nombre, Telefono
 
 // Últimos 8 dígitos: así "+591 70012345" y "70012345" coinciden.
 function normalizarTelefono(t) {
@@ -156,17 +156,33 @@ function normalizarTelefono(t) {
   return dig.slice(-8);
 }
 
-function buscarPropietario(apto) {
-  var hoja = SpreadsheetApp.openById(ID_HOJA).getSheetByName(HOJA_PROPIETARIOS);
-  if (!hoja || hoja.getLastRow() < 2) return null;
-  var filas = hoja.getRange(2, 1, hoja.getLastRow() - 1, 3).getValues();
+function hojaEncuesta() {
+  var hoja = SpreadsheetApp.openById(ID_HOJA).getSheetByName(HOJA_ENCUESTA);
+  if (!hoja) throw new Error('no existe la pestaña ' + HOJA_ENCUESTA);
+  // Cabeceras de las columnas de voto, la primera vez.
+  var cab = hoja.getRange(1, COL_VOTO, 1, COLUMNAS_VOTO.length);
+  if (!String(cab.getValues()[0][0]).trim()) {
+    cab.setValues([COLUMNAS_VOTO]).setFontWeight('bold');
+  }
+  return hoja;
+}
+
+// Busca la fila del depto en el padrón de la encuesta.
+function buscarFila(hoja, apto) {
+  if (hoja.getLastRow() < 2) return null;
+  var filas = hoja.getRange(2, 1, hoja.getLastRow() - 1, COL_VOTO).getValues();
   for (var i = 0; i < filas.length; i++) {
-    if (String(filas[i][0]).trim() === apto) {
+    if (String(filas[i][0]).replace(/^'/, '').trim() === apto) {
       // Una celda puede tener más de un número (separados por espacios, comas o barras).
       var telefonos = String(filas[i][2]).split(/[^\d+]+/)
         .map(normalizarTelefono)
         .filter(function (n) { return n.length >= 7; });
-      return { nombre: String(filas[i][1]).trim(), telefonos: telefonos };
+      return {
+        fila: i + 2,
+        nombre: String(filas[i][1]).trim(),
+        telefonos: telefonos,
+        yaVoto: String(filas[i][COL_VOTO - 1]).trim() !== ''
+      };
     }
   }
   return null;
@@ -177,37 +193,17 @@ function validarPropietario(d) {
   if (!/^([1-9]|10)0[1-4]$/.test(apto)) return { ok: false, error: 'departamento inválido' };
   var tel = normalizarTelefono(d.telefono);
   if (tel.length < 7) return { ok: false, error: 'teléfono inválido' };
-  var p = buscarPropietario(apto);
+  var hoja = hojaEncuesta();
+  var p = buscarFila(hoja, apto);
   if (!p) return { ok: false, error: 'departamento no registrado' };
   if (p.telefonos.indexOf(tel) === -1) return { ok: false, error: 'telefono' };
-  return { ok: true, apto: apto, nombre: p.nombre, telefono: tel };
-}
-
-function hojaEncuesta() {
-  var libro = SpreadsheetApp.openById(ID_HOJA);
-  var hoja = libro.getSheetByName(HOJA_ENCUESTA) || libro.insertSheet(HOJA_ENCUESTA);
-  if (hoja.getLastRow() === 0) {
-    hoja.appendRow(CABECERAS_ENCUESTA);
-    hoja.getRange(1, 1, 1, CABECERAS_ENCUESTA.length)
-      .setFontWeight('bold').setBackground('#0d1424').setFontColor('#e6ecf5');
-    hoja.setFrozenRows(1);
-  }
-  return hoja;
-}
-
-function filaDeVoto(hoja, apto) {
-  if (hoja.getLastRow() < 2) return 0;
-  var deptos = hoja.getRange(2, 2, hoja.getLastRow() - 1, 1).getValues();
-  for (var i = 0; i < deptos.length; i++) {
-    if (String(deptos[i][0]).replace(/^'/, '').trim() === apto) return i + 2;
-  }
-  return 0;
+  return { ok: true, hoja: hoja, fila: p.fila, yaVoto: p.yaVoto };
 }
 
 function verificarPropietario(d) {
   var v = validarPropietario(d);
   if (!v.ok) return v;
-  return { ok: true, yaVoto: filaDeVoto(hojaEncuesta(), v.apto) > 0 };
+  return { ok: true, yaVoto: v.yaVoto };
 }
 
 function registrarVoto(d) {
@@ -216,17 +212,14 @@ function registrarVoto(d) {
   if (!v.ok) return v;
 
   var votos = d.votos || {};
-  var fila = [new Date(), "'" + v.apto, v.nombre, "'" + v.telefono];
+  var fila = [new Date()];
   for (var i = 0; i < PREGUNTAS.length; i++) {
     var r = VOTOS_VALIDOS[votos[PREGUNTAS[i]]];
     if (!r) return { ok: false, error: 'falta responder una pregunta' };
     fila.push(r);
   }
 
-  var hoja = hojaEncuesta();
-  var n = filaDeVoto(hoja, v.apto);
-  if (n) hoja.getRange(n, 1, 1, fila.length).setValues([fila]);
-  else hoja.appendRow(fila);
+  v.hoja.getRange(v.fila, COL_VOTO, 1, fila.length).setValues([fila]);
   return { ok: true };
 }
 
