@@ -95,14 +95,36 @@
   form.addEventListener('change', actualizarEnvio);
 
   /* ---------- llamada al Apps Script ----------
-     text/plain: petición "simple", sin preflight CORS. */
+     JSONP: se carga la URL como <script>, así el navegador no aplica
+     CORS a la respuesta (el POST con fetch fallaba al leerla). */
+  var ESPERA_MAX = 25000;   // ms; Apps Script puede tardar varios segundos en arrancar
+  var nLlamada = 0;
+
   function llamar(datos) {
-    return fetch(ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(datos),
-      redirect: 'follow'
-    }).then(function (r) { return r.json(); });
+    return new Promise(function (resolve, reject) {
+      var cb = '__encuesta' + Date.now() + '_' + (nLlamada++);
+      var params = Object.keys(datos).map(function (k) {
+        return encodeURIComponent(k) + '=' + encodeURIComponent(datos[k]);
+      });
+      params.push('callback=' + cb);
+      var s = document.createElement('script');
+      var timer = setTimeout(function () { fin(); var e = new Error('timeout'); e.name = 'AbortError'; reject(e); }, ESPERA_MAX);
+      function fin() {
+        clearTimeout(timer);
+        delete window[cb];
+        if (s.parentNode) s.parentNode.removeChild(s);
+      }
+      window[cb] = function (res) { fin(); resolve(res); };
+      s.onerror = function () { fin(); reject(new Error('red')); };
+      s.src = ENDPOINT + '?' + params.join('&');
+      document.head.appendChild(s);
+    });
+  }
+
+  function errorDeRed(err) {
+    return err && err.name === 'AbortError'
+      ? 'El servidor tardó demasiado en responder. Intentá de nuevo en unos segundos.'
+      : 'No se pudo conectar. Revisá tu conexión e intentá de nuevo.';
   }
 
   /* ---------- verificar teléfono ---------- */
@@ -113,7 +135,7 @@
     if (numero.length < 7) { setMsg(msgVerif, 'Escribí tu número de teléfono completo.', 'err'); return; }
 
     btnVerif.disabled = true;
-    setMsg(msgVerif, 'Verificando…');
+    setMsg(msgVerif, 'Verificando… puede tardar unos segundos.');
     llamar({ accion: 'verificar', apto: apto, telefono: numero })
       .then(function (res) {
         if (res && res.ok) {
@@ -132,9 +154,9 @@
           setMsg(msgVerif, 'No se pudo verificar: ' + ((res && res.error) || 'respuesta inesperada') + '.', 'err');
         }
       })
-      .catch(function () {
+      .catch(function (err) {
         bloquear();
-        setMsg(msgVerif, 'No se pudo conectar. Revisá tu conexión e intentá de nuevo.', 'err');
+        setMsg(msgVerif, errorDeRed(err), 'err');
       })
       .then(function () { btnVerif.disabled = false; });
   });
@@ -150,7 +172,7 @@
     enviando = true;
     actualizarEnvio();
     setMsg(msgEnvio, 'Enviando…');
-    llamar({ accion: 'votar', apto: verificado.apto, telefono: verificado.telefono, votos: votos })
+    llamar({ accion: 'votar', apto: verificado.apto, telefono: verificado.telefono, pj: votos.pj, pintura: votos.pintura, cuota: votos.cuota })
       .then(function (res) {
         if (res && res.ok) {
           setMsg(msgEnvio, '✓ Voto registrado. ¡Gracias por participar!', 'ok');
@@ -169,10 +191,10 @@
           setMsg(msgEnvio, 'No se registró el voto: ' + ((res && res.error) || 'respuesta inesperada') + '.', 'err');
         }
       })
-      .catch(function () {
+      .catch(function (err) {
         enviando = false;
         actualizarEnvio();
-        setMsg(msgEnvio, 'No se pudo conectar. Intentá de nuevo.', 'err');
+        setMsg(msgEnvio, errorDeRed(err), 'err');
       });
   });
 })();
