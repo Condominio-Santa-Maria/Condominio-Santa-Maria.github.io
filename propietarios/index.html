@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propietarios · Condominio Santa María</title>
+<link rel="icon" href="../images/favicon.png">
+<meta name="description" content="Propietarios del Condominio Santa María, piso por piso — Santa Cruz de la Sierra.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../smnav.css">
+<style>
+:root{
+  --bg:#070b14;
+  --panel:#0d1424;
+  --panel-2:#111a2e;
+  --line:rgba(124,162,214,.14);
+  --cyan:#4fd8e8;
+  --cyan-dim:rgba(79,216,232,.16);
+  --gold:#e8b85c;
+  --gold-dim:rgba(232,184,92,.14);
+  --violet:#8b7bf4;
+  --text:#e6ecf5;
+  --muted:#7c8aa5;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'IBM Plex Sans',sans-serif;line-height:1.55;overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(900px 500px at 85% -10%, rgba(79,216,232,.07), transparent 60%),
+    radial-gradient(700px 480px at 0% 110%, rgba(139,123,244,.06), transparent 60%);
+}
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+  background-image:linear-gradient(rgba(124,162,214,.04) 1px, transparent 1px),
+                   linear-gradient(90deg, rgba(124,162,214,.04) 1px, transparent 1px);
+  background-size:44px 44px;
+}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 24px 80px}
+.back{display:inline-flex;align-items:center;gap:8px;margin-top:28px;font-size:.82rem;color:var(--muted);padding:8px 14px;border:1px solid var(--line);border-radius:10px;transition:.15s;text-decoration:none}
+.back:hover{color:var(--cyan);border-color:var(--cyan)}
+.back svg{width:15px;height:15px}
+
+header{padding:54px 0 30px}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.32em;
+  text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:14px;
+}
+.eyebrow::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--cyan-dim),transparent)}
+h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.1rem,5vw,3.4rem);letter-spacing:-.02em;margin-top:10px}
+.sub{color:var(--muted);max-width:640px;margin-top:8px;font-size:.95rem}
+
+.tools{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:28px}
+.tools input{
+  flex:1;min-width:220px;max-width:420px;
+  background:var(--panel-2);border:1px solid var(--line);color:var(--text);
+  border-radius:10px;padding:10px 14px;font-family:'IBM Plex Mono',monospace;font-size:.82rem;
+}
+.tools input:focus{outline:none;border-color:var(--cyan)}
+.tools .count{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--muted)}
+
+/* ---------- la torre, en grande ---------- */
+.building{
+  margin-top:26px;
+  background:linear-gradient(180deg,var(--panel-2),var(--panel));
+  border:1px solid var(--line);border-radius:18px;padding:22px 22px 0;
+}
+.roof{
+  font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--muted);text-align:center;padding:10px 0 14px;margin-left:52px;
+  border-bottom:2px solid var(--line);margin-bottom:12px;
+}
+.tower{display:flex;flex-direction:column;gap:10px}
+.floor{display:grid;grid-template-columns:42px repeat(4,1fr);gap:10px;align-items:stretch}
+.floor .fl{
+  font-family:'IBM Plex Mono',monospace;font-size:.74rem;color:var(--muted);
+  display:flex;align-items:center;justify-content:center;border-right:1px solid var(--line);
+}
+.owner{
+  border:1px solid var(--line);border-radius:12px;padding:14px 12px 12px;
+  background:rgba(79,216,232,.03);
+  display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;
+  transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease, opacity .15s ease;
+  position:relative;min-width:0;
+}
+.owner:hover{transform:translateY(-2px);border-color:var(--cyan);box-shadow:0 8px 24px rgba(79,216,232,.16)}
+.owner .num{
+  position:absolute;top:9px;left:10px;
+  font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--cyan);
+}
+.photo{
+  width:96px;height:96px;border-radius:50%;flex:0 0 auto;overflow:hidden;
+  border:1px dashed rgba(124,162,214,.35);
+  background:rgba(124,138,165,.08);
+  display:grid;place-items:center;margin-top:10px;
+}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.photo svg{width:52%;height:52%;color:rgba(124,138,165,.55)}
+.owner.has-photo .photo{border:2px solid var(--cyan-dim)}
+.owner .name{font-size:.88rem;font-weight:500;line-height:1.3;overflow-wrap:anywhere}
+.owner.dim{opacity:.22}
+.owner.hit{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.ground{
+  margin:14px -22px 0;padding:12px 0;border-top:2px solid var(--line);border-radius:0 0 18px 18px;
+  background:repeating-linear-gradient(135deg,rgba(124,138,165,.06) 0 6px,transparent 6px 12px);
+  font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--muted);text-align:center;
+}
+.note{font-size:.78rem;color:var(--muted);margin-top:16px;border-left:2px solid var(--gold);padding-left:10px}
+
+footer{
+  margin-top:70px;padding-top:22px;border-top:1px solid var(--line);
+  font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--muted);
+  display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+}
+
+@media (max-width:900px){
+  .photo{width:72px;height:72px}
+  .owner .name{font-size:.8rem}
+}
+@media (max-width:640px){
+  .wrap{padding:0 16px 60px}
+  .building{padding:14px 14px 0}
+  .roof{margin-left:0}
+  .floor{grid-template-columns:repeat(2,1fr);gap:8px}
+  .floor .fl{grid-column:1 / -1;border-right:none;border-bottom:1px solid var(--line);justify-content:flex-start;padding:4px 2px}
+  .ground{margin:14px -14px 0}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<nav class="smnav">
+  <div class="smnav-inner">
+    <a class="smnav-brand" href="../">
+      <span class="smnav-mark">SM</span>
+      <span>Santa María<small>Santa Cruz · Bolivia</small></span>
+    </a>
+    <button class="smnav-toggle" aria-label="Menú" aria-expanded="false">☰</button>
+    <div class="smnav-links">
+      <a href="../#ubicacion">Ubicación</a>
+      <a href="../#edificio">El edificio</a>
+      <a href="../#areas">Áreas sociales</a>
+      <a href="../#departamento">Departamentos</a>
+      <a href="../planos_edificio/">Planos</a>
+      <a href="../censo/">Censo</a>
+      <a href="../propietarios/">Propietarios</a>
+      <a href="../finanzas/">Finanzas</a>
+      <a href="../personeria/">Personería</a>
+      <a href="../solicitudes/">Solicitudes</a>
+      <a href="../encuesta/">Encuesta</a>
+      <a class="cta" href="../reuniones/">Reuniones</a>
+    </div>
+  </div>
+</nav>
+<div class="wrap">
+
+<a class="back" href="../">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+  Volver al inicio
+</a>
+
+<header>
+  <div class="eyebrow">Condominio Santa María · Santa Cruz de la Sierra</div>
+  <h1>Propietarios</h1>
+  <p class="sub">La torre piso por piso, con el propietario de cada uno de los 40 departamentos.</p>
+  <div class="tools">
+    <input id="search" type="search" placeholder="Buscar nombre o depto…" aria-label="Buscar propietario">
+    <span class="count" id="count"></span>
+  </div>
+</header>
+
+<section class="building" aria-label="Propietarios por piso">
+  <div class="roof">Terraza</div>
+  <div class="tower" id="tower"></div>
+  <div class="ground">Planta baja · Ingreso</div>
+</section>
+
+<p class="note">¿Algún dato está mal o falta tu foto? Avisanos por <a href="../solicitudes/" style="color:var(--cyan)">Solicitudes</a>.</p>
+
+<footer>
+  <span>PROPIETARIOS · CONDOMINIO SANTA MARÍA</span>
+  <span>10 PISOS · 40 DEPARTAMENTOS</span>
+</footer>
+</div>
+
+<script src="propietarios.js"></script>
+<script>
+(function () {
+  var SILUETA = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="8" r="4.2"/><path d="M3.5 21c.6-4.6 4.2-7.4 8.5-7.4s7.9 2.8 8.5 7.4z"/></svg>';
+  var esc = function (s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  };
+  var piso = function (d) { return Math.floor(d / 100); };
+  var tower = document.getElementById('tower');
+
+  for (var p = 10; p >= 1; p--) {
+    var row = document.createElement('div');
+    row.className = 'floor';
+    row.innerHTML = '<div class="fl">P' + p + '</div>' +
+      PROPIETARIOS.filter(function (x) { return piso(x.d) === p; }).map(function (x) {
+        var foto = x.foto
+          ? '<img src="' + esc(x.foto) + '" alt="Foto de ' + esc(x.nombre) + '" loading="lazy">'
+          : SILUETA;
+        return '<article class="owner' + (x.foto ? ' has-photo' : '') + '" data-q="' +
+          esc((x.d + ' ' + x.nombre).toLowerCase()) + '">' +
+          '<span class="num">' + x.d + '</span>' +
+          '<div class="photo">' + foto + '</div>' +
+          '<div class="name">' + esc(x.nombre) + '</div>' +
+          '</article>';
+      }).join('');
+    tower.appendChild(row);
+  }
+
+  var cards = tower.querySelectorAll('.owner');
+  var count = document.getElementById('count');
+  function filtrar() {
+    var q = document.getElementById('search').value.toLowerCase().trim();
+    var n = 0;
+    cards.forEach(function (c) {
+      var ok = !q || c.dataset.q.indexOf(q) !== -1;
+      if (ok) n++;
+      c.classList.toggle('dim', !ok);
+      c.classList.toggle('hit', !!q && ok);
+    });
+    count.textContent = q ? n + ' de 40 departamentos' : '40 departamentos';
+  }
+  document.getElementById('search').addEventListener('input', filtrar);
+  filtrar();
+})();
+</script>
+<script src="../smnav.js"></script>
+</body>
+</html>
